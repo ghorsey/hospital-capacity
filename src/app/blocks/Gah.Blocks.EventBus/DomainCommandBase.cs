@@ -4,9 +4,9 @@
 
     /// <summary>
     /// Class DomainCommandBase.
-    /// Implements the <see cref="TS.Blocks.DomainCommands.IDomainCommand" />.
+    /// Implements the <see cref="IDomainCommand" />.
     /// </summary>
-    /// <seealso cref="TS.Blocks.DomainCommands.IDomainCommand" />
+    /// <seealso cref="IDomainCommand" />
     public abstract class DomainCommandBase : IDomainCommand
     {
         /// <summary>
