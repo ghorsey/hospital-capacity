@@ -1,4 +1,4 @@
-﻿namespace TS.Blocks.DomainCommands
+﻿namespace Gah.Blocks.EventBus
 {
     using System;
 

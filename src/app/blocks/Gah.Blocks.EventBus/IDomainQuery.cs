@@ -1,8 +1,7 @@
-﻿namespace TS.Blocks.DomainQueries
+﻿namespace Gah.Blocks.EventBus
 {
     using MediatR;
 
-#pragma warning disable CA1040 // Avoid empty interfaces
     /// <summary>
     /// Interface <c>IQuery</c>
     /// Implements the <see cref="MediatR.IRequest{TResponse}" />.
@@ -10,7 +9,6 @@
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <seealso cref="MediatR.IRequest{TResponse}" />
     public interface IDomainQuery<out TResponse> : IRequest<TResponse>
-#pragma warning restore CA1040 // Avoid empty interfaces
     {
     }
 }
