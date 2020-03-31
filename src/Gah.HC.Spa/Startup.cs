@@ -1,8 +1,11 @@
 namespace Gah.HC.Spa
 {
+    using System;
+    using Gah.HC.Repository.Sql.Data;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -26,21 +29,6 @@ namespace Gah.HC.Spa
         /// </summary>
         /// <value>The configuration.</value>
         public IConfiguration Configuration { get; }
-
-        /// <summary>
-        /// Configures the services.
-        /// </summary>
-        /// <param name="services">The services.</param>
-        public static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
-
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
-        }
 
         /// <summary>
         /// Configures the specified application.
@@ -87,6 +75,31 @@ namespace Gah.HC.Spa
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+            });
+        }
+
+        /// <summary>
+        /// Configures the services.
+        /// </summary>
+        /// <param name="services">The services.</param>
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson();
+
+            services.AddDbContext<HospitalCapacityContext>(
+                options => options.UseSqlServer(
+                    this.Configuration.GetConnectionString("Database"),
+                    builder =>
+                    {
+                        builder.MigrationsAssembly(typeof(HospitalCapacityContext).Assembly.FullName);
+                        builder.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
+                    }));
+
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
             });
         }
     }
