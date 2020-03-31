@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "<Pending>", Scope = "member", Target = "~M:Gah.HC.Domain.HelpfulExtensions.ToSlug(System.String)~System.String")]
+[assembly: SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "used in URLs", Scope = "member", Target = "~M:Gah.HC.Domain.HelpfulExtensions.ToSlug(System.String)~System.String")]

@@ -1,10 +1,10 @@
 ﻿namespace Gah.HC.Repository
 {
-    using Gah.HC.Domain;
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using Gah.HC.Domain;
 
     /// <summary>
     /// Interface IRepository.

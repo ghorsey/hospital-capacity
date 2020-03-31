@@ -1,7 +1,7 @@
-﻿using Xunit;
-
-namespace Gah.HC.Domain.Tests
+﻿namespace Gah.HC.Domain.Tests
 {
+    using Xunit;
+
     public class HospitalTests
     {
         /// <summary>
@@ -19,11 +19,10 @@ namespace Gah.HC.Domain.Tests
             var hospital = new Hospital
             {
                 BedCapacity = total,
-                BedsInUse = inUse
+                BedsInUse = inUse,
             };
 
             hospital.CalculatePercentageAvailable();
-
 
             Assert.Equal(expectedPercentage, hospital.PercentageAvailable);
         }
@@ -45,7 +44,7 @@ namespace Gah.HC.Domain.Tests
                 Name = name,
                 Address1 = address,
                 City = city,
-                State = state
+                State = state,
             };
 
             Assert.Equal(expectedSlug, hospital.Slug);

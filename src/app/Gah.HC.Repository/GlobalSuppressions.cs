@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Design", "CA1040:Avoid empty interfaces", Justification = "<Pending>", Scope = "type", Target = "~T:Gah.HC.Repository.IRepository")]
+[assembly: SuppressMessage("Design", "CA1040:Avoid empty interfaces", Justification = "Reviewed.", Scope = "type", Target = "~T:Gah.HC.Repository.IRepository")]
