@@ -47,3 +47,7 @@ steps:
      arguments: '--configuration $(BuildConfiguration) -o build'
      zipAfterPublish: False
 
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
