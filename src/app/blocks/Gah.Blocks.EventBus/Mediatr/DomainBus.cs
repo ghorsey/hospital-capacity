@@ -1,5 +1,6 @@
 ﻿namespace Gah.Blocks.EventBus.Mediatr
 {
+    using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
     using MediatR;
@@ -40,10 +41,10 @@
         /// <param name="query">The query.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A/an <c>Task&lt;TResponse&gt;</c>.</returns>
+        [DebuggerStepThrough]
         public Task<TResponse> ExecuteAsync<TResponse>(IDomainQuery<TResponse> query, CancellationToken cancellationToken = default)
         {
             this.logger.LogDebug("Executing query {@query}", query);
-
             return this.mediator.Send(query, cancellationToken);
         }
 
@@ -54,6 +55,7 @@
         /// <param name="command">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A/an <c>Task</c>.</returns>
+        [DebuggerStepThrough]
         public Task ExecuteAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default)
             where TCommand : IDomainCommand
         {

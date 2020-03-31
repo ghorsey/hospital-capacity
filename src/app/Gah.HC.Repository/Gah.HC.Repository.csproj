@@ -26,4 +26,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Gah.HC.Domain\Gah.HC.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,14 +5,30 @@
 
     /// <summary>
     /// Class Hospital.
+    /// Implements the <see cref="Entity{Guid}" />
     /// </summary>
-    public class Hospital
+    /// <seealso cref="Entity{Guid}" />
+
+    public class Hospital : Entity<Guid>
     {
         /// <summary>
-        /// Gets or sets the identifier.
+        /// Initializes a new instance of the <see cref="Hospital"/> class.
         /// </summary>
-        /// <value>The identifier.</value>
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Hospital()
+            : base(Guid.NewGuid())
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Hospital"/> class.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        public Hospital(Guid id) 
+            : base(id)
+        {
+
+        }
 
         /// <summary>
         /// Gets or sets the name.
@@ -74,6 +90,18 @@
         /// </summary>
         /// <value>The percentage available.</value>
         public int PercentageAvailable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created on.
+        /// </summary>
+        /// <value>The created on.</value>
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// Gets or sets the last updated.
+        /// </summary>
+        /// <value>The last updated.</value>
+        public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Gets or sets the URL slug.
