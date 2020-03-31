@@ -1,6 +1,8 @@
 ﻿namespace Gah.HC.Domain
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+
     /// <summary>
     /// Class AppUser.
     /// </summary>
@@ -27,18 +29,23 @@
         /// Gets or sets the email.
         /// </summary>
         /// <value>The email.</value>
+        [Required]
+        [MaxLength(200)]
         public string Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the password hash.
         /// </summary>
         /// <value>The password hash.</value>
+        [Required]
+        [MaxLength(500)]
         public string PasswordHash { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is site admin.
         /// </summary>
         /// <value><c>true</c> if this instance is site admin; otherwise, <c>false</c>.</value>
+        [Required]
         public bool IsSiteAdmin { get; set; } = false;
 
         /// <summary>
@@ -52,5 +59,17 @@
         /// </summary>
         /// <value>The hospital.</value>
         public Hospital? Hospital { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created on.
+        /// </summary>
+        /// <value>The created on.</value>
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// Gets or sets the updated on.
+        /// </summary>
+        /// <value>The updated on.</value>
+        public DateTime UpdatedOn { get; set; } = DateTime.UtcNow;
     }
 }
