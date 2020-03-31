@@ -34,12 +34,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1BAC9B90-7CC3-4666-884C-D7F38AE44871}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gah.HC.Repository", "src\app\Gah.HC.Repository\Gah.HC.Repository.csproj", "{2CC65D5D-DBC2-44E9-91B1-9A6B13F52B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gah.HC.Repository", "src\app\Gah.HC.Repository\Gah.HC.Repository.csproj", "{2CC65D5D-DBC2-44E9-91B1-9A6B13F52B9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gah.HC.Spa", "src\Gah.HC.Spa\Gah.HC.Spa.csproj", "{FDD8A372-6CB5-4B30-8FE4-138AEE4D3D31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gah.HC.Spa", "src\Gah.HC.Spa\Gah.HC.Spa.csproj", "{FDD8A372-6CB5-4B30-8FE4-138AEE4D3D31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
