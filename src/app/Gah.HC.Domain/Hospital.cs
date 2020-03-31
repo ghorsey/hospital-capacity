@@ -12,7 +12,7 @@
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         /// <summary>
         /// Gets or sets the name.
@@ -74,6 +74,19 @@
         /// </summary>
         /// <value>The percentage available.</value>
         public int PercentageAvailable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL slug.
+        /// </summary>
+        /// <value>The URL slug.</value>
+        public string Slug
+        {
+            get => $"{this.Name} {this.Address1} {this.City} {this.State}".ToSlug();
+            set
+            {
+                // no op
+            }
+        }
 
         /// <summary>
         /// Calculates the percentage available.
