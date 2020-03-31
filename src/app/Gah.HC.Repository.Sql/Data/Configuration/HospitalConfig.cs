@@ -34,6 +34,10 @@
             builder.Property(e => e.PostalCode);
             builder.Property(e => e.Slug);
             builder.Property(e => e.State);
+
+            builder.HasIndex(e => e.Slug)
+                .HasName("AK_SLUG")
+                .IsUnique();
         }
     }
 }

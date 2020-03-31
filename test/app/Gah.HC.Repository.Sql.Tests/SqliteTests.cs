@@ -1,4 +1,4 @@
-﻿namespace TS.Media.Repository.Sql.Tests
+﻿namespace Gah.HC.Repository.Sql.Tests
 {
     using System;
     using System.Threading.Tasks;
