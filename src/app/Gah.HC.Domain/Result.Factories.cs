@@ -45,9 +45,9 @@
         /// </returns>
         public static Result<T> MakeUnsuccessfulResult<T>(string message)
         {
-#pragma warning disable CS8604 // Possible null reference argument.
+#nullable disable
             return new Result<T>(default) { Success = false, Message = message };
-#pragma warning restore CS8604 // Possible null reference argument.
+#nullable enable
         }
 
         /// <summary>
