@@ -149,5 +149,17 @@
 
             return this.Ok(dto.MakeSuccessfulResult());
         }
+
+        /// <summary>
+        /// Logs the out.
+        /// </summary>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpPost("logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            await this.signInManager.SignOutAsync();
+
+            return this.NoContent();
+        }
     }
 }
