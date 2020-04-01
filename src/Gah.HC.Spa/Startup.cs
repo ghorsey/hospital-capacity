@@ -1,11 +1,13 @@
 namespace Gah.HC.Spa
 {
     using System;
+    using System.Threading.Tasks;
     using Gah.HC.Domain;
     using Gah.HC.Repository.Sql.Data;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.EntityFrameworkCore;
@@ -112,6 +114,24 @@ namespace Gah.HC.Spa
 
             services.ConfigureApplicationCookie(options =>
             {
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        if (
+                        ctx.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase) &&
+                        ctx.Response.StatusCode == StatusCodes.Status200OK)
+                        {
+                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+
+                        return Task.CompletedTask;
+                    },
+                };
                 options.AccessDeniedPath = "/acessDenied";
                 options.Cookie.Name = "app-hospital-capacity";
                 options.Cookie.HttpOnly = true;
