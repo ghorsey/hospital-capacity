@@ -2,12 +2,13 @@
 {
     using System;
     using Gah.HC.Domain;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Class HospitalCapacityContext.
     /// </summary>
-    public class HospitalCapacityContext : DbContext
+    public class HospitalCapacityContext : IdentityDbContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HospitalCapacityContext" /> class.

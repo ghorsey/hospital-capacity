@@ -3,5 +3,7 @@
     <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
         <Rule Id="SA1633" Action="None"/> <!-- FileMustHaveHeader -->
         <Rule Id="CA1303" Action="None" /> <!-- DoNotPassLiteralsAsLocalizedParameters  -->
+        <Rule Id="CA2007" Action="None" />
+        <Rule Id="CS8602" Action="None" />
     </Rules>
 </RuleSet>
