@@ -1,14 +1,18 @@
 namespace Gah.HC.Spa
 {
     using System;
+    using Gah.HC.Domain;
     using Gah.HC.Repository.Sql.Data;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Newtonsoft.Json.Converters;
 
     /// <summary>
     /// Class Startup.
@@ -58,6 +62,9 @@ namespace Gah.HC.Spa
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -85,7 +92,11 @@ namespace Gah.HC.Spa
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(
+                options =>
+                {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
 
             services.AddDbContext<HospitalCapacityContext>(
                 options => options.UseSqlServer(
@@ -95,6 +106,22 @@ namespace Gah.HC.Spa
                         builder.MigrationsAssembly(typeof(HospitalCapacityContext).Assembly.FullName);
                         builder.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
                     }));
+
+            services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<HospitalCapacityContext>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/acessDenied";
+                options.Cookie.Name = "app-hospital-capacity";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.LoginPath = "/manage/login";
+                //// ReturnUrlParameter requires
+                ////using Microsoft.AspNetCore.Authentication.Cookies;
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

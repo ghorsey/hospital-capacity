@@ -2,13 +2,16 @@
 {
     using System;
     using Gah.HC.Domain;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Class HospitalCapacityContext.
+    /// Implements the <see cref="Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext{AppUser}" />.
     /// </summary>
-    public class HospitalCapacityContext : IdentityDbContext
+    /// <seealso cref="Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext{AppUser}" />
+    public class HospitalCapacityContext : IdentityDbContext<AppUser>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HospitalCapacityContext" /> class.
@@ -45,6 +48,8 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
+
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         }
