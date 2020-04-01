@@ -25,10 +25,10 @@
         public virtual DbSet<Hospital>? Hospitals { get; private set; }
 
         /// <summary>
-        /// Gets the application users.
+        /// Gets the regions.
         /// </summary>
-        /// <value>The application users.</value>
-        public virtual DbSet<AppUser>? AppUsers { get; private set; }
+        /// <value>The regions.</value>
+        public virtual DbSet<Region>? Regions { get; private set; }
 
         /// <summary>
         /// Override this method to further configure the model that was discovered by convention from the entity types

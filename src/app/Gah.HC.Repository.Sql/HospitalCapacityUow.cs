@@ -22,7 +22,6 @@
             : base(context, loggerFactory)
         {
             this.HospitalRepository = new HospitalRepository(context, loggerFactory.CreateLogger<HospitalRepository>());
-            this.AppUserRepository = new AppUserRepository(context, loggerFactory.CreateLogger<AppUserRepository>());
         }
 
         /// <summary>
@@ -30,11 +29,5 @@
         /// </summary>
         /// <value>The hospital repository.</value>
         public IHospitalRepository HospitalRepository { get; }
-
-        /// <summary>
-        /// Gets the application user repository.
-        /// </summary>
-        /// <value>The application user repository.</value>
-        public IAppUserRepository AppUserRepository { get; }
     }
 }

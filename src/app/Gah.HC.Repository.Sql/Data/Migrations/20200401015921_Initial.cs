@@ -11,6 +11,18 @@
         {
             migrationBuilder = migrationBuilder ?? throw new ArgumentNullException(nameof(migrationBuilder));
             migrationBuilder.CreateTable(
+                name: "Regions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Regions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Hospitals",
                 columns: table => new
                 {
@@ -27,39 +39,23 @@
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     UpdatedOn = table.Column<DateTime>(nullable: false),
                     Slug = table.Column<string>(maxLength: 402, nullable: false),
+                    RegionId = table.Column<Guid>(nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hospitals", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AppUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Email = table.Column<string>(maxLength: 200, nullable: false),
-                    PasswordHash = table.Column<string>(maxLength: 500, nullable: false),
-                    IsSiteAdmin = table.Column<bool>(nullable: false),
-                    HospitalId = table.Column<Guid>(nullable: true),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    UpdatedOn = table.Column<DateTime>(nullable: false),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppUsers_Hospitals_HospitalId",
-                        column: x => x.HospitalId,
-                        principalTable: "Hospitals",
+                        name: "FK_Hospitals_Regions_RegionId",
+                        column: x => x.RegionId,
+                        principalTable: "Regions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppUsers_HospitalId",
-                table: "AppUsers",
-                column: "HospitalId");
+                name: "IX_Region",
+                table: "Hospitals",
+                column: "RegionId");
 
             migrationBuilder.CreateIndex(
                 name: "AK_SLUG",
@@ -73,10 +69,10 @@
         {
             migrationBuilder = migrationBuilder ?? throw new ArgumentNullException(nameof(migrationBuilder));
             migrationBuilder.DropTable(
-                name: "AppUsers");
+                name: "Hospitals");
 
             migrationBuilder.DropTable(
-                name: "Hospitals");
+                name: "Regions");
         }
     }
 }

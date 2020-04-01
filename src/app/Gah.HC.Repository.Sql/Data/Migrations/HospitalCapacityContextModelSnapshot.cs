@@ -11,7 +11,6 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
     [DbContext(typeof(HospitalCapacityContext))]
     partial class HospitalCapacityContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc/>
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -19,41 +18,6 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Gah.HC.Domain.AppUser", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<Guid?>("HospitalId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsSiteAdmin")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HospitalId");
-
-                    b.ToTable("AppUsers");
-                });
 
             modelBuilder.Entity("Gah.HC.Domain.Hospital", b =>
                 {
@@ -98,6 +62,9 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<Guid>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasColumnType("nvarchar(402)")
@@ -113,6 +80,9 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RegionId")
+                        .HasName("IX_Region");
+
                     b.HasIndex("Slug")
                         .IsUnique()
                         .HasName("AK_SLUG");
@@ -120,11 +90,29 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
                     b.ToTable("Hospitals");
                 });
 
-            modelBuilder.Entity("Gah.HC.Domain.AppUser", b =>
+            modelBuilder.Entity("Gah.HC.Domain.Region", b =>
                 {
-                    b.HasOne("Gah.HC.Domain.Hospital", "Hospital")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Regions");
+                });
+
+            modelBuilder.Entity("Gah.HC.Domain.Hospital", b =>
+                {
+                    b.HasOne("Gah.HC.Domain.Region", "Region")
                         .WithMany()
-                        .HasForeignKey("HospitalId");
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

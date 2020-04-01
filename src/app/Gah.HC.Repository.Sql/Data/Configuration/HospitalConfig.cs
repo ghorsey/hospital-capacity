@@ -38,6 +38,11 @@
             builder.HasIndex(e => e.Slug)
                 .HasName("AK_SLUG")
                 .IsUnique();
+
+            builder.HasIndex(e => e.RegionId)
+                .HasName("IX_Region");
+
+            builder.HasOne(e => e.Region);
         }
     }
 }

@@ -48,7 +48,7 @@
         /// </summary>
         /// <value>The address2.</value>
         [MaxLength(100)]
-        public string Address2 { get; set;  } = string.Empty;
+        public string Address2 { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the city.
@@ -122,6 +122,19 @@
                 // no op
             }
         }
+
+        /// <summary>
+        /// Gets or sets the region identifier.
+        /// </summary>
+        /// <value>The region identifier.</value>
+        [Required]
+        public Guid RegionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the region.
+        /// </summary>
+        /// <value>The region.</value>
+        public Region? Region { get; set; }
 
         /// <summary>
         /// Calculates the percentage available.
