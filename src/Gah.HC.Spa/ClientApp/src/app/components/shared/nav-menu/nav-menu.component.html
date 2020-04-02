@@ -1,39 +1,33 @@
 <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Capacity</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" [routerLink]="['/']">
+      <img src="logo.svg" title="Hospital Capacity Application" />
+      Hospital Capacity App
+    </a>
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar-content"
+            aria-controls="navbar-content"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-1 text-right" [ngbCollapse]="isCollapsed" id="navbar-content">
+      <ul class="navbar-nav ml-auto flex-nowrap">
+        <li class="nav-item"
             [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/manage/login']"
-              >manage</a
-            >
-          </li>
-        </ul>
-      </div>
+            [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link text-light" [routerLink]="['/']">home</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['link-active']">
+          <a class="nav-link text-light" [routerLink]="['/manage/login']">manage</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['link-active']">
+          <a class="nav-link text-light" href="#">about</a>
+        </li>
+      </ul>
     </div>
   </nav>
 </header>

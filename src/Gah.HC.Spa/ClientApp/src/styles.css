@@ -1,16 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+html {
+    font-size: 10px;
 }
 
-code {
-  color: #e01a76;
+body {
+    font-size: 1.6rem;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+main {
+    margin-top: 2rem;
 }
