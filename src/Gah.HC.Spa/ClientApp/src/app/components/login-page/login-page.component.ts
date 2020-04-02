@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 export class LoginPageComponent implements OnInit {
 
   constructor(title: Title) {
-    title.setTitle("Login: Hotel Capacity App");
+    title.setTitle("Login: Hospital Capacity App");
   }
 
   ngOnInit() {
