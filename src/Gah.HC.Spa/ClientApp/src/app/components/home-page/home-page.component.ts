@@ -7,6 +7,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class HomePageComponent {
   constructor(title: Title) {
-    title.setTitle("View Hospital Capacity: Hotel Capacity App")
+    title.setTitle("View Hospital Capacity: Hotel Capacity")
   }
 }
