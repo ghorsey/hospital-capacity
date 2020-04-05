@@ -6,7 +6,7 @@ import { ToastMessage } from '../../services/models/toast-message';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Result } from '../../services/models/result';
 import { LoginInput } from '../../services/models/login-input';
-import { SessionStorageService } from 'ngx-webstorage'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -20,20 +20,17 @@ export class LoginPageComponent {
     'rememberMe': new FormControl(false)
   });
 
-  public isSubmitted = false;
   public get formControls() { return this.loginForm.controls; }
 
   constructor(
     public title: Title,
     private toastService: ToastService,
-    private sessionStorageService: SessionStorageService,
+    private router: Router,
     private authService: AuthenticationService) {
     title.setTitle("Login: Hospital Capacity");
   }
 
   public login(): void {
-    console.log(this.loginForm.value);
-    this.isSubmitted = true;
     if (this.loginForm.invalid) {
 
       if (this.formControls.email.errors?.email) {
@@ -51,11 +48,11 @@ export class LoginPageComponent {
       return;
     }
 
-    this.authService.login(this.loginForm.value as LoginInput).subscribe(r => {
+    this.authService.authenticate(this.loginForm.value as LoginInput).subscribe(() => {
       this.authService.me().subscribe(me => {
-        console.log(me);
-        this.sessionStorageService.store("me", me.value);
-      })
+        this.authService.login(me.value);
+        this.router.navigate(['/dashboard']);
+      });
     }, e => {
         const error = e.error as Result<string>;
         this.toastService.show(new ToastMessage(error.message, "bg-danger text-light"));

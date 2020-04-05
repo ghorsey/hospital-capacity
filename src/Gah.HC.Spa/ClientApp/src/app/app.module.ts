@@ -11,6 +11,9 @@ import { NavMenuComponent } from './components/shared/nav-menu/nav-menu.componen
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ToastsComponent } from './components/shared/toasts/toasts.component';
+import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
+import { LogoutPageComponent } from './components/logout-page/logout-page.component';
+import { AuthGeneralGuardService } from './route-guards/auth-general-guard.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { ToastsComponent } from './components/shared/toasts/toasts.component';
     NavMenuComponent,
     HomePageComponent,
     LoginPageComponent,
-    ToastsComponent
+    ToastsComponent,
+    DashboardPageComponent,
+    LogoutPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,7 +34,14 @@ import { ToastsComponent } from './components/shared/toasts/toasts.component';
     NgbModule,
     RouterModule.forRoot([
       { path: '', component: HomePageComponent, pathMatch: 'full' },
-      { path: 'manage/login', component: LoginPageComponent }
+      { path: 'login', component: LoginPageComponent },
+      { path: 'logout', component: LogoutPageComponent },
+      {
+        path: 'dashboard',
+        component: DashboardPageComponent,
+        canActivate: [ AuthGeneralGuardService ]
+
+      }
     ])
   ],
   providers: [

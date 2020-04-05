@@ -21,8 +21,17 @@
             [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link text-light" [routerLink]="['/']">home</a>
         </li>
-        <li class="nav-item" [routerLinkActive]="['link-active']">
-          <a class="nav-link text-light" [routerLink]="['/manage/login']">manage</a>
+        <li *ngIf="!this.isLoggedOn" class="nav-item" [routerLinkAcive]="['link-active']">
+          <a class="nav-link text-light" [routerLink]="['/login']">login</a>
+        </li>
+        <li *ngIf="!this.isLoggedOn" class="nav-item" [routerLinkAcive]="['link-active']">
+          <a class="nav-link text-light" href="#">register</a>
+        </li>
+        <li *ngIf="this.isLoggedOn" class="nav-item" [routerLinkActive]="['link-active']">
+          <a class="nav-link text-light" [routerLink]="['/dashboard']">dashboard</a>
+        </li>
+        <li *ngIf="this.isLoggedOn" class="nav-item" [routerLinkActive]="['link-active']">
+          <a class="nav-link text-light" [routerLink]="['/logout']">logout</a>
         </li>
         <li class="nav-item" [routerLinkActive]="['link-active']">
           <a class="nav-link text-light" href="#">about</a>
