@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gah.HC.Commands
+﻿namespace Gah.HC.Commands
 {
-    class RegisterRegionUserCommand
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    /// <summary>
+    /// Class RegisterRegionUserCommand.
+    /// </summary>
+    public class RegisterRegionUserCommand
     {
     }
 }

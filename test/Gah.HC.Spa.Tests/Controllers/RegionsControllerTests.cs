@@ -19,7 +19,7 @@
             var expected = new List<Region>();
             var partialName = "partial";
             var domainBusMock = new Mock<IDomainBus>(MockBehavior.Strict);
-            domainBusMock.Setup(s => s.ExecuteAsync(It.Is<MatchRegionByName>(q => q.PartialName == partialName), default))
+            domainBusMock.Setup(s => s.ExecuteAsync(It.Is<MatchRegionByNameQuery>(q => q.PartialName == partialName), default))
                 .ReturnsAsync(expected);
 
             var loggerMock = new Mock<ILogger<RegionsController>>(MockBehavior.Loose);
