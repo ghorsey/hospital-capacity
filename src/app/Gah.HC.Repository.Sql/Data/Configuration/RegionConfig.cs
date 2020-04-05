@@ -20,6 +20,12 @@
             builder.HasKey(e => e.Id);
 
             builder.Property(e => e.Name);
+            builder.Property(e => e.Slug);
+
+            builder.HasIndex(e => e.Slug)
+                .IsUnique(true);
+
+            builder.HasIndex(e => e.Name);
         }
     }
 }

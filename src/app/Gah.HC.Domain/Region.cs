@@ -34,5 +34,20 @@
         [Required]
         [MaxLength(50)]
         public string Name { get; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the slug.
+        /// </summary>
+        /// <value>The slug.</value>
+        [Required]
+        [MaxLength(50)]
+        public string Slug
+        {
+            get => this.Name.ToSlug();
+            set
+            {
+                // no op;
+            }
+        }
     }
 }

@@ -34,6 +34,7 @@
             builder.Property(e => e.PostalCode);
             builder.Property(e => e.Slug);
             builder.Property(e => e.State);
+            builder.Property(e => e.IsCovid);
 
             builder.HasIndex(e => e.Slug)
                 .HasName("AK_SLUG")
@@ -43,6 +44,12 @@
                 .HasName("IX_Region");
 
             builder.HasOne(e => e.Region);
+
+            builder.HasIndex(e => e.Name);
+            builder.HasIndex(e => e.PostalCode);
+            builder.HasIndex(e => e.City);
+            builder.HasIndex(e => e.State);
+            builder.HasIndex(e => e.IsCovid);
         }
     }
 }

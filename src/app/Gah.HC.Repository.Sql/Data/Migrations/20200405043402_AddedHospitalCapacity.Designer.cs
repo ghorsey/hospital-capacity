@@ -4,14 +4,16 @@ using Gah.HC.Repository.Sql.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gah.HC.Repository.Sql.Data.Migrations
 {
     [DbContext(typeof(HospitalCapacityContext))]
-    partial class HospitalCapacityContextModelSnapshot : ModelSnapshot
+    [Migration("20200405043402_AddedHospitalCapacity")]
+    partial class AddedHospitalCapacity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

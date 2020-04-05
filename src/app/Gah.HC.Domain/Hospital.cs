@@ -137,11 +137,10 @@
         public Region? Region { get; set; }
 
         /// <summary>
-        /// Calculates the percentage available.
+        /// Gets or sets a value indicating whether this instance is covid.
         /// </summary>
-        public void CalculatePercentageAvailable()
-        {
-            this.PercentageAvailable = (int)Math.Round((100 / (decimal)this.BedCapacity) * this.BedsInUse);
-        }
+        /// <value><c>true</c> if this instance is covid; otherwise, <c>false</c>.</value>
+        [Required]
+        public bool IsCovid { get; set; }
     }
 }
