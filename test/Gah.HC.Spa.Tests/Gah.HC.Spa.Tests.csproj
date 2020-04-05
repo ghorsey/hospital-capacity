@@ -9,10 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="1.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\app\blocks\Gah.Blocks.EventBus\Gah.Blocks.EventBus.csproj" />
+    <ProjectReference Include="..\..\src\app\Gah.HC.Commands\Gah.HC.Commands.csproj" />
+    <ProjectReference Include="..\..\src\app\Gah.HC.Domain\Gah.HC.Domain.csproj" />
+    <ProjectReference Include="..\..\src\app\Gah.HC.Queries\Gah.HC.Queries.csproj" />
+    <ProjectReference Include="..\..\src\Gah.HC.Spa\Gah.HC.Spa.csproj" />
   </ItemGroup>
 
 </Project>

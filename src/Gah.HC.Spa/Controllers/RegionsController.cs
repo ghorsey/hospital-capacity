@@ -1,8 +1,6 @@
 ﻿namespace Gah.HC.Spa.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.EventBus;
@@ -40,7 +38,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpGet]
-        public async Task<IActionResult> FindRegionsByPartialName([FromQuery] string name, CancellationToken cancellationToken)
+        public async Task<IActionResult> FindRegionsByPartialNameAsync([FromQuery] string name, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Finding regions named {name}");
 
