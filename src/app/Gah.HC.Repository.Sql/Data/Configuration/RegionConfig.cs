@@ -25,7 +25,11 @@
             builder.HasIndex(e => e.Slug)
                 .IsUnique(true);
 
-            builder.HasIndex(e => e.Name);
+            builder.HasIndex(e => e.Name)
+                .IsUnique(true);
+
+            builder.Property(e => e.CreatedOn)
+                .IsRequired(true);
         }
     }
 }

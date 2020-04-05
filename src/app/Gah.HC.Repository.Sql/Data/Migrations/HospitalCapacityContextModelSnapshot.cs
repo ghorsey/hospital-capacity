@@ -194,9 +194,7 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("getutcdate()");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("HospitalId")
                         .HasColumnType("uniqueidentifier");
@@ -217,6 +215,9 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -229,7 +230,8 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("Slug")
                         .IsUnique();

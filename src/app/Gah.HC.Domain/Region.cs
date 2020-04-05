@@ -28,12 +28,12 @@
         }
 
         /// <summary>
-        /// Gets the state.
+        /// Gets or sets the name.
         /// </summary>
         /// <value>The state.</value>
         [Required]
         [MaxLength(50)]
-        public string Name { get; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the slug.
@@ -49,5 +49,12 @@
                 // no op;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the created on.
+        /// </summary>
+        /// <value>The created on.</value>
+        [Required]
+        public DateTime CreatedOn { get; set; }
     }
 }

@@ -1,18 +1,27 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Gah.HC.Repository.Sql.Data.Migrations
+﻿namespace Gah.HC.Repository.Sql.Data.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
+    /// <inheritdoc/>
     public partial class AddedHospitalCapacity : Migration
     {
+        /// <inheritdoc/>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder = migrationBuilder ?? throw new ArgumentNullException(nameof(migrationBuilder));
+            migrationBuilder.AddColumn<DateTime>(
+                name: "CreatedOn",
+                table: "Regions",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
             migrationBuilder.AddColumn<string>(
                 name: "Slug",
                 table: "Regions",
                 maxLength: 50,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.AddColumn<bool>(
                 name: "IsCovid",
@@ -29,7 +38,7 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
                     BedCapacity = table.Column<int>(nullable: false),
                     BedsInUse = table.Column<int>(nullable: false),
                     PercentageAvailable = table.Column<int>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()")
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -45,7 +54,8 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Regions_Name",
                 table: "Regions",
-                column: "Name");
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Regions_Slug",
@@ -84,8 +94,10 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
                 column: "HospitalId");
         }
 
+        /// <inheritdoc/>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder = migrationBuilder ?? throw new ArgumentNullException(nameof(migrationBuilder));
             migrationBuilder.DropTable(
                 name: "HospitalCapacity");
 
@@ -116,6 +128,10 @@ namespace Gah.HC.Repository.Sql.Data.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_Hospitals_State",
                 table: "Hospitals");
+
+            migrationBuilder.DropColumn(
+                name: "CreatedOn",
+                table: "Regions");
 
             migrationBuilder.DropColumn(
                 name: "Slug",

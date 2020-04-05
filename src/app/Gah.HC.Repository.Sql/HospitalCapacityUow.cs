@@ -21,6 +21,7 @@
         public HospitalCapacityUow(HospitalCapacityContext context, ILoggerFactory loggerFactory)
             : base(context, loggerFactory)
         {
+            this.RegionRepository = new RegionRepository(context, loggerFactory.CreateLogger<RegionRepository>());
             this.HospitalRepository = new HospitalRepository(context, loggerFactory.CreateLogger<HospitalRepository>());
         }
 
@@ -29,5 +30,11 @@
         /// </summary>
         /// <value>The hospital repository.</value>
         public IHospitalRepository HospitalRepository { get; }
+
+        /// <summary>
+        /// Gets the region repository.
+        /// </summary>
+        /// <value>The region repository.</value>
+        public IRegionRepository RegionRepository { get; }
     }
 }

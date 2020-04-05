@@ -4,5 +4,6 @@
         <Rule Id="SA1633" Action="None"/> <!-- FileMustHaveHeader -->
         <Rule Id="SA0001" Action="None" /> <!-- XmlCommentAnalysisDisabled -->
         <Rule Id="CA1303" Action="None" /> <!-- DoNotPassLiteralsAsLocalizedParameters  -->
+        <Rule Id="CA2007" Action="None" /> <!-- call configure await  -->
     </Rules>
 </RuleSet>

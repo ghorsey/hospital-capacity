@@ -33,8 +33,7 @@
                 .IsRequired();
 
             builder.Property(e => e.CreatedOn)
-                .IsRequired()
-                .HasDefaultValueSql("getutcdate()");
+                .IsRequired();
         }
     }
 }
