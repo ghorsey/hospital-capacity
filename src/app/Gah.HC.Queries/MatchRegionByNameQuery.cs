@@ -7,13 +7,13 @@
     /// <summary>
     /// Class MatchRegionByName.
     /// </summary>
-    public class MatchRegionByName : IDomainQuery<List<Region>>
+    public class MatchRegionByNameQuery : IDomainQuery<List<Region>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MatchRegionByName"/> class.
+        /// Initializes a new instance of the <see cref="MatchRegionByNameQuery"/> class.
         /// </summary>
         /// <param name="partialName">The partial name.</param>
-        public MatchRegionByName(string partialName)
+        public MatchRegionByNameQuery(string partialName)
         {
             this.PartialName = partialName;
         }

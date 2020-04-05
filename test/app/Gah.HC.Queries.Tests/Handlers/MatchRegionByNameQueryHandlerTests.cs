@@ -8,17 +8,17 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class MatchRegionByNameHandlerTests
+    public class MatchRegionByNameQueryHandlerTests
     {
         [Fact]
         public async Task HandleMethodTest() {
             var result = new List<Region>();
-            var query = new MatchRegionByName("partial");
+            var query = new MatchRegionByNameQuery("partial");
             var regionRepoMock = new Mock<IRegionRepository>(MockBehavior.Strict);
             regionRepoMock.Setup(r => r.MatchByName(query.PartialName, default))
                 .ReturnsAsync(result);
 
-            var handler = new MatchRegionByNameHandler(this.MakeUow(regionRepoMock.Object), this.MakeLogger<MatchRegionByNameHandler>());
+            var handler = new MatchRegionByNameQueryHandler(this.MakeUow(regionRepoMock.Object), this.MakeLogger<MatchRegionByNameQueryHandler>());
 
             var response = await handler.Handle(query, default);
 

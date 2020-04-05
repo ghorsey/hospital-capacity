@@ -157,7 +157,7 @@ namespace Gah.HC.Spa
             services.AddScoped<IHospitalCapacityUow, HospitalCapacityUow>();
 
             services.AddDomainBus()
-                .AddQuery<MatchRegionByName, List<Region>, MatchRegionByNameHandler>();
+                .AddQuery<MatchRegionByName, List<Region>, MatchRegionByNameQueryHandler>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
