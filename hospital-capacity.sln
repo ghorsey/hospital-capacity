@@ -42,7 +42,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gah.HC.Repository", "src\ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gah.HC.Spa", "src\Gah.HC.Spa\Gah.HC.Spa.csproj", "{FDD8A372-6CB5-4B30-8FE4-138AEE4D3D31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gah.HC.Spa.Tests", "test\Gah.HC.Spa.Tests\Gah.HC.Spa.Tests.csproj", "{CCF2D4EC-7708-46EA-8D26-DCCA0245B9B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gah.HC.Spa.Tests", "test\Gah.HC.Spa.Tests\Gah.HC.Spa.Tests.csproj", "{CCF2D4EC-7708-46EA-8D26-DCCA0245B9B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

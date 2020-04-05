@@ -16,6 +16,7 @@
     /// </summary>
     /// <seealso cref="Gah.HC.Spa.Controllers.BaseController" />
     [ApiController]
+    [Authorize]
     [Route("api/authorization")]
     public class AuthorizationController : BaseController
     {
@@ -50,7 +51,8 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IActionResult.</returns>
         [HttpPost("register/super")]
-        public async Task<IActionResult> RegisterSuperUser(RegisterUser input, CancellationToken cancellationToken)
+        [Authorize(Roles="Admin")]
+        public async Task<IActionResult> RegisterSuperUser(RegisterSuperUserInput input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Registering a super user");
 
@@ -88,6 +90,19 @@
 
             return this.NoContent();
         }
+
+        /////// <summary>
+        /////// Registers the region user.
+        /////// </summary>
+        /////// <param name="input">The input.</param>
+        /////// <returns>Task&lt;IActionResult&gt;.</returns>
+        ////[HttpPost("register/region")]
+        ////[AllowAnonymous]
+        ////public Task<IActionResult> RegisterRegionUser(RegisterRegionUserInput input)
+        ////{
+        ////    this.Logger.LogInformation("Registering a new Region User for ");
+        ////    throw new NotImplementedException();
+        ////}
 
         /// <summary>
         /// Logins the user.
@@ -132,7 +147,6 @@
         /// </summary>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpGet("me")]
-        [Authorize]
         public async Task<IActionResult> GetMe()
         {
             this.Logger.LogInformation("Getting own record");

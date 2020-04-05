@@ -1,8 +1,14 @@
 namespace Gah.HC.Spa
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Gah.Blocks.EventBus;
+    using Gah.Blocks.EventBus.Configuration;
     using Gah.HC.Domain;
+    using Gah.HC.Queries;
+    using Gah.HC.Queries.Handlers;
+    using Gah.HC.Repository.Sql;
     using Gah.HC.Repository.Sql.Data;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
@@ -145,6 +151,13 @@ namespace Gah.HC.Spa
             });
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
+
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, ClaimsPrincipalFactory>();
+
+            services.AddScoped<IHospitalCapacityUow, HospitalCapacityUow>();
+
+            services.AddDomainBus()
+                .AddQuery<MatchRegionByName, List<Region>, MatchRegionByNameHandler>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

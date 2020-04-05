@@ -2,12 +2,11 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Gah.HC.Domain;
 
     /// <summary>
-    /// Class RegisterUser.
+    /// Class RegisterRegionUserInput.
     /// </summary>
-    public class RegisterUser
+    public class RegisterRegionUserInput
     {
         /// <summary>
         /// Gets or sets the email.
@@ -38,15 +37,11 @@
         public string ConfirmPassword { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the region identifier.
+        /// Gets or sets the name of the region.
         /// </summary>
-        /// <value>The region identifier.</value>
-        public Guid? RegionId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the hospital identifier.
-        /// </summary>
-        /// <value>The hospital identifier.</value>
-        public Guid? HospitalId { get; set; }
+        /// <value>The name of the region.</value>
+        [Required]
+        [StringLength(50)]
+        public string RegionName { get; set; } = string.Empty;
     }
 }
