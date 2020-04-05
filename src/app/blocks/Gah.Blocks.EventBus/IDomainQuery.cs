@@ -10,5 +10,10 @@
     /// <seealso cref="MediatR.IRequest{TResponse}" />
     public interface IDomainQuery<out TResponse> : IRequest<TResponse>
     {
+        /// <summary>
+        /// Gets the correlation identifier.
+        /// </summary>
+        /// <value>The correlation identifier.</value>
+        public string CorrelationId { get; }
     }
 }

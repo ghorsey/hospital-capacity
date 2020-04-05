@@ -7,13 +7,15 @@
     /// <summary>
     /// Class MatchRegionByName.
     /// </summary>
-    public class MatchRegionByNameQuery : IDomainQuery<List<Region>>
+    public class MatchRegionByNameQuery : DomainQueryBase<List<Region>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MatchRegionByNameQuery"/> class.
+        /// Initializes a new instance of the <see cref="MatchRegionByNameQuery" /> class.
         /// </summary>
         /// <param name="partialName">The partial name.</param>
-        public MatchRegionByNameQuery(string partialName)
+        /// <param name="correlationId">The correlation identifier.</param>
+        public MatchRegionByNameQuery(string partialName, string correlationId)
+            : base(correlationId)
         {
             this.PartialName = partialName;
         }

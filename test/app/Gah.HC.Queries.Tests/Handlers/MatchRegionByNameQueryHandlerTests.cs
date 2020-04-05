@@ -13,7 +13,7 @@
         [Fact]
         public async Task HandleMethodTest() {
             var result = new List<Region>();
-            var query = new MatchRegionByNameQuery("partial");
+            var query = new MatchRegionByNameQuery("partial", "cor");
             var regionRepoMock = new Mock<IRegionRepository>(MockBehavior.Strict);
             regionRepoMock.Setup(r => r.MatchByName(query.PartialName, default))
                 .ReturnsAsync(result);

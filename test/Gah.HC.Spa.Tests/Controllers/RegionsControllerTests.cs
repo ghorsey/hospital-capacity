@@ -25,6 +25,7 @@
             var loggerMock = new Mock<ILogger<RegionsController>>(MockBehavior.Loose);
 
             var c = new RegionsController(domainBusMock.Object, loggerMock.Object);
+            c.SetDefaultContext();
 
             var response = await c.FindRegionsByPartialNameAsync(partialName, default) as OkObjectResult;
             Assert.NotNull(response);

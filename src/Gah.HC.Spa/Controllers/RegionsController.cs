@@ -42,7 +42,7 @@
         {
             this.Logger.LogInformation($"Finding regions named {name}");
 
-            var query = new MatchRegionByNameQuery(name);
+            var query = new MatchRegionByNameQuery(name, this.HttpContext.TraceIdentifier);
 
             var response = await this.domainBus.ExecuteAsync(query, cancellationToken);
 
