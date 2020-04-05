@@ -108,7 +108,7 @@
 
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult("Invalid input"));
             }
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -124,8 +124,7 @@
                 return this.NoContent();
             }
 
-            this.ModelState.AddModelError(string.Empty, "Invalid login attempt");
-            return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+            return this.BadRequest(this.ModelState.MakeUnsuccessfulResult("Email/Password is invalid"));
         }
 
         /// <summary>
