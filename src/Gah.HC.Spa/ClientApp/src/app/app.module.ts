@@ -18,8 +18,7 @@ import { ToastsComponent } from './components/shared/toasts/toasts.component';
     NavMenuComponent,
     HomePageComponent,
     LoginPageComponent,
-    ToastsComponent,
-    DashboardComponent
+    ToastsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
