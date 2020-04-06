@@ -35,5 +35,12 @@
             int bedsInUse = -1,
             int percentageAvailable = -1,
             bool? isCovid = null);
+
+        /// <summary>
+        /// Finds the by slug.
+        /// </summary>
+        /// <param name="slug">The slug.</param>
+        /// <returns>Task&lt;Hospital&gt;.</returns>
+        public Task<Hospital> FindBySlugAsync(string slug);
     }
 }

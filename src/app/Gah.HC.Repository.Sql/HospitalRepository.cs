@@ -27,6 +27,18 @@
         }
 
         /// <summary>
+        /// Finds the by slug.
+        /// </summary>
+        /// <param name="slug">The slug.</param>
+        /// <returns>Task&lt;Hospital&gt;.</returns>
+        public Task<Hospital> FindBySlugAsync(string slug)
+        {
+            this.Logger.LogInformation($"Finding hospital by slug: {slug}");
+
+            return this.Entities.FirstOrDefaultAsync(h => h.Slug == slug);
+        }
+
+        /// <summary>
         /// Finds the hospitals asynchronous.
         /// </summary>
         /// <param name="regionId">The region identifier.</param>
