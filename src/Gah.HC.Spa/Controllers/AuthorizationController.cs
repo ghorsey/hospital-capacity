@@ -126,6 +126,11 @@
             try
             {
                 await this.domainBus.ExecuteAsync(command, cancellationToken);
+
+                var user = await this.userManager.GetUserAsync(this.User);
+
+                await this.signInManager.SignInAsync(user, isPersistent: false);
+
                 return this.NoContent();
             }
             catch (UserCreationException x)
