@@ -6,6 +6,7 @@
     using Gah.HC.Domain;
     using Gah.HC.Spa.Models.Authorization;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -52,6 +53,7 @@
         /// <returns>IActionResult.</returns>
         [HttpPost("register/super")]
         [Authorize(Roles="Admin")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> RegisterSuperUser(RegisterSuperUserInput input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Registering a super user");
@@ -112,6 +114,7 @@
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPost("login")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> LoginUser(LoginModel input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Attempting to log in a user");
@@ -147,6 +150,7 @@
         /// </summary>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpGet("me")]
+        [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMe()
         {
             this.Logger.LogInformation("Getting own record");
@@ -168,6 +172,7 @@
         /// </summary>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPost("logout")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> LogOut()
         {
             await this.signInManager.SignOutAsync();
