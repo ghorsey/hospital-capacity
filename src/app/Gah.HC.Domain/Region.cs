@@ -55,6 +55,6 @@
         /// </summary>
         /// <value>The created on.</value>
         [Required]
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
     }
 }
