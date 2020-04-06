@@ -1,5 +1,4 @@
-﻿
-namespace Gah.HC.Commands.Tests.Handlers
+﻿namespace Gah.HC.Commands.Tests.Handlers
 {
     using Gah.HC.Commands.Handlers;
     using Gah.HC.Domain;
