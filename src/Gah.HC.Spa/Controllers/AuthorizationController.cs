@@ -3,6 +3,9 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Gah.Blocks.EventBus;
+    using Gah.HC.Commands;
+    using Gah.HC.Commands.Exceptions;
     using Gah.HC.Domain;
     using Gah.HC.Spa.Models.Authorization;
     using Microsoft.AspNetCore.Authorization;
@@ -22,6 +25,7 @@
     public class AuthorizationController : BaseController
     {
         private readonly UserManager<AppUser> userManager;
+        private readonly IDomainBus domainBus;
         private readonly SignInManager<AppUser> signInManager;
 
         /// <summary>
@@ -29,20 +33,21 @@
         /// </summary>
         /// <param name="userManager">The user manager.</param>
         /// <param name="signInManager">The sign in manager.</param>
+        /// <param name="domainBus">The domain bus.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="ArgumentNullException">
-        /// userManager
+        /// <exception cref="ArgumentNullException">userManager
         /// or
-        /// signInManager.
-        /// </exception>
+        /// signInManager.</exception>
         public AuthorizationController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
+            IDomainBus domainBus,
             ILogger<AuthorizationController> logger)
             : base(logger)
         {
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
         }
 
         /// <summary>
@@ -93,18 +98,46 @@
             return this.NoContent();
         }
 
-        /////// <summary>
-        /////// Registers the region user.
-        /////// </summary>
-        /////// <param name="input">The input.</param>
-        /////// <returns>Task&lt;IActionResult&gt;.</returns>
-        ////[HttpPost("register/region")]
-        ////[AllowAnonymous]
-        ////public Task<IActionResult> RegisterRegionUser(RegisterRegionUserInput input)
-        ////{
-        ////    this.Logger.LogInformation("Registering a new Region User for ");
-        ////    throw new NotImplementedException();
-        ////}
+        /// <summary>
+        /// Registers the region user.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpPost("register/region")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterRegionUserAsync(RegisterRegionUserInput input, CancellationToken cancellationToken)
+        {
+            this.Logger.LogInformation("Registering a new Region User for ");
+
+            if (input == null)
+            {
+                return this.BadRequest("input cannot be null".MakeUnsuccessfulResult());
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+            }
+
+            var command = new RegisterRegionUserCommand(input.Email, input.Password, input.RegionName, this.HttpContext.TraceIdentifier);
+
+            try
+            {
+                await this.domainBus.ExecuteAsync(command, cancellationToken);
+                return this.NoContent();
+            }
+            catch (UserCreationException x)
+            {
+                foreach (var e in x.Errors)
+                {
+                    this.ModelState.AddModelError(string.Empty, e.Description);
+                }
+
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult("Unable to create user"));
+            }
+        }
 
         /// <summary>
         /// Logins the user.

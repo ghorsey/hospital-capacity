@@ -5,6 +5,8 @@ namespace Gah.HC.Spa
     using System.Threading.Tasks;
     using Gah.Blocks.EventBus;
     using Gah.Blocks.EventBus.Configuration;
+    using Gah.HC.Commands;
+    using Gah.HC.Commands.Handlers;
     using Gah.HC.Domain;
     using Gah.HC.Queries;
     using Gah.HC.Queries.Handlers;
@@ -164,7 +166,12 @@ namespace Gah.HC.Spa
             services.AddScoped<IHospitalCapacityUow, HospitalCapacityUow>();
 
             services.AddDomainBus()
-                .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>();
+
+                // Queryies
+                .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
+
+                // Commands
+                .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>();
 
             services.AddSwaggerGen(c =>
             {

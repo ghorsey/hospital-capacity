@@ -56,7 +56,7 @@
 
                 var user = new AppUser
                 {
-                    Email = command.Email,
+                    UserName = command.Email,
                     UserType = AppUserType.Region,
                     RegionId = region.Id,
                 };

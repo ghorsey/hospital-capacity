@@ -65,6 +65,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\app\blocks\Gah.Blocks.EventBus\Gah.Blocks.EventBus.csproj" />
+    <ProjectReference Include="..\app\Gah.HC.Commands\Gah.HC.Commands.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Domain\Gah.HC.Domain.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Queries\Gah.HC.Queries.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Repository.Sql\Gah.HC.Repository.Sql.csproj" />
