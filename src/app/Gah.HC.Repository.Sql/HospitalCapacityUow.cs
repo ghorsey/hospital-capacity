@@ -23,6 +23,7 @@
         {
             this.RegionRepository = new RegionRepository(context, loggerFactory.CreateLogger<RegionRepository>());
             this.HospitalRepository = new HospitalRepository(context, loggerFactory.CreateLogger<HospitalRepository>());
+            this.HospitalCapacityRepository = new HospitalCapacityRepository(context, loggerFactory.CreateLogger<HospitalCapacityRepository>());
         }
 
         /// <summary>
@@ -36,5 +37,11 @@
         /// </summary>
         /// <value>The region repository.</value>
         public IRegionRepository RegionRepository { get; }
+
+        /// <summary>
+        /// Gets the hospital capacity repository.
+        /// </summary>
+        /// <value>The hospital capacity repository.</value>
+        public IHospitalCapacityRepository HospitalCapacityRepository { get; }
     }
 }

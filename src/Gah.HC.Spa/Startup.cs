@@ -169,8 +169,11 @@ namespace Gah.HC.Spa
 
                 // Queryies
                 .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
+                .AddQuery<FindBySlugOrIdQuery, Hospital, FindBySlugOrIdQueryHandler>()
+                .AddQuery<FindHospitalsQuery, List<Hospital>, FindHospitalsQueryHandler>()
 
                 // Commands
+                .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
                 .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>();
 
             services.AddSwaggerGen(c =>

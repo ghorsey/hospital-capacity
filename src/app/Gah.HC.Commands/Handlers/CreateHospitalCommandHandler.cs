@@ -1,11 +1,10 @@
 ﻿namespace Gah.HC.Commands.Handlers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.EventBus;
+    using Gah.HC.Domain;
     using Gah.HC.Repository.Sql;
     using Microsoft.Extensions.Logging;
 
@@ -41,6 +40,17 @@
             command = command ?? throw new ArgumentNullException(nameof(command));
             this.Logger.LogInformation($"Attempting to create new hospital named: {command.Hospital.Name} for region id: {command.Hospital.RegionId}");
 
+            var capacity = new HospitalCapacity
+            {
+                BedCapacity = command.Hospital.BedCapacity,
+                BedsInUse = command.Hospital.BedsInUse,
+            };
+
+            capacity.CalculatePercentageAvailable();
+
+            command.Hospital.PercentageAvailable = capacity.PercentageAvailable;
+
+            await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
             await this.uow.HospitalRepository.AddAsync(command.Hospital).ConfigureAwait(false);
             await this.uow.CommitAsync().ConfigureAwait(false);
         }
