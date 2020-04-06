@@ -3,7 +3,7 @@
     /// <summary>
     /// Interface IHospitalCapacityUow.
     /// </summary>
-    public interface IHospitalCapacityUow
+    public interface IHospitalCapacityUow : IUnitOfWork
     {
         /// <summary>
         /// Gets the hospital repository.

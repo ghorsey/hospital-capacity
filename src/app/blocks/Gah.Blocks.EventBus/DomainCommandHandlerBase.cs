@@ -43,6 +43,6 @@
         /// <param name="command">The command to handle.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected abstract Task Handle(TCommand command, CancellationToken cancellationToken = default);
+        public abstract Task Handle(TCommand command, CancellationToken cancellationToken = default);
     }
 }
