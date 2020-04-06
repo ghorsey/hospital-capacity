@@ -48,7 +48,7 @@
 
             capacity.CalculatePercentageAvailable();
 
-            command.Hospital.PercentageAvailable = capacity.PercentageAvailable;
+            command.Hospital.PercentOfUsage = capacity.PercentOfUsage;
 
             await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
             await this.uow.HospitalRepository.AddAsync(command.Hospital).ConfigureAwait(false);

@@ -30,7 +30,7 @@
             builder.Property(e => e.CreatedOn);
             builder.Property(e => e.UpdatedOn);
             builder.Property(e => e.Name);
-            builder.Property(e => e.PercentageAvailable);
+            builder.Property(e => e.PercentOfUsage);
             builder.Property(e => e.PostalCode);
             builder.Property(e => e.Slug);
             builder.Property(e => e.State);

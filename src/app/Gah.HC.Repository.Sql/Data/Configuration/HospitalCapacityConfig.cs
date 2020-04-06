@@ -29,7 +29,7 @@
             builder.Property(e => e.BedsInUse)
                 .IsRequired();
 
-            builder.Property(e => e.PercentageAvailable)
+            builder.Property(e => e.PercentOfUsage)
                 .IsRequired();
 
             builder.Property(e => e.CreatedOn)

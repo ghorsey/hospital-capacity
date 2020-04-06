@@ -1,9 +1,7 @@
 ﻿namespace Gah.HC.Domain
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
 
     /// <summary>
     /// Class HospitalCapacity.
@@ -61,7 +59,7 @@
         /// Gets or sets the percentage available.
         /// </summary>
         /// <value>The percentage available.</value>
-        public int PercentageAvailable { get; set; }
+        public int PercentOfUsage { get; set; }
 
         /// <summary>
         /// Gets or sets the created on.
@@ -74,7 +72,7 @@
         /// </summary>
         public void CalculatePercentageAvailable()
         {
-            this.PercentageAvailable = (int)Math.Round((100 / (decimal)this.BedCapacity) * this.BedsInUse);
+            this.PercentOfUsage = (int)Math.Round((100 / (decimal)this.BedCapacity) * this.BedsInUse);
         }
     }
 }

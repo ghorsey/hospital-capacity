@@ -54,7 +54,7 @@
                         h.PostalCode,
                         h.BedCapacity,
                         h.BedsInUse,
-                        h.PercentageAvailable,
+                        h.PercentOfUsage,
                         h.IsCovid);
 
                     Assert.Equal(2, allItems.Count);
@@ -86,7 +86,7 @@
                     RegionId = region.Id,
                     PostalCode = "90066",
                     State = "CA",
-                    PercentageAvailable = 125
+                    PercentOfUsage = 125
                 },
                 new Hospital
                 {
@@ -98,7 +98,7 @@
                     RegionId = region.Id,
                     PostalCode = "90066",
                     State = "CA",
-                    PercentageAvailable = 125
+                    PercentOfUsage = 125
                 }
             };
             return (region, hospitals);

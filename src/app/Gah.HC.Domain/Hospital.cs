@@ -94,7 +94,7 @@
         /// Gets or sets the percentage available.
         /// </summary>
         /// <value>The percentage available.</value>
-        public int PercentageAvailable { get; set; }
+        public int PercentOfUsage { get; set; }
 
         /// <summary>
         /// Gets or sets the created on.

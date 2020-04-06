@@ -24,7 +24,7 @@
 
             hospital.CalculatePercentageAvailable();
 
-            Assert.Equal(expectedPercentage, hospital.PercentageAvailable);
+            Assert.Equal(expectedPercentage, hospital.PercentOfUsage);
         }
     }
 }

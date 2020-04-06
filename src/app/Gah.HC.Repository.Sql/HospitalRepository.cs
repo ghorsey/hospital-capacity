@@ -75,7 +75,7 @@
 
             if (percentageAvailable != -1)
             {
-                q = q.Where(e => e.PercentageAvailable == percentageAvailable);
+                q = q.Where(e => e.PercentOfUsage == percentageAvailable);
             }
 
             if (isCovid != null)
