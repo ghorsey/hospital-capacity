@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Gah.HC.Domain;
     using Gah.HC.Repository.Sql.Data;
@@ -30,12 +31,13 @@
         /// Finds the by slug.
         /// </summary>
         /// <param name="slug">The slug.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;Hospital&gt;.</returns>
-        public Task<Hospital> FindBySlugAsync(string slug)
+        public Task<Hospital> FindBySlugAsync(string slug, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Finding hospital by slug: {slug}");
 
-            return this.Entities.FirstOrDefaultAsync(h => h.Slug == slug);
+            return this.Entities.FirstOrDefaultAsync(h => h.Slug == slug, cancellationToken);
         }
 
         /// <summary>

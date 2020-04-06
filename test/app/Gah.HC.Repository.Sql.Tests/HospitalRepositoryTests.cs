@@ -2,7 +2,6 @@
 {
     using Gah.HC.Domain;
     using Gah.HC.Repository.Sql.Data;
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -20,7 +19,7 @@
                     var h = hospitals[1];
 
                     IHospitalRepository r = new HospitalRepository(ctx, this.MakeLogger<HospitalRepository>());
-                    var found = await r.FindBySlugAsync(h.Slug);
+                    var found = await r.FindBySlugAsync(h.Slug, default);
                     Assert.NotNull(found);
                     Assert.Equal(h.Id, found.Id);
                 },
