@@ -14,6 +14,8 @@ import { ToastsComponent } from './components/shared/toasts/toasts.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
 import { AuthGeneralGuardService } from './route-guards/auth-general-guard.service';
+import { RegistrationPageComponent } from './components/registration-page/registration-page.component';
+import { AboutPageComponent } from './components/about-page/about-page.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { AuthGeneralGuardService } from './route-guards/auth-general-guard.servi
       { path: '', component: HomePageComponent, pathMatch: 'full' },
       { path: 'login', component: LoginPageComponent },
       { path: 'logout', component: LogoutPageComponent },
+      { path: 'registration', component: RegistrationPageComponent },
+      { path: 'about', component: AboutPageComponent },
       {
         path: 'dashboard',
         component: DashboardPageComponent,

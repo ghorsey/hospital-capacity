@@ -10,8 +10,8 @@ export class AuthGeneralGuardService implements CanActivate {
 
   constructor(private authService: AuthenticationService, private router: Router) {}
   canActivate(
-    route: import("@angular/router").ActivatedRouteSnapshot,
-    state: import("@angular/router").RouterStateSnapshot): boolean | import("@angular/router").UrlTree | import("rxjs").Observable<boolean | import("@angular/router").UrlTree> | Promise<boolean | import("@angular/router").UrlTree> {
+    route: import('@angular/router').ActivatedRouteSnapshot,
+    state: import('@angular/router').RouterStateSnapshot): boolean | import("@angular/router").UrlTree | import("rxjs").Observable<boolean | import("@angular/router").UrlTree> | Promise<boolean | import("@angular/router").UrlTree> {
       console.log(route);
       console.log(state);
 

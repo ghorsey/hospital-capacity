@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  styleUrls: ['./nav-menu.component.css'],
 })
 export class NavMenuComponent implements OnInit, OnDestroy {
   public isCollapsed = true;
@@ -17,7 +17,12 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.isLoggedOn = this.authenticationService.isLoggedOn();
-    this.siginChanged$ = this.authenticationService.signInChangedEvent.subscribe(isLoggedOn => this.isLoggedOn = isLoggedOn);
+    this.siginChanged$ = this.authenticationService.signInChangedEvent.subscribe(
+      (isLoggedOn: boolean) => {
+        debugger;
+        this.isLoggedOn = isLoggedOn;
+      }
+    );
   }
 
   public ngOnDestroy() {
