@@ -123,7 +123,7 @@
         /// <param name="postalCode">The postal code.</param>
         /// <param name="bedCapacity">The bed capacity.</param>
         /// <param name="bedsInUse">The beds in use.</param>
-        /// <param name="percentageAvailable">The percentage available.</param>
+        /// <param name="percentOfUse">The percentage available.</param>
         /// <param name="isCovid">if set to <c>true</c> [is covid].</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
@@ -138,7 +138,7 @@
             [FromQuery] string postalCode = "",
             [FromQuery] int bedCapacity = 0,
             [FromQuery] int bedsInUse = -1,
-            [FromQuery] int percentageAvailable = -1,
+            [FromQuery] int percentOfUse = -1,
             [FromQuery] bool? isCovid = null,
             CancellationToken cancellationToken = default)
         {
@@ -153,7 +153,7 @@
                 postalCode,
                 bedCapacity,
                 bedsInUse,
-                percentageAvailable,
+                percentOfUse,
                 isCovid);
 
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);

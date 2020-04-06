@@ -47,7 +47,7 @@
                 request.PostalCode,
                 request.BedCapacity,
                 request.BedsInUse,
-                request.PercentageAvailable,
+                request.PercentOfUse,
                 request.IsCovid);
         }
     }

@@ -50,7 +50,7 @@
         /// <param name="postalCode">The postal code.</param>
         /// <param name="bedCapacity">The bed capacity.</param>
         /// <param name="bedsInUse">The beds in use.</param>
-        /// <param name="percentageAvailable">The percentage available.</param>
+        /// <param name="percentOfUse">The percentage available.</param>
         /// <param name="isCovid">if set to <c>true</c> [is covid].</param>
         /// <returns>Task&lt;List&lt;Hospital&gt;&gt;.</returns>
         public Task<List<Hospital>> FindHospitalsAsync(
@@ -61,7 +61,7 @@
             string postalCode = "",
             int bedCapacity = 0,
             int bedsInUse = -1,
-            int percentageAvailable = -1,
+            int percentOfUse = -1,
             bool? isCovid = null)
         {
             this.Logger.LogInformation($"Finding hospitals for region: {regionId}, name: {name}, city: {city}, state: {state}, postal code: {postalCode}, capacity: {bedCapacity}, in use: {bedsInUse}");
@@ -73,9 +73,9 @@
                 q = q.Where(e => e.RegionId == regionId);
             }
 
-            if (percentageAvailable != -1)
+            if (percentOfUse != -1)
             {
-                q = q.Where(e => e.PercentOfUsage == percentageAvailable);
+                q = q.Where(e => e.PercentOfUsage == percentOfUse);
             }
 
             if (isCovid != null)

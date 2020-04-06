@@ -41,7 +41,7 @@
             this.PostalCode = postalCode;
             this.BedCapacity = bedCapacity;
             this.BedsInUse = bedsInUse;
-            this.PercentageAvailable = percentageAvailable;
+            this.PercentOfUse = percentageAvailable;
             this.IsCovid = isCovid;
         }
 
@@ -91,7 +91,7 @@
         /// Gets the percentage available.
         /// </summary>
         /// <value>The percentage available.</value>
-        public int PercentageAvailable { get; }
+        public int PercentOfUse { get; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is covid.
