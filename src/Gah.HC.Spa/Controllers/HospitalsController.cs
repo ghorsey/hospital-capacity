@@ -144,7 +144,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(List<Hospital>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<HospitalView>), StatusCodes.Status200OK)]
         [AllowAnonymous]
         public async Task<IActionResult> GetHospitalsAsync(
             [FromQuery] Guid? regionId = null,

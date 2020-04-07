@@ -26,9 +26,9 @@
                 75,
                 75,
                 true);
-            var expected = new List<Hospital>();
+            var expected = new List<HospitalView>();
 
-            var repoMock = new Mock<IHospitalRepository>(MockBehavior.Strict);
+            var repoMock = new Mock<IHospitalViewRepository>(MockBehavior.Strict);
             repoMock.Setup(r => r.FindHospitalsAsync(
                 request.RegionId,
                 request.Name,
@@ -42,7 +42,7 @@
                 .ReturnsAsync(expected);
 
             var uowMock = new Mock<IHospitalCapacityUow>(MockBehavior.Strict);
-            uowMock.SetupGet(u => u.HospitalRepository).Returns(repoMock.Object);
+            uowMock.SetupGet(u => u.HospitalViewRepository).Returns(repoMock.Object);
 
             var h = new FindHospitalsQueryHandler(uowMock.Object, new Mock<ILogger<FindHospitalsQueryHandler>>(MockBehavior.Loose).Object);
 
