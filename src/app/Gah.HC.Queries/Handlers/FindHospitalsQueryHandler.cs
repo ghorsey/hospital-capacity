@@ -10,7 +10,7 @@
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc/>
-    public class FindHospitalsQueryHandler : DomainQueryHandlerBase<FindHospitalsQuery, List<Hospital>>
+    public class FindHospitalsQueryHandler : DomainQueryHandlerBase<FindHospitalsQuery, List<HospitalView>>
     {
         private readonly IHospitalCapacityUow uow;
 
@@ -33,13 +33,13 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;List&lt;Hospital&gt;&gt;.</returns>
         /// <inheritdoc />
-        public override Task<List<Hospital>> Handle(FindHospitalsQuery request, CancellationToken cancellationToken)
+        public override Task<List<HospitalView>> Handle(FindHospitalsQuery request, CancellationToken cancellationToken)
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
 
             this.Logger.LogInformation("Finding hospitals");
 
-            return this.uow.HospitalRepository.FindHospitalsAsync(
+            return this.uow.HospitalViewRepository.FindHospitalsAsync(
                 request.RegionId,
                 request.Name,
                 request.City,

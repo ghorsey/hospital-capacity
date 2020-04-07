@@ -104,7 +104,7 @@
         {
             var regionId = Guid.NewGuid();
 
-            var expected = new List<Hospital>();
+            var expected = new List<HospitalView>();
 
             var domainBusMock = new Mock<IDomainBus>(MockBehavior.Strict);
             domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindHospitalsQuery>(q => q.RegionId == regionId), default))
@@ -116,7 +116,7 @@
             var response = await c.GetHospitalsAsync(regionId) as OkObjectResult;
             Assert.NotNull(response);
 
-            var result = response.Value as Result<List<Hospital>>;
+            var result = response.Value as Result<List<HospitalView>>;
 
             Assert.NotNull(result);
 
