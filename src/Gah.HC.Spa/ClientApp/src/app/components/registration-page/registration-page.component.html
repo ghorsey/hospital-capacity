@@ -29,6 +29,7 @@
             [ngClass]="{ 'is-invalid': registrationForm.get('password').invalid && registrationForm.get('password').dirty && submitted}"
             id="password" type="password" class="form-control" placeholder="Password" formControlName="password">
           <small *ngIf="registrationForm.get('password').errors?.required && submitted" class="text-danger">Password is required field.</small>
+          <small *ngIf="registrationForm.get('password').errors?.minlength && submitted" class="text-danger">Password must be at least 6 characters long.</small>
         </div>
 
         <div class="row">
@@ -38,6 +39,7 @@
             id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
           <small *ngIf="registrationForm.get('confirmPassword').errors?.required && submitted" class="text-danger">Confirm password is required field.</small>
           <small *ngIf="registrationForm.get('confirmPassword').errors?.mustMatch && submitted" class="text-danger">Password doesn't match.</small>
+          <small *ngIf="registrationForm.get('password').errors?.minlength && submitted" class="text-danger">Password must be at least 6 characters long.</small>
         </div>
 
         <div class="row">

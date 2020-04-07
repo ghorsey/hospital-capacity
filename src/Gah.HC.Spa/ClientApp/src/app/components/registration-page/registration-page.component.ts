@@ -32,8 +32,8 @@ export class RegistrationPageComponent implements OnInit {
       {
         email: [this.user.email, [Validators.required, Validators.email]],
         regionName: [this.user.regionName, [Validators.required]],
-        password: [this.user.password, [Validators.required]],
-        confirmPassword: [this.user.confirmPassword, [Validators.required]],
+        password: [this.user.password, [Validators.required, Validators.minLength(6)]],
+        confirmPassword: [this.user.confirmPassword, [Validators.required, Validators.minLength(6)]],
       },
       {
         validator: CustomValidators.Match('password', 'confirmPassword'),
