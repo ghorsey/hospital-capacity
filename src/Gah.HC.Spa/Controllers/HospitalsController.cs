@@ -93,16 +93,7 @@
         {
             this.Logger.LogInformation($"Finding hospital by id or slug: {idOrSlug}");
 
-            FindBySlugOrIdQuery q;
-
-            if (Guid.TryParse(idOrSlug, out var id))
-            {
-                q = new FindBySlugOrIdQuery(this.HttpContext.TraceIdentifier, id: id);
-            }
-            else
-            {
-                q = new FindBySlugOrIdQuery(this.HttpContext.TraceIdentifier, slug: idOrSlug);
-            }
+            var q = this.MakeFindByIdOrSlugQuery(idOrSlug);
 
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
@@ -114,20 +105,39 @@
             return this.Ok(result.MakeSuccessfulResult());
         }
 
-        /////// <summary>
-        /////// rapid update as an asynchronous operation.
-        /////// </summary>
-        /////// <param name="input">The input.</param>
-        /////// <param name="cancellationToken">The cancellation token.</param>
-        /////// <returns>Task&lt;IActionResult&gt;.</returns>
-        ////[HttpPost("{idOrSlug}/rapid-update")]
-        ////[ProducesResponseType(StatusCodes.Status200OK)]
-        ////public async Task<IActionResult> RapidUpdateAsync(RapidHospitalUpdateInput input, CancellationToken cancellationToken)
-        ////{
+        /// <summary>
+        /// rapid update as an asynchronous operation.
+        /// </summary>
+        /// <param name="idOrSlug">The identifier or slug.</param>
+        /// <param name="input">The input.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpPost("{idOrSlug}/rapid-update")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> RapidUpdateAsync(string idOrSlug, RapidHospitalUpdateInput input, CancellationToken cancellationToken)
+        {
+            if (input == null)
+            {
+                return this.BadRequest("Input cannot be null".MakeUnsuccessfulResult());
+            }
 
-        ////    // todo: need to implement.
-        ////    return await Task.FromResult(this.NoContent());
-        ////}
+            this.Logger.LogInformation($"Rapid updating {idOrSlug} with capacity {input.BedCapacity} and usage {input.BedsInUse} and isCovid {input.IsCovid}");
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+            }
+
+            var q = this.MakeFindByIdOrSlugQuery(idOrSlug);
+
+            var hospital = await this.domainBus.ExecuteAsync(q, cancellationToken);
+
+            var cmd = new RapidHospitalUpdateCommand(hospital.Id, input.BedsInUse, input.BedCapacity, input.IsCovid);
+
+            await this.domainBus.ExecuteAsync(cmd, cancellationToken);
+
+            return this.NoContent();
+        }
 
         /// <summary>
         /// get hospitals as an asynchronous operation.
@@ -175,6 +185,27 @@
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
             return this.Ok(result.MakeSuccessfulResult());
+        }
+
+        /// <summary>
+        /// Makes the find by identifier or slug query.
+        /// </summary>
+        /// <param name="idOrSlug">The identifier or slug.</param>
+        /// <returns>Gah.HC.Queries.FindBySlugOrIdQuery.</returns>
+        private FindBySlugOrIdQuery MakeFindByIdOrSlugQuery(string idOrSlug)
+        {
+            FindBySlugOrIdQuery q;
+
+            if (Guid.TryParse(idOrSlug, out var id))
+            {
+                q = new FindBySlugOrIdQuery(this.HttpContext.TraceIdentifier, id: id);
+            }
+            else
+            {
+                q = new FindBySlugOrIdQuery(this.HttpContext.TraceIdentifier, slug: idOrSlug);
+            }
+
+            return q;
         }
     }
 }
