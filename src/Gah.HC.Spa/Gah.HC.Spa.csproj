@@ -67,6 +67,7 @@
     <ProjectReference Include="..\app\blocks\Gah.Blocks.DomainBus\Gah.Blocks.DomainBus.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Commands\Gah.HC.Commands.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Domain\Gah.HC.Domain.csproj" />
+    <ProjectReference Include="..\app\Gah.HC.Events\Gah.HC.Events.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Queries\Gah.HC.Queries.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Repository.Sql\Gah.HC.Repository.Sql.csproj" />
     <ProjectReference Include="..\app\Gah.HC.Repository\Gah.HC.Repository.csproj" />

@@ -30,4 +30,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\blocks\Gah.Blocks.DomainBus\Gah.Blocks.DomainBus.csproj" />
+    <ProjectReference Include="..\Gah.HC.Domain\Gah.HC.Domain.csproj" />
+    <ProjectReference Include="..\Gah.HC.Repository\Gah.HC.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

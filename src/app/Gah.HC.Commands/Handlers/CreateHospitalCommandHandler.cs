@@ -1,10 +1,12 @@
 ﻿namespace Gah.HC.Commands.Handlers
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
+    using Gah.HC.Events;
     using Gah.HC.Repository;
     using Microsoft.Extensions.Logging;
 
@@ -16,17 +18,20 @@
     public class CreateHospitalCommandHandler : DomainCommandHandlerBase<CreateHospitalCommand>
     {
         private readonly IHospitalCapacityUow uow;
+        private readonly IDomainBus domainBus;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateHospitalCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="CreateHospitalCommandHandler" /> class.
         /// </summary>
         /// <param name="uow">The uow.</param>
+        /// <param name="domainBus">The domain bus.</param>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">uow.</exception>
-        public CreateHospitalCommandHandler(IHospitalCapacityUow uow, ILogger<CreateHospitalCommandHandler> logger)
+        public CreateHospitalCommandHandler(IHospitalCapacityUow uow, IDomainBus domainBus, ILogger<CreateHospitalCommandHandler> logger)
             : base(logger)
         {
             this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
+            this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
         }
 
         /// <summary>
@@ -50,9 +55,19 @@
 
             command.Hospital.PercentOfUsage = capacity.PercentOfUsage;
 
-            await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
-            await this.uow.HospitalRepository.AddAsync(command.Hospital).ConfigureAwait(false);
-            await this.uow.CommitAsync().ConfigureAwait(false);
+            await this.uow.ExecuteInResilientTransactionAsync(async () =>
+            {
+                await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
+                await this.uow.HospitalRepository.AddAsync(command.Hospital).ConfigureAwait(false);
+                await this.uow.CommitAsync().ConfigureAwait(false);
+
+                var region = await this.uow.RegionRepository.FindAsync(command.Hospital.RegionId).ConfigureAwait(false);
+                var hospitalChangedEvent = new HospitalChangedEvent(command.Hospital, region, new List<HospitalCapacity> { capacity }, command.CorrelationId);
+
+                await this.domainBus.PublishAsync(cancellationToken, hospitalChangedEvent).ConfigureAwait(false);
+
+                return true;
+            }).ConfigureAwait(false);
         }
     }
 }

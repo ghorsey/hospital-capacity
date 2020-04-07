@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
+    using Gah.HC.Events;
     using Gah.HC.Repository;
     using Microsoft.Extensions.Logging;
 
@@ -12,16 +13,24 @@
     public class RapidHospitalUpdateCommandHandler : DomainCommandHandlerBase<RapidHospitalUpdateCommand>
     {
         private readonly IHospitalCapacityUow uow;
+        private readonly IDomainBus domainBus;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RapidHospitalUpdateCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="RapidHospitalUpdateCommandHandler" /> class.
         /// </summary>
         /// <param name="uow">The uow.</param>
+        /// <param name="domainBus">The domain bus.</param>
         /// <param name="logger">The logger.</param>
-        public RapidHospitalUpdateCommandHandler(IHospitalCapacityUow uow, ILogger<RapidHospitalUpdateCommandHandler> logger)
+        /// <exception cref="ArgumentNullException">
+        /// uow
+        /// or
+        /// domainBus.
+        /// </exception>
+        public RapidHospitalUpdateCommandHandler(IHospitalCapacityUow uow, IDomainBus domainBus, ILogger<RapidHospitalUpdateCommandHandler> logger)
             : base(logger)
         {
             this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
+            this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
         }
 
         /// <summary>
@@ -64,6 +73,12 @@
                 await this.uow.HospitalRepository.UpdateAsync(hospital).ConfigureAwait(false);
 
                 await this.uow.CommitAsync().ConfigureAwait(false);
+
+                var region = await this.uow.RegionRepository.FindAsync(hospital.RegionId, cancellationToken).ConfigureAwait(false);
+                var recentCapacity = await this.uow.HospitalCapacityRepository.GetRecent10Async(hospital.Id).ConfigureAwait(false);
+
+                var hospitalChanged = new HospitalChangedEvent(hospital, region, recentCapacity, command.CorrelationId);
+                await this.domainBus.PublishAsync(cancellationToken, hospitalChanged).ConfigureAwait(false);
 
                 return true;
             }).ConfigureAwait(false);

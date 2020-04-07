@@ -7,6 +7,8 @@ namespace Gah.HC.Spa
     using Gah.HC.Commands;
     using Gah.HC.Commands.Handlers;
     using Gah.HC.Domain;
+    using Gah.HC.Events;
+    using Gah.HC.Events.Handlers;
     using Gah.HC.Queries;
     using Gah.HC.Queries.Handlers;
     using Gah.HC.Repository;
@@ -166,6 +168,9 @@ namespace Gah.HC.Spa
             services.AddScoped<IHospitalCapacityUow, HospitalCapacityUow>();
 
             services.AddDomainBus()
+
+                // Events
+                .AddEvent<HospitalChangedEvent, HospitalChangedEventHandler>()
 
                 // Queryies
                 .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
