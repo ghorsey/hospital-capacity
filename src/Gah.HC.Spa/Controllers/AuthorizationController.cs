@@ -127,7 +127,7 @@
             {
                 await this.domainBus.ExecuteAsync(command, cancellationToken);
 
-                var user = await this.userManager.GetUserAsync(this.User);
+                var user = await this.userManager.FindByNameAsync(input.Email);
 
                 await this.signInManager.SignInAsync(user, isPersistent: false);
 
