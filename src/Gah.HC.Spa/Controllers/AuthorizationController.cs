@@ -58,7 +58,7 @@
         /// <returns>IActionResult.</returns>
         [HttpPost("register/super")]
         [Authorize(Roles="Admin")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> RegisterSuperUser(RegisterSuperUserInput input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Registering a super user");
@@ -95,7 +95,14 @@
 
             await this.signInManager.SignInAsync(user, isPersistent: false);
 
-            return this.NoContent();
+            var dto = new UserDto
+            {
+                UserType = user.UserType,
+                RegionId = user.RegionId,
+                HospitalId = user.HospitalId,
+            };
+
+            return this.Ok(dto.MakeSuccessfulResult());
         }
 
         /// <summary>
@@ -105,7 +112,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPost("register/region")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterRegionUserAsync(RegisterRegionUserInput input, CancellationToken cancellationToken)
         {
@@ -130,8 +137,14 @@
                 var user = await this.userManager.FindByNameAsync(input.Email);
 
                 await this.signInManager.SignInAsync(user, isPersistent: false);
+                var dto = new UserDto
+                {
+                    HospitalId = user.HospitalId,
+                    RegionId = user.RegionId,
+                    UserType = user.UserType,
+                };
 
-                return this.NoContent();
+                return this.Ok(dto.MakeSuccessfulResult());
             }
             catch (UserCreationException x)
             {
