@@ -32,8 +32,8 @@ export class RegistrationPageComponent implements OnInit {
       {
         email: [this.user.email, [Validators.required, Validators.email]],
         regionName: [this.user.regionName, [Validators.required]],
-        password: [this.user.password, [Validators.required, Validators.minLength(6)]],
-        confirmPassword: [this.user.confirmPassword, [Validators.required, Validators.minLength(6)]],
+        password: [this.user.password, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}')]],
+        confirmPassword: [this.user.confirmPassword, [Validators.required]],
       },
       {
         validator: CustomValidators.Match('password', 'confirmPassword'),
@@ -87,10 +87,10 @@ export class RegistrationPageComponent implements OnInit {
   private createUser(): void {
     this.userService.createUser(this.user).subscribe(
       (response: any) => {
-        if (response.success) {
-          this.login();
-        } else {
+        if (response && response.success === false) {
           this.showError = true;
+        } else {
+          this.login();
         }
       },
       () => {
