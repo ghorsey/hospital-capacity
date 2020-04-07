@@ -1,31 +1,43 @@
+<ngb-alert *ngIf="showError" [type]="danger">
+  <strong>Error!</strong> Something went wrong please try again later.
+</ngb-alert>
 <h1>Registration</h1>
 <div class="container">
-  <form>
+  <form [formGroup]="registrationForm" (ngSubmit)="submit()">
     <div class="row justify-content-md-center">
       <div class="col">
         <div class="row">
           <label for="email" class="col-form-label">Email</label>
-          <input id="email" type="email" class="form-control" placeholder="Email">
-          <small class="text-danger">Email is required field.</small>
+          <input
+            [ngClass]="{ 'is-invalid': registrationForm.get('email').invalid && registrationForm.get('email').dirty && submitted}"
+            id="email" type="email" class="form-control" placeholder="Email" formControlName="email">
+          <small *ngIf="registrationForm.get('email').errors?.email && submitted" class="text-danger">Email is required field.</small>
+          <small *ngIf="registrationForm.get('email').errors?.required && submitted" class="text-danger">Invalid email format.</small>
         </div>
         <div class="row">
-          <label for="region" class="col-form-label">Region</label>
-          <input id="region" type="test" class="form-control" placeholder="Region">
-          <small class="text-danger">Region is required field.</small>
+          <label for="regionName" class="col-form-label">Region Name</label>
+          <input
+            [ngClass]="{ 'is-invalid': registrationForm.get('regionName').invalid && registrationForm.get('regionName').dirty && submitted}"
+            id="regionName" type="test" class="form-control" placeholder="Region Name" formControlName="regionName">
+          <small *ngIf="registrationForm.get('regionName').errors?.required && submitted" class="text-danger">Region name is required field.</small>
+          <small *ngIf="registrationForm.get('regionName').errors?.regionExist && submitted" class="text-danger">Region name already exist.</small>
         </div>
 
         <div class="row">
           <label for="password" class="col-form-label">Password</label>
-          <input id="password" type="password" class="form-control" placeholder="Password">
-          <small class="text-danger">Password is required field.</small>
-          <small class="text-danger">Password doesn't match.</small>
+          <input
+            [ngClass]="{ 'is-invalid': registrationForm.get('password').invalid && registrationForm.get('password').dirty && submitted}"
+            id="password" type="password" class="form-control" placeholder="Password" formControlName="password">
+          <small *ngIf="registrationForm.get('password').errors?.required && submitted" class="text-danger">Password is required field.</small>
         </div>
 
         <div class="row">
           <label for="confirmPassword" class="col-form-label">Confirm Password</label>
-          <input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password">
-          <small class="text-danger">Confirm password is required field.</small>
-          <small class="text-danger">Password doesn't match.</small>
+          <input
+            [ngClass]="{ 'is-invalid': registrationForm.get('confirmPassword').invalid && registrationForm.get('confirmPassword').dirty && submitted}"
+            id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
+          <small *ngIf="registrationForm.get('confirmPassword').errors?.required && submitted" class="text-danger">Confirm password is required field.</small>
+          <small *ngIf="registrationForm.get('confirmPassword').errors?.mustMatch && submitted" class="text-danger">Password doesn't match.</small>
         </div>
 
         <div class="row">

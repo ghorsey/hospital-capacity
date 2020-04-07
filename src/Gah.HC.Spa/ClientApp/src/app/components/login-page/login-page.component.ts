@@ -19,10 +19,6 @@ export class LoginPageComponent {
     rememberMe: new FormControl(false),
   });
 
-  public get formControls() {
-    return this.loginForm.controls;
-  }
-
   constructor(public title: Title, private router: Router, private authService: AuthenticationService) {
     title.setTitle('Login: Hospital Capacity');
   }

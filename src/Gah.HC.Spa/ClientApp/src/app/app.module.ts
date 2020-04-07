@@ -25,7 +25,8 @@ import { AboutPageComponent } from './components/about-page/about-page.component
     LoginPageComponent,
     ToastsComponent,
     DashboardPageComponent,
-    LogoutPageComponent
+    LogoutPageComponent,
+    RegistrationPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
