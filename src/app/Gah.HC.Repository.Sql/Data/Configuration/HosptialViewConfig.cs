@@ -5,19 +5,11 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    /// <summary>
-    /// Class HospitalConfig.
-    /// Implements the <see cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Hospital}" />.
-    /// </summary>
-    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Hospital}" />
-    public class HospitalConfig : IEntityTypeConfiguration<Hospital>
+    /// <inheritdoc />
+    public class HosptialViewConfig : IEntityTypeConfiguration<HospitalView>
     {
-        /// <summary>
-        /// Configures the entity of type <see cref="Hospital"/>.
-        /// </summary>
-        /// <param name="builder">The builder to be used to configure the entity type.</param>
-        /// <exception cref="ArgumentNullException">builder.</exception>
-        public void Configure(EntityTypeBuilder<Hospital> builder)
+        /// <inheritdoc />
+        public void Configure(EntityTypeBuilder<HospitalView> builder)
         {
             builder = builder ?? throw new ArgumentNullException(nameof(builder));
 
@@ -36,15 +28,14 @@
             builder.Property(e => e.Slug);
             builder.Property(e => e.State);
             builder.Property(e => e.IsCovid);
+            builder.Property(e => e.RegionName);
 
             builder.HasIndex(e => e.Slug)
-                .HasName("AK_HOSPITAL_SLUG")
+                .HasName("AK_HOSPITALVIEW_SLUG")
                 .IsUnique();
 
             builder.HasIndex(e => e.RegionId)
-                .HasName("IX_HOSPITAL_Region");
-
-            builder.HasOne(e => e.Region);
+                .HasName("IX_HOSPITALVIEW_Region");
 
             builder.HasIndex(e => e.Name);
             builder.HasIndex(e => e.PostalCode);

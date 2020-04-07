@@ -71,6 +71,7 @@
                 PostalCode = input.PostalCode,
                 RegionId = input.RegionId,
                 State = input.State,
+                Phone = input.Phone,
             };
             var command = new CreateHospitalCommand(hospital, this.HttpContext.TraceIdentifier);
 
@@ -113,23 +114,20 @@
             return this.Ok(result.MakeSuccessfulResult());
         }
 
-        /// <summary>
-        /// rapid update as an asynchronous operation.
-        /// </summary>
-        /// <param name="input">The input.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Task&lt;IActionResult&gt;.</returns>
-        [HttpPost("{idOrSlug}/rapid-update")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-#pragma warning disable IDE0060  // Remove unused parameter
-#pragma warning disable CA1801
-        public async Task<IActionResult> RapidUpdateAsync(RapidHospitalUpdateInput input, CancellationToken cancellationToken)
-#pragma warning restore CA1801 // Remove unused parameter
-#pragma warning restore IDE0060 // Remove unused parameter
-        {
-            // todo: need to implement.
-            return await Task.FromResult(this.NoContent());
-        }
+        /////// <summary>
+        /////// rapid update as an asynchronous operation.
+        /////// </summary>
+        /////// <param name="input">The input.</param>
+        /////// <param name="cancellationToken">The cancellation token.</param>
+        /////// <returns>Task&lt;IActionResult&gt;.</returns>
+        ////[HttpPost("{idOrSlug}/rapid-update")]
+        ////[ProducesResponseType(StatusCodes.Status200OK)]
+        ////public async Task<IActionResult> RapidUpdateAsync(RapidHospitalUpdateInput input, CancellationToken cancellationToken)
+        ////{
+
+        ////    // todo: need to implement.
+        ////    return await Task.FromResult(this.NoContent());
+        ////}
 
         /// <summary>
         /// get hospitals as an asynchronous operation.

@@ -18,6 +18,12 @@
         IHospitalCapacityRepository HospitalCapacityRepository { get; }
 
         /// <summary>
+        /// Gets the hospital view repository.
+        /// </summary>
+        /// <value>The hospital view repository.</value>
+        IHospitalViewRepository HospitalViewRepository { get; }
+
+        /// <summary>
         /// Gets the region repository.
         /// </summary>
         /// <value>The region repository.</value>

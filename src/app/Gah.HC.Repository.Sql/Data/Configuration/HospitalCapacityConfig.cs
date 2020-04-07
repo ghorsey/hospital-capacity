@@ -34,6 +34,9 @@
 
             builder.Property(e => e.CreatedOn)
                 .IsRequired();
+
+            builder.HasIndex(e => e.CreatedOn)
+                .HasName("IX_HOSPITALCAPACITY_CREATEDON");
         }
     }
 }

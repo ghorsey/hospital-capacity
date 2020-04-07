@@ -37,25 +37,30 @@
             this.Logger.LogInformation("Calling rapid update"); // todo: put better log mesasage
 
             var hospital = await this.uow.HospitalRepository.FindAsync(command.Id, cancellationToken);
-            var capacity = new HospitalCapacity
-            {
-                BedCapacity = command.BedCapacity,
-                BedsInUse = command.BedsInUse,
-                HospitalId = command.Id,
-            };
-
-            capacity.CalculatePercentOfUsage();
 
             await this.uow.ExecuteInResilientTransactionAsync(async () =>
             {
-                hospital.BedsInUse = capacity.BedsInUse;
-                hospital.BedCapacity = capacity.BedCapacity;
-                hospital.PercentOfUsage = capacity.PercentOfUsage;
+                if (hospital.BedCapacity != command.BedCapacity || hospital.BedsInUse != command.BedsInUse)
+                {
+                    var capacity = new HospitalCapacity
+                    {
+                        BedCapacity = command.BedCapacity,
+                        BedsInUse = command.BedsInUse,
+                        HospitalId = command.Id,
+                    };
+
+                    capacity.CalculatePercentOfUsage();
+                    hospital.BedsInUse = capacity.BedsInUse;
+                    hospital.BedCapacity = capacity.BedCapacity;
+                    hospital.PercentOfUsage = capacity.PercentOfUsage;
+
+                    await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
+                }
+
                 hospital.IsCovid = command.IsCovid;
 
                 cancellationToken.ThrowIfCancellationRequested();
 
-                await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
                 await this.uow.HospitalRepository.UpdateAsync(hospital).ConfigureAwait(false);
 
                 await this.uow.CommitAsync().ConfigureAwait(false);

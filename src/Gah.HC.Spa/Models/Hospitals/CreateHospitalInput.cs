@@ -56,6 +56,14 @@
         public string PostalCode { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets the phone.
+        /// </summary>
+        /// <value>The phone.</value>
+        [Required]
+        [MaxLength(20)]
+        public string Phone { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the bed capacity.
         /// </summary>
         /// <value>The bed capacity.</value>
