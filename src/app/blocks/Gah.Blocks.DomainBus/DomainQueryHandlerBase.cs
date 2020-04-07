@@ -1,4 +1,4 @@
-﻿namespace Gah.Blocks.EventBus
+﻿namespace Gah.Blocks.DomainBus
 {
     using System;
     using System.Threading;
@@ -7,11 +7,11 @@
 
     /// <summary>
     /// Class DomainQueryHandlerBase.
-    /// Implements the <see cref="Gah.Blocks.EventBus.IDomainQueryHandler{TQuery, TResponse}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.IDomainQueryHandler{TQuery, TResponse}" />.
     /// </summary>
     /// <typeparam name="TQuery">The type of the t query.</typeparam>
     /// <typeparam name="TResponse">The type of the t response.</typeparam>
-    /// <seealso cref="Gah.Blocks.EventBus.IDomainQueryHandler{TQuery, TResponse}" />
+    /// <seealso cref="Gah.Blocks.DomainBus.IDomainQueryHandler{TQuery, TResponse}" />
     public abstract class DomainQueryHandlerBase<TQuery, TResponse> : IDomainQueryHandler<TQuery, TResponse>
         where TQuery : IDomainQuery<TResponse>
     {

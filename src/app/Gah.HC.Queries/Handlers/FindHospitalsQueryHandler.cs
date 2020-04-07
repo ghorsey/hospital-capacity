@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Repository;
     using Microsoft.Extensions.Logging;

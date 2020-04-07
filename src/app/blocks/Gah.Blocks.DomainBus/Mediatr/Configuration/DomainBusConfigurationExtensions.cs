@@ -1,6 +1,6 @@
-﻿namespace Gah.Blocks.EventBus.Configuration
+﻿namespace Gah.Blocks.DomainBus.Configuration
 {
-    using Gah.Blocks.EventBus.Mediatr;
+    using Gah.Blocks.DomainBus.Mediatr;
     using MediatR;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +20,7 @@
             services.AddScoped<IMediator, Mediator>();
             services.AddTransient<ServiceFactory>(sp => sp.GetService);
 
-            services.AddScoped<IDomainBus, DomainBus>();
+            services.AddScoped<IDomainBus, DomainBusMediator>();
 
             return new DomainBusBuilder(services);
         }

@@ -12,7 +12,7 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>Gah.Blocks.EventBus.xml</DocumentationFile>
+    <DocumentationFile>Gah.Blocks.DomainBus.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

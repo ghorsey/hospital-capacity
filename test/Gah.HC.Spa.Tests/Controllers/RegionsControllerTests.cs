@@ -1,6 +1,6 @@
 ﻿namespace Gah.HC.Spa.Tests.Controllers
 {
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Spa.Controllers;
     using Gah.HC.Queries;
     using Microsoft.Extensions.Logging;

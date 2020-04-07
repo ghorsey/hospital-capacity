@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Commands.Exceptions;
     using Gah.HC.Domain;
     using Gah.HC.Repository;
@@ -14,9 +14,9 @@
 
     /// <summary>
     /// Class RegisterRegionUserCommandHandler.
-    /// Implements the <see cref="Gah.Blocks.EventBus.DomainCommandHandlerBase{RegisterRegionUserCommand}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{RegisterRegionUserCommand}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.EventBus.IDomainCommandHandler{RegisterRegionUserCommand}" />
+    /// <seealso cref="Gah.Blocks.DomainBus.IDomainCommandHandler{RegisterRegionUserCommand}" />
     public class RegisterRegionUserCommandHandler : DomainCommandHandlerBase<RegisterRegionUserCommand>
     {
         private readonly IHospitalCapacityUow uow;

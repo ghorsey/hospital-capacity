@@ -1,14 +1,14 @@
 ﻿namespace Gah.HC.Queries
 {
     using System;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
 
     /// <summary>
     /// Class FindBySlugOrIdQuery.
-    /// Implements the <see cref="Gah.Blocks.EventBus.DomainQueryBase{Hospital}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryBase{Hospital}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.EventBus.DomainQueryBase{Hospital}" />
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryBase{Hospital}" />
     public class FindBySlugOrIdQuery : DomainQueryBase<Hospital>
     {
         /// <summary>

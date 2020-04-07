@@ -1,4 +1,4 @@
-﻿namespace Gah.Blocks.EventBus
+﻿namespace Gah.Blocks.DomainBus
 {
     using System.Threading;
     using System.Threading.Tasks;

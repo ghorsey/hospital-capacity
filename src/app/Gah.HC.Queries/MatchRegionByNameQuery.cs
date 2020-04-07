@@ -1,7 +1,7 @@
 ﻿namespace Gah.HC.Queries
 {
     using System.Collections.Generic;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace Gah.Blocks.EventBus.Mediatr
+﻿namespace Gah.Blocks.DomainBus.Mediatr
 {
     using System.Diagnostics;
     using System.Threading;
@@ -8,10 +8,10 @@
 
     /// <summary>
     /// Class DomainBus.
-    /// Implements the <see cref="Gah.Blocks.EventBus.IDomainBus" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.IDomainBus" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.EventBus.IDomainBus" />
-    public class DomainBus : IDomainBus
+    /// <seealso cref="Gah.Blocks.DomainBus.IDomainBus" />
+    public class DomainBusMediator : IDomainBus
     {
         /// <summary>
         /// The mediator.
@@ -21,14 +21,14 @@
         /// <summary>
         /// The logger.
         /// </summary>
-        private readonly ILogger<DomainBus> logger;
+        private readonly ILogger<DomainBusMediator> logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainBus"/> class.
+        /// Initializes a new instance of the <see cref="DomainBusMediator"/> class.
         /// </summary>
         /// <param name="mediator">The mediator.</param>
         /// <param name="logger">The logger.</param>
-        public DomainBus(IMediator mediator, ILogger<DomainBus> logger)
+        public DomainBusMediator(IMediator mediator, ILogger<DomainBusMediator> logger)
         {
             this.mediator = mediator;
             this.logger = logger;

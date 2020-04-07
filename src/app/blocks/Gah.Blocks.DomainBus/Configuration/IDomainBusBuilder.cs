@@ -1,4 +1,4 @@
-﻿namespace Gah.Blocks.EventBus.Configuration
+﻿namespace Gah.Blocks.DomainBus.Configuration
 {
     /// <summary>
     /// Interface <c>ICommandBuilder</c>.

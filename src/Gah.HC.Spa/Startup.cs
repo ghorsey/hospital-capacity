@@ -3,7 +3,7 @@ namespace Gah.HC.Spa
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Gah.Blocks.EventBus.Configuration;
+    using Gah.Blocks.DomainBus.Configuration;
     using Gah.HC.Commands;
     using Gah.HC.Commands.Handlers;
     using Gah.HC.Domain;

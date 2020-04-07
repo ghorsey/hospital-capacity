@@ -1,16 +1,14 @@
 ﻿namespace Gah.HC.Commands
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
 
     /// <summary>
     /// Class CreateHospitalCommand.
-    /// Implements the <see cref="Gah.Blocks.EventBus.DomainCommandBase" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandBase" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.EventBus.DomainCommandBase" />
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandBase" />
     public class CreateHospitalCommand : DomainCommandBase
     {
         /// <summary>

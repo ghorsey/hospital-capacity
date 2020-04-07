@@ -1,7 +1,7 @@
 ﻿namespace Gah.HC.Commands
 {
     using System;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
 
     /// <summary>
     /// Class RapidHospitalUpdateCommand.

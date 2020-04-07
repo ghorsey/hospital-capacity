@@ -3,16 +3,16 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Repository;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Class FindBySlugOrIdQueryHandler.
-    /// Implements the <see cref="Gah.Blocks.EventBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.EventBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />
     public class FindBySlugOrIdQueryHandler : DomainQueryHandlerBase<FindBySlugOrIdQuery, Hospital>
     {
         private readonly IHospitalCapacityUow uow;

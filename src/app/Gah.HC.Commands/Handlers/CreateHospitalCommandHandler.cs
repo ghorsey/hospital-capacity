@@ -3,16 +3,16 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Gah.Blocks.EventBus;
+    using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Repository;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Class CreateHospitalCommandHandler.
-    /// Implements the <see cref="Gah.Blocks.EventBus.DomainCommandHandlerBase{CreateHospitalCommand}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{CreateHospitalCommand}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.EventBus.DomainCommandHandlerBase{CreateHospitalCommand}" />
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{CreateHospitalCommand}" />
     public class CreateHospitalCommandHandler : DomainCommandHandlerBase<CreateHospitalCommand>
     {
         private readonly IHospitalCapacityUow uow;

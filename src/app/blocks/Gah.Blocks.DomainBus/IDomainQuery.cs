@@ -1,4 +1,4 @@
-﻿namespace Gah.Blocks.EventBus
+﻿namespace Gah.Blocks.DomainBus
 {
     using MediatR;
 
