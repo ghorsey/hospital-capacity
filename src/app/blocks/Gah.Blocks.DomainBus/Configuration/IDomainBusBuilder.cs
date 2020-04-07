@@ -25,5 +25,15 @@
         IDomainBusBuilder AddQuery<TQuery, TQueryResponse, TQueryHandler>()
             where TQuery : IDomainQuery<TQueryResponse>
             where TQueryHandler : class, IDomainQueryHandler<TQuery, TQueryResponse>;
+
+        /// <summary>
+        /// Adds the event.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of the t event.</typeparam>
+        /// <typeparam name="TEventHandler">The type of the t event handler.</typeparam>
+        /// <returns>A/an <c>IEventBuilder</c>.</returns>
+        IDomainBusBuilder AddEvent<TEvent, TEventHandler>()
+            where TEvent : IDomainEvent
+            where TEventHandler : class, IDomainEventHandler<TEvent>;
     }
 }

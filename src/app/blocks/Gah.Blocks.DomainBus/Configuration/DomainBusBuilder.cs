@@ -55,5 +55,20 @@
             this.services.AddScoped<IRequestHandler<TQuery, TQueryResponse>, TQueryHandler>();
             return this;
         }
+
+        /// <summary>
+        /// Adds the event.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of the t event.</typeparam>
+        /// <typeparam name="TEventHandler">The type of the t event handler.</typeparam>
+        /// <returns>A/an <c>IEventBuilder</c>.</returns>
+        public IDomainBusBuilder AddEvent<TEvent, TEventHandler>()
+            where TEvent : IDomainEvent
+            where TEventHandler : class, IDomainEventHandler<TEvent>
+        {
+            this.services.AddScoped<INotificationHandler<TEvent>, TEventHandler>();
+
+            return this;
+        }
     }
 }

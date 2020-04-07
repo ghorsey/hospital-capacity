@@ -26,5 +26,17 @@
         /// <returns>A/an <c>Task</c>.</returns>
         Task ExecuteAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default)
             where TCommand : IDomainCommand;
+
+        /// <summary>
+        /// Publishes the asynchronous.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of the t event.</typeparam>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="events">The events.</param>
+        /// <returns>A/an <c>Task</c>.</returns>
+        Task PublishAsync<TEvent>(
+            CancellationToken cancellationToken = default,
+            params TEvent[] events)
+            where TEvent : IDomainEvent;
     }
 }
