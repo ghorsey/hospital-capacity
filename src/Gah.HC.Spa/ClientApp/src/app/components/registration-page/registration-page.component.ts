@@ -87,10 +87,10 @@ export class RegistrationPageComponent implements OnInit {
   private createUser(): void {
     this.userService.createUser(this.user).subscribe(
       (response: any) => {
-        if (response && response.success === false) {
-          this.showError = true;
-        } else {
+        if (response.success) {
           this.login();
+        } else {
+          this.showError = true;
         }
       },
       () => {
