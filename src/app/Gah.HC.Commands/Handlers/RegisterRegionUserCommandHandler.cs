@@ -7,7 +7,7 @@
     using Gah.Blocks.EventBus;
     using Gah.HC.Commands.Exceptions;
     using Gah.HC.Domain;
-    using Gah.HC.Repository.Sql;
+    using Gah.HC.Repository;
     using MediatR;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;

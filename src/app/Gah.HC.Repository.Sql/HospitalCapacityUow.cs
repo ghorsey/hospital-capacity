@@ -7,10 +7,10 @@
     /// <summary>
     /// Class HospitalCapacityUow.
     /// Implements the <see cref="Gah.HC.Repository.Sql.UnitOfWork{HospitalCapacityContext}" />
-    /// Implements the <see cref="Gah.HC.Repository.Sql.IHospitalCapacityUow" />.
+    /// Implements the <see cref="Gah.HC.Repository.IHospitalCapacityUow" />.
     /// </summary>
     /// <seealso cref="Gah.HC.Repository.Sql.UnitOfWork{HospitalCapacityContext}" />
-    /// <seealso cref="Gah.HC.Repository.Sql.IHospitalCapacityUow" />
+    /// <seealso cref="Gah.HC.Repository.IHospitalCapacityUow" />
     public class HospitalCapacityUow : UnitOfWork<HospitalCapacityContext>, IHospitalCapacityUow
     {
         /// <summary>

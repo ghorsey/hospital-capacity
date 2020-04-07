@@ -1,7 +1,6 @@
 ﻿using Gah.HC.Domain;
 using Gah.HC.Queries.Handlers;
 using Gah.HC.Repository;
-using Gah.HC.Repository.Sql;
 using Moq;
 using System.Threading.Tasks;
 using Xunit;

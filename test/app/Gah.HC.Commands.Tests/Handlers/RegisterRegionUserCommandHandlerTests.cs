@@ -3,7 +3,6 @@
     using Gah.HC.Commands.Handlers;
     using Gah.HC.Domain;
     using Gah.HC.Repository;
-    using Gah.HC.Repository.Sql;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;

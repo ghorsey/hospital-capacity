@@ -22,7 +22,7 @@
                 BedsInUse = inUse,
             };
 
-            hospital.CalculatePercentageAvailable();
+            hospital.CalculatePercentOfUsage();
 
             Assert.Equal(expectedPercentage, hospital.PercentOfUsage);
         }

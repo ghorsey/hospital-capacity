@@ -1,5 +1,4 @@
 ﻿using Gah.HC.Repository;
-using Gah.HC.Repository.Sql;
 using Microsoft.Extensions.Logging;
 using Moq;
 

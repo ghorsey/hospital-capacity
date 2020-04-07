@@ -70,7 +70,7 @@
         /// <summary>
         /// Calculates the percentage available.
         /// </summary>
-        public void CalculatePercentageAvailable()
+        public void CalculatePercentOfUsage()
         {
             this.PercentOfUsage = (int)Math.Round((100 / (decimal)this.BedCapacity) * this.BedsInUse);
         }

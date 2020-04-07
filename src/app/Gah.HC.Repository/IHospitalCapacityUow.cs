@@ -1,4 +1,4 @@
-﻿namespace Gah.HC.Repository.Sql
+﻿namespace Gah.HC.Repository
 {
     /// <summary>
     /// Interface IHospitalCapacityUow.

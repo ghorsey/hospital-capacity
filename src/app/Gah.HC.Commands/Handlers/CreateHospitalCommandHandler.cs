@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Gah.Blocks.EventBus;
     using Gah.HC.Domain;
-    using Gah.HC.Repository.Sql;
+    using Gah.HC.Repository;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -46,7 +46,7 @@
                 BedsInUse = command.Hospital.BedsInUse,
             };
 
-            capacity.CalculatePercentageAvailable();
+            capacity.CalculatePercentOfUsage();
 
             command.Hospital.PercentOfUsage = capacity.PercentOfUsage;
 

@@ -114,6 +114,24 @@
         }
 
         /// <summary>
+        /// rapid update as an asynchronous operation.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpPost("{idOrSlug}/rapid-update")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+#pragma warning disable IDE0060  // Remove unused parameter
+#pragma warning disable CA1801
+        public async Task<IActionResult> RapidUpdateAsync(RapidHospitalUpdateInput input, CancellationToken cancellationToken)
+#pragma warning restore CA1801 // Remove unused parameter
+#pragma warning restore IDE0060 // Remove unused parameter
+        {
+            // todo: need to implement.
+            return await Task.FromResult(this.NoContent());
+        }
+
+        /// <summary>
         /// get hospitals as an asynchronous operation.
         /// </summary>
         /// <param name="regionId">The region identifier.</param>
