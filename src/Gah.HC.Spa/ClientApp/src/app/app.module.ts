@@ -16,6 +16,7 @@ import { LogoutPageComponent } from './components/logout-page/logout-page.compon
 import { AuthGeneralGuardService } from './route-guards/auth-general-guard.service';
 import { RegistrationPageComponent } from './components/registration-page/registration-page.component';
 import { AboutPageComponent } from './components/about-page/about-page.component';
+import { HospitalPageComponent } from './components/hospital-page/hospital-page.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AboutPageComponent } from './components/about-page/about-page.component
     DashboardPageComponent,
     LogoutPageComponent,
     RegistrationPageComponent,
+    HospitalPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,7 +47,11 @@ import { AboutPageComponent } from './components/about-page/about-page.component
         path: 'dashboard',
         component: DashboardPageComponent,
         canActivate: [ AuthGeneralGuardService ]
-
+      },
+      {
+        path: 'hospital/:id',
+        component: HospitalPageComponent,
+        canActivate: [ AuthGeneralGuardService ]
       }
     ])
   ],
