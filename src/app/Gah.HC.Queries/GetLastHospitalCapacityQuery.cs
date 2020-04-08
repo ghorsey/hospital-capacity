@@ -6,15 +6,15 @@
     using Gah.HC.Domain;
 
     /// <inheritdoc/>
-    public class GetLastHospitalCapacity : DomainQueryBase<List<HospitalCapacity>>
+    public class GetLastHospitalCapacityQuery : DomainQueryBase<List<HospitalCapacity>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetLastHospitalCapacity"/> class.
+        /// Initializes a new instance of the <see cref="GetLastHospitalCapacityQuery"/> class.
         /// </summary>
         /// <param name="hospitalId">The hospital identifier.</param>
         /// <param name="maxRecentRecords">The maximum recent records.</param>
         /// <param name="correlationId">The correlation identifier.</param>
-        public GetLastHospitalCapacity(Guid hospitalId, int maxRecentRecords, string correlationId)
+        public GetLastHospitalCapacityQuery(Guid hospitalId, int maxRecentRecords, string correlationId)
             : base(correlationId)
         {
             this.HospitalId = hospitalId;

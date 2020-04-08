@@ -198,7 +198,7 @@ namespace Gah.HC.Spa
                 .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
                 .AddQuery<FindHospitalBySlugOrIdQuery, Hospital, FindHospitalBySlugOrIdQueryHandler>()
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
-                .AddQuery<GetLastHospitalCapacity, List<HospitalCapacity>, GetLastHospitalCapacityHandler>()
+                .AddQuery<GetLastHospitalCapacityQuery, List<HospitalCapacity>, GetLastHospitalCapacityQueryHandler>()
 
                 // Commands
                 .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>()

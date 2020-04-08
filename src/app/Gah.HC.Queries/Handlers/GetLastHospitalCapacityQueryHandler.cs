@@ -10,16 +10,16 @@
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc/>
-    public class GetLastHospitalCapacityHandler : DomainQueryHandlerBase<GetLastHospitalCapacity, List<HospitalCapacity>>
+    public class GetLastHospitalCapacityQueryHandler : DomainQueryHandlerBase<GetLastHospitalCapacityQuery, List<HospitalCapacity>>
     {
         private readonly IHospitalCapacityUow uow;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetLastHospitalCapacityHandler"/> class.
+        /// Initializes a new instance of the <see cref="GetLastHospitalCapacityQueryHandler"/> class.
         /// </summary>
         /// <param name="uow">The uow.</param>
         /// <param name="logger">The logger.</param>
-        public GetLastHospitalCapacityHandler(IHospitalCapacityUow uow, ILogger logger)
+        public GetLastHospitalCapacityQueryHandler(IHospitalCapacityUow uow, ILogger<GetLastHospitalCapacityQueryHandler> logger)
             : base(logger)
         {
             this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
@@ -34,7 +34,7 @@
         /// <exception cref="ArgumentNullException">request.</exception>
         /// <inheritdoc />
         public override Task<List<HospitalCapacity>> Handle(
-            GetLastHospitalCapacity request,
+            GetLastHospitalCapacityQuery request,
             CancellationToken cancellationToken)
         {
             request = request ?? throw new ArgumentNullException(nameof(request));

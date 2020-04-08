@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
@@ -120,9 +121,44 @@
             return this.Ok(result.MakeSuccessfulResult());
         }
 
-        [HttpGet("idOrSlug}")]
-        [ProducesResponseType(typeof(List<HospitalCapacity>), StatusCodes.Status200OK)]
+        /// <summary>
+        /// Gets the last recent capacity.
+        /// </summary>
+        /// <param name="idOrSlug">The identifier or slug.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="maxRecentRecords">The maximum recent records.</param>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpGet("{idOrSlug}/recent-capacity")]
+        [ProducesResponseType(typeof(List<HospitalCapacityDto>), StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLastRecentCapacity(
+            string idOrSlug,
+            CancellationToken cancellationToken,
+            [FromQuery] int maxRecentRecords = 30)
+        {
+            this.Logger.LogInformation($"Finding the last {maxRecentRecords} recent capacity records for hospital {idOrSlug}");
 
+            var hospitalQuery = this.MakeFindByIdOrSlugQuery(idOrSlug);
+            var hospital = await this.domainBus.ExecuteAsync(hospitalQuery, cancellationToken);
+
+            if (hospital == null)
+            {
+                return this.NotFound();
+            }
+
+            var query = new GetLastHospitalCapacityQuery(hospital.Id, maxRecentRecords, this.HttpContext.TraceIdentifier);
+
+            var result = await this.domainBus.ExecuteAsync(query, cancellationToken);
+
+            return this.Ok(result.Select(r => new HospitalCapacityDto
+            {
+                BedCapacity = r.BedCapacity,
+                BedsInUse = r.BedsInUse,
+                CreatedOn = r.CreatedOn,
+                HospitalId = r.HospitalId,
+                PercentOfUsage = r.PercentOfUsage,
+            }).ToList());
+        }
 
         /// <summary>
         /// Updates the hospital.
