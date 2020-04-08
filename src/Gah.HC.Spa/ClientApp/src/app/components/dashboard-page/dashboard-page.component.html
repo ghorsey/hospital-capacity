@@ -56,7 +56,7 @@
           <ngb-highlight [result]="hospital.phone" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="hospital.isCovid" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="hospital.isCovid ? 'Yes' : 'No'" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
           <ngb-highlight [result]="hospital.bedsInUse | number" [term]="filter.value"></ngb-highlight>
