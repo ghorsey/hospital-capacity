@@ -75,7 +75,7 @@
                 await this.uow.CommitAsync().ConfigureAwait(false);
 
                 var region = await this.uow.RegionRepository.FindAsync(hospital.RegionId, cancellationToken).ConfigureAwait(false);
-                var recentCapacity = await this.uow.HospitalCapacityRepository.GetRecent10Async(hospital.Id).ConfigureAwait(false);
+                var recentCapacity = await this.uow.HospitalCapacityRepository.GetRecentAsync(hospital.Id, 10).ConfigureAwait(false);
 
                 var hospitalChanged = new HospitalChangedEvent(hospital, region, recentCapacity, command.CorrelationId);
                 await this.domainBus.PublishAsync(cancellationToken, hospitalChanged).ConfigureAwait(false);

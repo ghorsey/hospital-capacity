@@ -26,14 +26,15 @@
         /// Gets the recent10 asynchronous.
         /// </summary>
         /// <param name="hospitalId">The hospital identifier.</param>
+        /// <param name="last">The last.</param>
         /// <returns>Task&lt;List&lt;HospitalCapacity&gt;&gt;.</returns>
-        public Task<List<HospitalCapacity>> GetRecent10Async(Guid hospitalId)
+        public Task<List<HospitalCapacity>> GetRecentAsync(Guid hospitalId, int last)
         {
             this.Logger.LogInformation($"Fetching recent 10 for {hospitalId}");
 
             return this.Entities.Where(e => e.HospitalId == hospitalId)
                 .OrderByDescending(e => e.CreatedOn)
-                .Take(10)
+                .Take(last)
                 .ToListAsync();
         }
     }

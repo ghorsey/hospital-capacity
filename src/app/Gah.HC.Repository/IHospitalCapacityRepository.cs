@@ -9,10 +9,11 @@
     public interface IHospitalCapacityRepository : IRepository<HospitalCapacity, Guid>
     {
         /// <summary>
-        /// Gets the recent10 asynchronous.
+        /// Gets the recent asynchronous.
         /// </summary>
         /// <param name="hospitalId">The hospital identifier.</param>
+        /// <param name="last">The last.</param>
         /// <returns>Task&lt;List&lt;HospitalCapacity&gt;&gt;.</returns>
-        public Task<List<HospitalCapacity>> GetRecent10Async(Guid hospitalId);
+        public Task<List<HospitalCapacity>> GetRecentAsync(Guid hospitalId, int last);
     }
 }
