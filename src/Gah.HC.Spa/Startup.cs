@@ -169,9 +169,14 @@ namespace Gah.HC.Spa
                 options.AddPolicy(
                     "AddHospital",
                     policy => policy.Requirements.Add(new CreateHospitalRequirement()));
+
+                options.AddPolicy(
+                    "RapidHospitalUpdateRequirement",
+                    policy => policy.Requirements.Add(new RapidHospitalUpdateRequirement()));
             });
 
             services.AddSingleton<IAuthorizationHandler, CreateHospitalRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, RapidHospitalUpdateRequirementHandler>();
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 

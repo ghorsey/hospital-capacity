@@ -131,6 +131,12 @@
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> RapidUpdateAsync(string idOrSlug, RapidHospitalUpdateInput input, CancellationToken cancellationToken)
         {
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new CreateHospitalRequirement());
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
+
             if (input == null)
             {
                 return this.BadRequest("Input cannot be null".MakeUnsuccessfulResult());
