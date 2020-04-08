@@ -7,6 +7,8 @@
     using Gah.HC.Commands;
     using Gah.HC.Commands.Exceptions;
     using Gah.HC.Domain;
+    using Gah.HC.Queries;
+    using Gah.HC.Spa.Authorization;
     using Gah.HC.Spa.Models.Authorization;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -27,6 +29,7 @@
         private readonly UserManager<AppUser> userManager;
         private readonly IDomainBus domainBus;
         private readonly SignInManager<AppUser> signInManager;
+        private readonly IAuthorizationService authorizationService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorizationController" /> class.
@@ -34,6 +37,7 @@
         /// <param name="userManager">The user manager.</param>
         /// <param name="signInManager">The sign in manager.</param>
         /// <param name="domainBus">The domain bus.</param>
+        /// <param name="authorizationService">The authorization service.</param>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">userManager
         /// or
@@ -42,12 +46,14 @@
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             IDomainBus domainBus,
+            IAuthorizationService authorizationService,
             ILogger<AuthorizationController> logger)
             : base(logger)
         {
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
+            this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
         }
 
         /// <summary>
@@ -106,6 +112,48 @@
         }
 
         /// <summary>
+        /// register hospital user as an asynchronous operation.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpPost("register/hospital")]
+        [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> RegisterHospitalUserAsync(RegisterHospitalUserInput input, CancellationToken cancellationToken)
+        {
+            if (input == null)
+            {
+                return this.BadRequest("input cannot be null".MakeUnsuccessfulResult());
+            }
+
+            this.Logger.LogInformation($"Registering hospital user for {input.HospitalId}");
+
+            if (input.HospitalId == Guid.Empty)
+            {
+                this.ModelState.AddModelError("HosptialId", "Guid cannot be an empty guid");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+            }
+
+            var cmd = new RegisterHospitalUserCommand(input.Email, input.Password, input.HospitalId);
+
+            await this.domainBus.ExecuteAsync(cmd, cancellationToken);
+            var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, this.HttpContext.TraceIdentifier));
+
+            var dto = new UserDto
+            {
+                HospitalId = user.HospitalId,
+                RegionId = user.RegionId,
+                UserType = user.UserType,
+            };
+
+            return this.Ok(dto.MakeSuccessfulResult());
+        }
+
+        /// <summary>
         /// Registers the region user.
         /// </summary>
         /// <param name="input">The input.</param>
@@ -116,12 +164,19 @@
         [AllowAnonymous]
         public async Task<IActionResult> RegisterRegionUserAsync(RegisterRegionUserInput input, CancellationToken cancellationToken)
         {
-            this.Logger.LogInformation("Registering a new Region User for ");
-
             if (input == null)
             {
                 return this.BadRequest("input cannot be null".MakeUnsuccessfulResult());
             }
+
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new RegisterHospitalUserRequirement());
+
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
+
+            this.Logger.LogInformation($"Registering a new Region User for {input.RegionName}");
 
             if (!this.ModelState.IsValid)
             {
@@ -133,8 +188,7 @@
             try
             {
                 await this.domainBus.ExecuteAsync(command, cancellationToken);
-
-                var user = await this.userManager.FindByNameAsync(input.Email);
+                var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, this.HttpContext.TraceIdentifier));
 
                 await this.signInManager.SignInAsync(user, isPersistent: false);
                 var dto = new UserDto

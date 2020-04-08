@@ -35,5 +35,13 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the hospital identifier.
+        /// </summary>
+        /// <value>The hospital identifier.</value>
+        [Required]
+        [Display(Name = "Hospital")]
+        public Guid HospitalId { get; set; } = Guid.Empty;
     }
 }

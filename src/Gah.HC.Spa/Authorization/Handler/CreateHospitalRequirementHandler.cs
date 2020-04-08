@@ -50,7 +50,7 @@
             }
 
             if (role.Value.Equals(AppUserType.Region.ToString(), StringComparison.OrdinalIgnoreCase) &&
-                context.User.FindFirst(ClaimsPrincipalFactory.RegionClaimType).Value.EndsWith(resource.RegionId.ToString(), StringComparison.OrdinalIgnoreCase))
+                context.User.FindFirst(ClaimsPrincipalFactory.RegionClaimType).Value.Equals(resource.RegionId.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 context.Succeed(requirement);
             }

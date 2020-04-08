@@ -199,10 +199,13 @@ namespace Gah.HC.Spa
                 .AddQuery<FindHospitalBySlugOrIdQuery, Hospital, FindHospitalBySlugOrIdQueryHandler>()
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
                 .AddQuery<GetLastHospitalCapacityQuery, List<HospitalCapacity>, GetLastHospitalCapacityQueryHandler>()
+                .AddQuery<FindUserByEmailQuery, AppUser, FindUserByEmailQueryHandler>()
 
                 // Commands
+                .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
                 .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>()
                 .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
+                .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
                 .AddCommand<RapidHospitalUpdateCommand, RapidHospitalUpdateCommandHandler>()
                 .AddCommand<CreateHospitalCommand, CreateHospitalCommandHandler>();
 
