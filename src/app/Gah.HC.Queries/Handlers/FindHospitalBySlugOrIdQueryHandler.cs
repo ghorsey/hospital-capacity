@@ -13,17 +13,17 @@
     /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />.
     /// </summary>
     /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />
-    public class FindBySlugOrIdQueryHandler : DomainQueryHandlerBase<FindBySlugOrIdQuery, Hospital>
+    public class FindHospitalBySlugOrIdQueryHandler : DomainQueryHandlerBase<FindHospitalBySlugOrIdQuery, Hospital>
     {
         private readonly IHospitalCapacityUow uow;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FindBySlugOrIdQueryHandler"/> class.
+        /// Initializes a new instance of the <see cref="FindHospitalBySlugOrIdQueryHandler"/> class.
         /// </summary>
         /// <param name="uow">The uow.</param>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">uow.</exception>
-        public FindBySlugOrIdQueryHandler(IHospitalCapacityUow uow, ILogger<FindBySlugOrIdQueryHandler> logger)
+        public FindHospitalBySlugOrIdQueryHandler(IHospitalCapacityUow uow, ILogger<FindHospitalBySlugOrIdQueryHandler> logger)
             : base(logger)
         {
             this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
@@ -37,7 +37,7 @@
         /// <returns>Task&lt;Hospital&gt;.</returns>
         /// <exception cref="ArgumentNullException">request.</exception>
         /// <inheritdoc />
-        public override async Task<Hospital> Handle(FindBySlugOrIdQuery request, CancellationToken cancellationToken)
+        public override async Task<Hospital> Handle(FindHospitalBySlugOrIdQuery request, CancellationToken cancellationToken)
         {
             request = request ?? throw new ArgumentNullException(nameof(request));
             this.Logger.LogInformation($"Finding hospital with id: {request.Id} or slug: {request.Slug}");

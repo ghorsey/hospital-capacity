@@ -55,7 +55,7 @@
 
             var domainBusMock = new Mock<IDomainBus>(MockBehavior.Strict);
 
-            domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindBySlugOrIdQuery>(q => q.Id == input), default))
+            domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindHospitalBySlugOrIdQuery>(q => q.Id == input), default))
                 .ReturnsAsync(hospital);
 
             var c = new HospitalsController(
@@ -86,7 +86,7 @@
 
             var domainBusMock = new Mock<IDomainBus>(MockBehavior.Strict);
 
-            domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindBySlugOrIdQuery>(q => q.Slug == input), default))
+            domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindHospitalBySlugOrIdQuery>(q => q.Slug == input), default))
                 .ReturnsAsync(hospital);
 
             var c = new HospitalsController(

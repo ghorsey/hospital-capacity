@@ -191,7 +191,7 @@ namespace Gah.HC.Spa
 
                 // Queryies
                 .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
-                .AddQuery<FindBySlugOrIdQuery, Hospital, FindBySlugOrIdQueryHandler>()
+                .AddQuery<FindHospitalBySlugOrIdQuery, Hospital, FindHospitalBySlugOrIdQueryHandler>()
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
 
                 // Commands

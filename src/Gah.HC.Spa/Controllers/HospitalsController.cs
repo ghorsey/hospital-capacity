@@ -213,17 +213,17 @@
         /// </summary>
         /// <param name="idOrSlug">The identifier or slug.</param>
         /// <returns>Gah.HC.Queries.FindBySlugOrIdQuery.</returns>
-        private FindBySlugOrIdQuery MakeFindByIdOrSlugQuery(string idOrSlug)
+        private FindHospitalBySlugOrIdQuery MakeFindByIdOrSlugQuery(string idOrSlug)
         {
-            FindBySlugOrIdQuery q;
+            FindHospitalBySlugOrIdQuery q;
 
             if (Guid.TryParse(idOrSlug, out var id))
             {
-                q = new FindBySlugOrIdQuery(this.HttpContext.TraceIdentifier, id: id);
+                q = new FindHospitalBySlugOrIdQuery(this.HttpContext.TraceIdentifier, id: id);
             }
             else
             {
-                q = new FindBySlugOrIdQuery(this.HttpContext.TraceIdentifier, slug: idOrSlug);
+                q = new FindHospitalBySlugOrIdQuery(this.HttpContext.TraceIdentifier, slug: idOrSlug);
             }
 
             return q;

@@ -67,7 +67,7 @@
             }
 
             var hospital = await this.domainBus.ExecuteAsync(
-                new FindBySlugOrIdQuery(
+                new FindHospitalBySlugOrIdQuery(
                     this.httpContextAccessor.HttpContext.TraceIdentifier,
                     id: resource.Id));
 

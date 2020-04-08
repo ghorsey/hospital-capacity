@@ -9,15 +9,15 @@
     /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryBase{Hospital}" />.
     /// </summary>
     /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryBase{Hospital}" />
-    public class FindBySlugOrIdQuery : DomainQueryBase<Hospital>
+    public class FindHospitalBySlugOrIdQuery : DomainQueryBase<Hospital>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FindBySlugOrIdQuery"/> class.
+        /// Initializes a new instance of the <see cref="FindHospitalBySlugOrIdQuery"/> class.
         /// </summary>
         /// <param name="correlationId">The correlation identifier.</param>
         /// <param name="id">The identifier.</param>
         /// <param name="slug">The slug.</param>
-        public FindBySlugOrIdQuery(string correlationId, Guid? id = null, string slug = "")
+        public FindHospitalBySlugOrIdQuery(string correlationId, Guid? id = null, string slug = "")
             : base(correlationId)
         {
             if ((id == null || id == Guid.Empty) && string.IsNullOrWhiteSpace(slug))
