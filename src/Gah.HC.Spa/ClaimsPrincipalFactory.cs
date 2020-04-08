@@ -15,6 +15,16 @@
     public class ClaimsPrincipalFactory : UserClaimsPrincipalFactory<AppUser>
     {
         /// <summary>
+        /// The hospital claim type.
+        /// </summary>
+        public const string HospitalClaimType = "HospitalId";
+
+        /// <summary>
+        /// The region claim type.
+        /// </summary>
+        public const string RegionClaimType = "RegionId";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ClaimsPrincipalFactory"/> class.
         /// </summary>
         /// <param name="userManager">The <see cref="Microsoft.AspNetCore.Identity.UserManager{T}" /> to retrieve user information from.</param>

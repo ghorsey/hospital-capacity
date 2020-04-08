@@ -47,6 +47,7 @@
 
             var capacity = new HospitalCapacity
             {
+                HospitalId = command.Hospital.Id,
                 BedCapacity = command.Hospital.BedCapacity,
                 BedsInUse = command.Hospital.BedsInUse,
             };
@@ -57,8 +58,8 @@
 
             await this.uow.ExecuteInResilientTransactionAsync(async () =>
             {
-                await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
                 await this.uow.HospitalRepository.AddAsync(command.Hospital).ConfigureAwait(false);
+                await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
                 await this.uow.CommitAsync().ConfigureAwait(false);
 
                 var region = await this.uow.RegionRepository.FindAsync(command.Hospital.RegionId).ConfigureAwait(false);

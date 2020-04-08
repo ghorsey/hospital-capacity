@@ -8,6 +8,7 @@
     using Gah.HC.Commands;
     using Gah.HC.Domain;
     using Gah.HC.Queries;
+    using Gah.HC.Spa.Authorization;
     using Gah.HC.Spa.Models.Hospitals;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -25,16 +26,24 @@
     public class HospitalsController : BaseController
     {
         private readonly IDomainBus domainBus;
+        private readonly IAuthorizationService authorizationService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HospitalsController" /> class.
         /// </summary>
+        /// <param name="authorizationService">The authorization service.</param>
         /// <param name="domainBus">The domain bus.</param>
         /// <param name="logger">The logger.</param>
-        public HospitalsController(IDomainBus domainBus, ILogger<HospitalsController> logger)
+        /// <exception cref="ArgumentNullException">
+        /// domainBus
+        /// or
+        /// authorizationService.
+        /// </exception>
+        public HospitalsController(IAuthorizationService authorizationService, IDomainBus domainBus, ILogger<HospitalsController> logger)
             : base(logger)
         {
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
+            this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
         }
 
         /// <summary>
@@ -48,6 +57,12 @@
         public async Task<IActionResult> CreateHospitalAsync([FromBody] CreateHospitalInput input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Creating a hospital");
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new AddHospitalRequirement());
+
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
 
             if (input == null)
             {

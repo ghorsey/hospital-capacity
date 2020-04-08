@@ -14,7 +14,10 @@ namespace Gah.HC.Spa
     using Gah.HC.Repository;
     using Gah.HC.Repository.Sql;
     using Gah.HC.Repository.Sql.Data;
+    using Gah.HC.Spa.Authorization;
+    using Gah.HC.Spa.Authorization.Handler;
     using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -161,6 +164,15 @@ namespace Gah.HC.Spa
                 options.SlidingExpiration = true;
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "AddHospital",
+                    policy => policy.Requirements.Add(new AddHospitalRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, AddHospitalRequirementHandler>();
+
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, ClaimsPrincipalFactory>();
@@ -179,7 +191,8 @@ namespace Gah.HC.Spa
 
                 // Commands
                 .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
-                .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>();
+                .AddCommand<RapidHospitalUpdateCommand, RapidHospitalUpdateCommandHandler>()
+                .AddCommand<CreateHospitalCommand, CreateHospitalCommandHandler>();
 
             services.AddSwaggerGen(c =>
             {

@@ -6,6 +6,7 @@
     using Gah.HC.Queries;
     using Gah.HC.Spa.Controllers;
     using Gah.HC.Spa.Models.Hospitals;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Moq;
@@ -28,7 +29,10 @@
             domainBusMock.Setup(b => b.ExecuteAsync(It.Is<CreateHospitalCommand>(c => c.Hospital.Address1 == input.Address1), default))
                 .Returns(Task.CompletedTask);
 
-            var c = new HospitalsController(domainBusMock.Object, new Mock<ILogger<HospitalsController>>().Object);
+            var c = new HospitalsController(
+                new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
+                domainBusMock.Object,
+                new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
 
             var response = await c.CreateHospitalAsync(input, default) as OkObjectResult;
@@ -54,7 +58,10 @@
             domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindBySlugOrIdQuery>(q => q.Id == input), default))
                 .ReturnsAsync(hospital);
 
-            var c = new HospitalsController(domainBusMock.Object, new Mock<ILogger<HospitalsController>>().Object);
+            var c = new HospitalsController(
+                new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
+                domainBusMock.Object,
+                new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
 
 
@@ -82,9 +89,11 @@
             domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindBySlugOrIdQuery>(q => q.Slug == input), default))
                 .ReturnsAsync(hospital);
 
-            var c = new HospitalsController(domainBusMock.Object, new Mock<ILogger<HospitalsController>>().Object);
+            var c = new HospitalsController(
+                new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
+                domainBusMock.Object,
+                new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
-
 
             var response = await c.GetHospitalAsync(input.ToString(), default) as OkObjectResult;
 
@@ -110,7 +119,10 @@
             domainBusMock.Setup(b => b.ExecuteAsync(It.Is<FindHospitalsQuery>(q => q.RegionId == regionId), default))
                 .ReturnsAsync(expected);
 
-            var c = new HospitalsController(domainBusMock.Object, new Mock<ILogger<HospitalsController>>().Object);
+            var c = new HospitalsController(
+                new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
+                domainBusMock.Object,
+                new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
 
             var response = await c.GetHospitalsAsync(regionId) as OkObjectResult;

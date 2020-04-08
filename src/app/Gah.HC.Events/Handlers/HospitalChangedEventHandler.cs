@@ -95,7 +95,7 @@
 
             int GetCapacity(int number)
             {
-                if (number >= notification.Capacity.Count)
+                if (number > notification.Capacity.Count)
                 {
                     return 0;
                 }
@@ -105,7 +105,7 @@
 
             int GetUsed(int number)
             {
-                if (number >= notification.Capacity.Count)
+                if (number > notification.Capacity.Count)
                 {
                     return 0;
                 }
