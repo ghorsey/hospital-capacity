@@ -167,16 +167,21 @@ namespace Gah.HC.Spa
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(
-                    "AddHospital",
+                    "AddHospitalPolicy",
                     policy => policy.Requirements.Add(new CreateHospitalRequirement()));
 
                 options.AddPolicy(
-                    "RapidHospitalUpdateRequirement",
+                    "RapidHospitalUpdatePolicy",
                     policy => policy.Requirements.Add(new RapidHospitalUpdateRequirement()));
+
+                options.AddPolicy(
+                    "UpdateHospitalPolicy",
+                    policy => policy.Requirements.Add(new UpdateHospitalRequirement()));
             });
 
             services.AddSingleton<IAuthorizationHandler, CreateHospitalRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, RapidHospitalUpdateRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, UpdateHospitalRequirementHandler>();
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
@@ -195,6 +200,7 @@ namespace Gah.HC.Spa
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
 
                 // Commands
+                .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>()
                 .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
                 .AddCommand<RapidHospitalUpdateCommand, RapidHospitalUpdateCommandHandler>()
                 .AddCommand<CreateHospitalCommand, CreateHospitalCommandHandler>();

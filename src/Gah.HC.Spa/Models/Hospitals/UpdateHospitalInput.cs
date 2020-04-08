@@ -4,9 +4,9 @@
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>
-    /// Class CreateHospitalInput.
+    /// Class UpdateHospitalInput.
     /// </summary>
-    public class CreateHospitalInput
+    public class UpdateHospitalInput
     {
         /// <summary>
         /// Gets or sets the name.
@@ -85,12 +85,5 @@
         /// <value><c>true</c> if this instance is covid; otherwise, <c>false</c>.</value>
         [Required]
         public bool IsCovid { get; set; }
-
-        /// <summary>
-        /// Gets or sets the region identifier.
-        /// </summary>
-        /// <value>The region identifier.</value>
-        [Required]
-        public Guid RegionId { get; set; }
     }
 }

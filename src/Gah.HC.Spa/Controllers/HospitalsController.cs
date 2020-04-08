@@ -20,7 +20,7 @@
     /// Implements the <see cref="Gah.HC.Spa.Controllers.BaseController" />.
     /// </summary>
     /// <seealso cref="Gah.HC.Spa.Controllers.BaseController" />
-    [Route("api/[controller]")]
+    [Route("api/hospitals")]
     [ApiController]
     [Authorize]
     public class HospitalsController : BaseController
@@ -118,6 +118,57 @@
             }
 
             return this.Ok(result.MakeSuccessfulResult());
+        }
+
+        /// <summary>
+        /// Updates the hospital.
+        /// </summary>
+        /// <param name="idOrSlug">The identifier or slug.</param>
+        /// <param name="input">The input.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpPut("{idOrSlug}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateHospital(string idOrSlug, UpdateHospitalInput input, CancellationToken cancellationToken)
+        {
+            if (input == null)
+            {
+                return this.BadRequest("Input cannot be null".MakeUnsuccessfulResult());
+            }
+
+            this.Logger.LogInformation($"Updating hosptial {idOrSlug}");
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+            }
+
+            var hospital = await this.domainBus.ExecuteAsync(this.MakeFindByIdOrSlugQuery(idOrSlug), cancellationToken);
+
+            // TODO: use auto mapper for this mappings...
+            hospital.Name = input.Name;
+            hospital.Address1 = input.Address1;
+            hospital.Address2 = input.Address2;
+            hospital.City = input.City;
+            hospital.State = input.State;
+            hospital.PostalCode = input.PostalCode;
+            hospital.Phone = input.Phone;
+            hospital.BedCapacity = input.BedCapacity;
+            hospital.BedsInUse = input.BedsInUse;
+            hospital.IsCovid = input.IsCovid;
+
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, hospital, new UpdateHospitalRequirement());
+
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
+
+            var command = new UpdateHospitalCommand(hospital, this.HttpContext.TraceIdentifier);
+
+            await this.domainBus.ExecuteAsync(command, cancellationToken);
+
+            return this.NoContent();
         }
 
         /// <summary>

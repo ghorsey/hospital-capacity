@@ -7,55 +7,63 @@
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
-    using Gah.HC.Queries;
     using Gah.HC.Spa.Models.Hospitals;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// Class EditHospitalRequirementHandler.
-    /// Implements the <see cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{EditHospitalRequirement, RapidHospitalUpdateInput}" />.
+    /// Class UpdateHospitalRequirementHandler.
+    /// Implements the <see cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{UpdateHospitalRequirement, UpdateHospitalInput}" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{RapidHospitalUpdateRequirement, RapidHospitalUpdateInput}" />
-    public class RapidHospitalUpdateRequirementHandler : AuthorizationHandler<RapidHospitalUpdateRequirement, RapidHospitalUpdateInput>
+    /// <seealso cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{UpdateHospitalRequirement, UpdateHospitalInput}" />
+    public class UpdateHospitalRequirementHandler : AuthorizationHandler<UpdateHospitalRequirement, Hospital>
     {
-        private readonly ILogger<RapidHospitalUpdateRequirementHandler> logger;
+        private readonly ILogger<UpdateHospitalRequirementHandler> logger;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IDomainBus domainBus;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RapidHospitalUpdateRequirementHandler" /> class.
+        /// Initializes a new instance of the <see cref="UpdateHospitalRequirementHandler"/> class.
         /// </summary>
-        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         /// <param name="domainBus">The domain bus.</param>
+        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="ArgumentNullException">logger.</exception>
-        public RapidHospitalUpdateRequirementHandler(
-            IHttpContextAccessor httpContextAccessor,
+        /// <exception cref="ArgumentNullException">
+        /// domainBus
+        /// or
+        /// httpContextAccessor
+        /// or
+        /// logger.
+        /// </exception>
+        public UpdateHospitalRequirementHandler(
             IDomainBus domainBus,
-            ILogger<RapidHospitalUpdateRequirementHandler> logger)
+            IHttpContextAccessor httpContextAccessor,
+            ILogger<UpdateHospitalRequirementHandler> logger)
         {
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
             this.httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
-        /// Makes a decision if authorization is allowed based on a specific requirement and resource.
+        /// handle requirement as an asynchronous operation.
         /// </summary>
         /// <param name="context">The authorization context.</param>
         /// <param name="requirement">The requirement to evaluate.</param>
         /// <param name="resource">The resource to evaluate.</param>
         /// <returns>Task.</returns>
-        protected override async Task HandleRequirementAsync(
+        /// <exception cref="ArgumentNullException">context
+        /// or
+        /// resource.</exception>
+        protected override Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
-            RapidHospitalUpdateRequirement requirement,
-            RapidHospitalUpdateInput resource)
+            UpdateHospitalRequirement requirement,
+            Hospital resource)
         {
             context = context ?? throw new ArgumentNullException(nameof(context));
             resource = resource ?? throw new ArgumentNullException(nameof(resource));
-            this.logger.LogInformation($"Performing rapid update for hospital {resource.Id}");
+            this.logger.LogInformation($"Checking if user has access to update hospital: {resource.Id}");
 
             var role = context.User.FindFirst(ClaimTypes.Role);
 
@@ -63,29 +71,26 @@
             {
                 this.logger.LogInformation("Access grandted to super user");
                 context.Succeed(requirement);
-                return;
+                return Task.CompletedTask;
             }
 
-            var hospital = await this.domainBus.ExecuteAsync(
-                new FindHospitalBySlugOrIdQuery(
-                    this.httpContextAccessor.HttpContext.TraceIdentifier,
-                    id: resource.Id));
-
             if (role.Value.Equals(AppUserType.Region.ToString(), StringComparison.OrdinalIgnoreCase) &&
-                context.User.FindFirst(ClaimsPrincipalFactory.RegionClaimType).Value.EndsWith(hospital.RegionId.ToString(), StringComparison.OrdinalIgnoreCase))
+                context.User.FindFirst(ClaimsPrincipalFactory.RegionClaimType).Value.EndsWith(resource.RegionId.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 this.logger.LogInformation("Access granted to region user");
                 context.Succeed(requirement);
-                return;
+                return Task.CompletedTask;
             }
 
             if (role.Value.Equals(AppUserType.Hospital.ToString(), StringComparison.OrdinalIgnoreCase) &&
-                context.User.FindFirst(ClaimsPrincipalFactory.HospitalClaimType).Value.EndsWith(hospital.Id.ToString(), StringComparison.OrdinalIgnoreCase))
+                context.User.FindFirst(ClaimsPrincipalFactory.HospitalClaimType).Value.EndsWith(resource.Id.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 this.logger.LogInformation("Access granted to hospital user");
                 context.Succeed(requirement);
-                return;
+                return Task.CompletedTask;
             }
+
+            return Task.CompletedTask; // failed checks.
         }
     }
 }
