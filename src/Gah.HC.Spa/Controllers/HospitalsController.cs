@@ -120,6 +120,10 @@
             return this.Ok(result.MakeSuccessfulResult());
         }
 
+        [HttpGet("idOrSlug}")]
+        [ProducesResponseType(typeof(List<HospitalCapacity>), StatusCodes.Status200OK)]
+
+
         /// <summary>
         /// Updates the hospital.
         /// </summary>
