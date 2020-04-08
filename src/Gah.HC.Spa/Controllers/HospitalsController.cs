@@ -57,7 +57,7 @@
         public async Task<IActionResult> CreateHospitalAsync([FromBody] CreateHospitalInput input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Creating a hospital");
-            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new AddHospitalRequirement());
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new CreateHospitalRequirement());
 
             if (!authResult.Succeeded)
             {

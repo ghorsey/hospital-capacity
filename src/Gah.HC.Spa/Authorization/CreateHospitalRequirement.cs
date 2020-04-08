@@ -3,11 +3,11 @@
     using Microsoft.AspNetCore.Authorization;
 
     /// <summary>
-    /// Class EditHospitalRequirement.
+    /// Class AddHospital.
     /// Implements the <see cref="Microsoft.AspNetCore.Authorization.IAuthorizationRequirement" />.
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Authorization.IAuthorizationRequirement" />
-    public class EditHospitalRequirement : IAuthorizationRequirement
+    public class CreateHospitalRequirement : IAuthorizationRequirement
     {
     }
 }

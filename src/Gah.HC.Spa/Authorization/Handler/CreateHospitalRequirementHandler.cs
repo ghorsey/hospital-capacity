@@ -15,16 +15,16 @@
     /// Implements the <see cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{AddHospitalRequirement, CreateHospitalInput}" />.
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{AddHospitalRequirement, CreateHospitalInput}" />
-    public class AddHospitalRequirementHandler : AuthorizationHandler<AddHospitalRequirement, CreateHospitalInput>
+    public class CreateHospitalRequirementHandler : AuthorizationHandler<CreateHospitalRequirement, CreateHospitalInput>
     {
-        private ILogger<AddHospitalRequirementHandler> logger;
+        private ILogger<CreateHospitalRequirementHandler> logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AddHospitalRequirementHandler" /> class.
+        /// Initializes a new instance of the <see cref="CreateHospitalRequirementHandler" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">logger.</exception>
-        public AddHospitalRequirementHandler(ILogger<AddHospitalRequirementHandler> logger)
+        public CreateHospitalRequirementHandler(ILogger<CreateHospitalRequirementHandler> logger)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -36,11 +36,11 @@
         /// <param name="requirement">The requirement to evaluate.</param>
         /// <param name="resource">The resource to evaluate.</param>
         /// <returns>System.Threading.Tasks.Task.</returns>
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AddHospitalRequirement requirement, CreateHospitalInput resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CreateHospitalRequirement requirement, CreateHospitalInput resource)
         {
             context = context ?? throw new ArgumentNullException(nameof(context));
             resource = resource ?? throw new ArgumentNullException(nameof(resource));
-            this.logger.LogInformation("Handling requirement addhospitalrequirement");
+            this.logger.LogInformation("Handling requirement AddEditHospitalRequirement");
 
             var role = context.User.FindFirst(ClaimTypes.Role);
 

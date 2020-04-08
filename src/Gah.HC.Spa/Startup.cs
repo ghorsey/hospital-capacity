@@ -168,10 +168,10 @@ namespace Gah.HC.Spa
             {
                 options.AddPolicy(
                     "AddHospital",
-                    policy => policy.Requirements.Add(new AddHospitalRequirement()));
+                    policy => policy.Requirements.Add(new CreateHospitalRequirement()));
             });
 
-            services.AddSingleton<IAuthorizationHandler, AddHospitalRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, CreateHospitalRequirementHandler>();
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
