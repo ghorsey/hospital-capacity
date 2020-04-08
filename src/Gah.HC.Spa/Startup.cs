@@ -200,15 +200,15 @@ namespace Gah.HC.Spa
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
                 .AddQuery<GetLastHospitalCapacityQuery, List<HospitalCapacity>, GetLastHospitalCapacityQueryHandler>()
                 .AddQuery<FindUserByEmailQuery, AppUser, FindUserByEmailQueryHandler>()
+                .AddQuery<FindUserByClaimsPrincipalQuery, AppUser, FindUserByClaimsPrincipalQueryHandler>()
 
                 // Commands
-                .AddCommand<RegisterSuperUserCommand, RegisterSuperUserCommandHandler>()
-                .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
-                .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>()
-                .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
-                .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
+                .AddCommand<CreateHospitalCommand, CreateHospitalCommandHandler>()
                 .AddCommand<RapidHospitalUpdateCommand, RapidHospitalUpdateCommandHandler>()
-                .AddCommand<CreateHospitalCommand, CreateHospitalCommandHandler>();
+                .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
+                .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
+                .AddCommand<RegisterSuperUserCommand, RegisterSuperUserCommandHandler>()
+                .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>();
 
             services.AddSwaggerGen(c =>
             {
