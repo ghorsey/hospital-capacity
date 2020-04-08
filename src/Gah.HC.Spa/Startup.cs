@@ -202,6 +202,7 @@ namespace Gah.HC.Spa
                 .AddQuery<FindUserByEmailQuery, AppUser, FindUserByEmailQueryHandler>()
 
                 // Commands
+                .AddCommand<RegisterSuperUserCommand, RegisterSuperUserCommandHandler>()
                 .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
                 .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>()
                 .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()

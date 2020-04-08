@@ -26,7 +26,6 @@
     [Route("api/authorization")]
     public class AuthorizationController : BaseController
     {
-        private readonly UserManager<AppUser> userManager;
         private readonly IDomainBus domainBus;
         private readonly SignInManager<AppUser> signInManager;
         private readonly IAuthorizationService authorizationService;
@@ -34,7 +33,6 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorizationController" /> class.
         /// </summary>
-        /// <param name="userManager">The user manager.</param>
         /// <param name="signInManager">The sign in manager.</param>
         /// <param name="domainBus">The domain bus.</param>
         /// <param name="authorizationService">The authorization service.</param>
@@ -43,14 +41,12 @@
         /// or
         /// signInManager.</exception>
         public AuthorizationController(
-            UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             IDomainBus domainBus,
             IAuthorizationService authorizationService,
             ILogger<AuthorizationController> logger)
             : base(logger)
         {
-            this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
             this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
@@ -65,7 +61,7 @@
         [HttpPost("register/super")]
         [Authorize(Roles="Admin")]
         [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> RegisterSuperUser(RegisterSuperUserInput input, CancellationToken cancellationToken)
+        public async Task<IActionResult> RegisterSuperUserAsync(RegisterSuperUserInput input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Registering a super user");
 
@@ -79,36 +75,33 @@
                 this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
             }
 
-            var user = new AppUser
-            {
-                UserName = input.Email,
-                UserType = AppUserType.Admin,
-            };
-
             cancellationToken.ThrowIfCancellationRequested();
 
-            var result = await this.userManager.CreateAsync(user, input.Password);
-
-            if (!result.Succeeded)
+            try
             {
-                foreach (var error in result.Errors)
+                var corrId = this.HttpContext.TraceIdentifier;
+                await this.domainBus.ExecuteAsync(new RegisterSuperUserCommand(input.Email, input.Password, corrId), cancellationToken);
+                var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, corrId), cancellationToken);
+                await this.signInManager.SignInAsync(user, isPersistent: false);
+
+                var dto = new UserDto
+                {
+                    UserType = user.UserType,
+                    RegionId = user.RegionId,
+                    HospitalId = user.HospitalId,
+                };
+
+                return this.Ok(dto.MakeSuccessfulResult());
+            }
+            catch (UserCreationException ex)
+            {
+                foreach (var error in ex.Errors)
                 {
                     this.ModelState.AddModelError(string.Empty, error.Description);
                 }
 
                 return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
             }
-
-            await this.signInManager.SignInAsync(user, isPersistent: false);
-
-            var dto = new UserDto
-            {
-                UserType = user.UserType,
-                RegionId = user.RegionId,
-                HospitalId = user.HospitalId,
-            };
-
-            return this.Ok(dto.MakeSuccessfulResult());
         }
 
         /// <summary>
@@ -220,7 +213,7 @@
         [HttpPost("login")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> LoginUser(LoginModel input, CancellationToken cancellationToken)
+        public async Task<IActionResult> LoginUserAsync(LoginModel input, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Attempting to log in a user");
 
@@ -253,14 +246,19 @@
         /// <summary>
         /// Gets me.
         /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpGet("me")]
         [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetMe()
+        public async Task<IActionResult> GetMeAsync(CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Getting own record");
 
-            var result = await this.userManager.GetUserAsync(this.User);
+            var result = await this.domainBus.ExecuteAsync(
+                new FindUserByClaimsPrincipalQuery(
+                    this.User,
+                    this.HttpContext.TraceIdentifier),
+                cancellationToken);
 
             var dto = new UserDto
             {
@@ -278,7 +276,7 @@
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPost("logout")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> LogOut()
+        public async Task<IActionResult> LogOutAsync()
         {
             await this.signInManager.SignOutAsync();
 
