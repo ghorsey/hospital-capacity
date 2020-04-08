@@ -31,7 +31,7 @@ export class DashboardPageComponent implements OnInit {
         hospital.state.toLowerCase().includes(term) ||
         hospital.postalCode.toLowerCase().includes(term) ||
         hospital.phone.toLowerCase().includes(term) ||
-        hospital.isCovid.toString().toLowerCase().includes(term) ||
+        (hospital.isCovid ? 'Yes' : 'No').toLowerCase().includes(term) ||
         hospital.bedsInUse.toString().toLowerCase().includes(term) ||
         hospital.bedCapacity.toString().toLowerCase().includes(term) ||
         hospital.percentOfUsage.toString().toLowerCase().includes(term) ||
