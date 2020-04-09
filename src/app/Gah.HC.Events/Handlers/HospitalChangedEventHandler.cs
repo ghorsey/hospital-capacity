@@ -90,7 +90,7 @@
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            await this.uow.HospitalViewRepository.AddAsync(view).ConfigureAwait(false);
+            await this.uow.HospitalViewRepository.UpdateAsync(view).ConfigureAwait(false);
             await this.uow.CommitAsync().ConfigureAwait(false);
 
             int GetCapacity(int number)
