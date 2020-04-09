@@ -22,7 +22,7 @@
         /// </summary>
         /// <param name="userManager">The user manager.</param>
         /// <param name="logger">The logger.</param>
-        public FindUserByClaimsPrincipalQueryHandler(UserManager<AppUser> userManager, ILogger logger)
+        public FindUserByClaimsPrincipalQueryHandler(UserManager<AppUser> userManager, ILogger<FindUserByEmailQueryHandler> logger)
             : base(logger)
         {
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));

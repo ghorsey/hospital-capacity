@@ -23,7 +23,7 @@
         /// </summary>
         /// <param name="userManager">The user manager.</param>
         /// <param name="logger">The logger.</param>
-        public ChangeUserPasswordCommandHandler(UserManager<AppUser> userManager, ILogger logger)
+        public ChangeUserPasswordCommandHandler(UserManager<AppUser> userManager, ILogger<ChangeUserPasswordCommandHandler> logger)
             : base(logger)
         {
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
