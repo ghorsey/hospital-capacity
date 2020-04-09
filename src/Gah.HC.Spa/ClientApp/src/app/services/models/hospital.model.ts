@@ -1,5 +1,6 @@
 export class Hospital {
   constructor(
+    public slug: string = '',
     public name: string = '',
     public address1: string = '',
     public address2: string = '',
@@ -13,8 +14,9 @@ export class Hospital {
     public percentOfUsage: number = 0,
     public createdOn: string = '',
     public updatedOn: string = '',
-    public slug: string = '',
     public regionId: string = '',
-    public regionName: string = ''
+    public regionName: string = '',
+    public region?: any,
+    public id?: string,
   ) {}
 }

@@ -19,7 +19,6 @@ export class NavMenuComponent implements OnInit, OnDestroy {
     this.isLoggedOn = this.authenticationService.isLoggedOn();
     this.siginChanged$ = this.authenticationService.signInChangedEvent.subscribe(
       (isLoggedOn: boolean) => {
-        debugger;
         this.isLoggedOn = isLoggedOn;
       }
     );

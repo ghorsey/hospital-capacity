@@ -5,6 +5,7 @@ import { Hospital } from 'src/app/services/models/hospital.model';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { Result } from 'src/app/services/models/result';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -17,7 +18,7 @@ export class DashboardPageComponent implements OnInit {
   filter = new FormControl('');
   showError = false;
 
-  constructor(private hospitalService: HospitalService) {}
+  constructor(private hospitalService: HospitalService, private router: Router) {}
 
   private search(text: string): Hospital[] {
     return this.hospitals.filter((hospital) => {
@@ -38,6 +39,10 @@ export class DashboardPageComponent implements OnInit {
         hospital.updatedOn.toString().toLowerCase().includes(term)
       );
     });
+  }
+
+  edit(slug: string): void {
+    this.router.navigate(['/hospital', slug]);
   }
 
   ngOnInit(): void {
