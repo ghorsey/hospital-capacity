@@ -15,6 +15,12 @@
         public AppUserType UserType { get; set; }
 
         /// <summary>
+        /// Gets or sets the user name.
+        /// </summary>
+        /// <value>The user name.</value>
+        public string UserName { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets the region identifier.
         /// </summary>
         /// <value>The region identifier.</value>

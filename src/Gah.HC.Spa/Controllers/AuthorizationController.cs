@@ -89,6 +89,7 @@
                     UserType = user.UserType,
                     RegionId = user.RegionId,
                     HospitalId = user.HospitalId,
+                    UserName = user.UserName,
                 };
 
                 return this.Ok(dto.MakeSuccessfulResult());
@@ -141,6 +142,7 @@
                 HospitalId = user.HospitalId,
                 RegionId = user.RegionId,
                 UserType = user.UserType,
+                UserName = user.UserName,
             };
 
             return this.Ok(dto.MakeSuccessfulResult());
@@ -189,6 +191,7 @@
                     HospitalId = user.HospitalId,
                     RegionId = user.RegionId,
                     UserType = user.UserType,
+                    UserName = user.UserName,
                 };
 
                 return this.Ok(dto.MakeSuccessfulResult());
@@ -244,6 +247,50 @@
         }
 
         /// <summary>
+        /// change my password as an asynchronous operation.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;IActionResult&gt;.</returns>
+        [HttpPost("me/change-password")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> ChangeMyPasswordAsync(ChangeMyPasswordInputModel input, CancellationToken cancellationToken)
+        {
+            if (input == null)
+            {
+                return this.BadRequest("input cannot be null".MakeUnsuccessfulResult());
+            }
+
+            this.Logger.LogInformation("A logged in user is updating their password");
+
+            if (this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+            }
+
+            var correlationId = this.HttpContext.TraceIdentifier;
+
+            var user = await this.domainBus.ExecuteAsync(new FindUserByClaimsPrincipalQuery(this.User, correlationId));
+
+            var command = new ChangeUserPasswordCommand(user, input.CurrentPassword, input.NewPassword, correlationId);
+
+            try
+            {
+                await this.domainBus.ExecuteAsync(command, cancellationToken);
+                return this.NoContent();
+            }
+            catch (ChangePasswordException x)
+            {
+                foreach (var e in x.Errors)
+                {
+                    this.ModelState.AddModelError(string.Empty, e.Description);
+                }
+
+                return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
+            }
+        }
+
+        /// <summary>
         /// Gets me.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -265,6 +312,7 @@
                 HospitalId = result.HospitalId,
                 RegionId = result.RegionId,
                 UserType = result.UserType,
+                UserName = result.UserName,
             };
 
             return this.Ok(dto.MakeSuccessfulResult());

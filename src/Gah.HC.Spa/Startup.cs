@@ -203,6 +203,7 @@ namespace Gah.HC.Spa
                 .AddQuery<FindUserByClaimsPrincipalQuery, AppUser, FindUserByClaimsPrincipalQueryHandler>()
 
                 // Commands
+                .AddCommand<ChangeUserPasswordCommand, ChangeUserPasswordCommandHandler>()
                 .AddCommand<CreateHospitalCommand, CreateHospitalCommandHandler>()
                 .AddCommand<RapidHospitalUpdateCommand, RapidHospitalUpdateCommandHandler>()
                 .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
