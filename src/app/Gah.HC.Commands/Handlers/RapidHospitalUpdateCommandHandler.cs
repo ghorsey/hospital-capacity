@@ -4,6 +4,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
+    using Gah.HC.Domain;
+    using Gah.HC.Events;
     using Gah.HC.Repository;
     using Microsoft.Extensions.Logging;
 
@@ -44,11 +46,48 @@
             this.Logger.LogInformation("Calling rapid update"); // todo: put better log mesasage
 
             var hospital = await this.uow.HospitalRepository.FindAsync(command.Id, cancellationToken);
-            hospital.BedCapacity = command.BedCapacity;
-            hospital.BedsInUse = command.BedsInUse;
-            hospital.IsCovid = command.IsCovid;
 
-            await this.domainBus.ExecuteAsync(new UpdateHospitalCommand(hospital, command.CorrelationId), cancellationToken).ConfigureAwait(false);
+            await this.uow.ExecuteInResilientTransactionAsync(async () =>
+            {
+                if (hospital.BedCapacity != command.BedCapacity || hospital.BedsInUse != command.BedsInUse)
+                {
+                    var capacity = new HospitalCapacity
+                    {
+                        BedCapacity = command.BedCapacity,
+                        BedsInUse = command.BedsInUse,
+                        HospitalId = command.Id,
+                    };
+
+                    capacity.CalculatePercentOfUsage();
+                    hospital.BedsInUse = capacity.BedsInUse;
+                    hospital.BedCapacity = capacity.BedCapacity;
+                    hospital.PercentOfUsage = capacity.PercentOfUsage;
+                    hospital.UpdatedOn = DateTime.UtcNow;
+
+                    await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
+                }
+
+                hospital.IsCovid = command.IsCovid;
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                await this.uow.HospitalRepository.UpdateAsync(hospital).ConfigureAwait(false);
+
+                await this.uow.CommitAsync().ConfigureAwait(false);
+
+                await PublishHospitalChanedEvent().ConfigureAwait(false);
+
+                return true;
+
+                async Task PublishHospitalChanedEvent()
+                {
+                    var region = await this.uow.RegionRepository.FindAsync(hospital.RegionId, cancellationToken).ConfigureAwait(false);
+                    var recentCapacity = await this.uow.HospitalCapacityRepository.GetRecentAsync(hospital.Id, 10).ConfigureAwait(false);
+
+                    var hospitalChanged = new HospitalChangedEvent(hospital, region, recentCapacity, command.CorrelationId);
+                    await this.domainBus.PublishAsync(cancellationToken, hospitalChanged).ConfigureAwait(false);
+                }
+            }).ConfigureAwait(false);
         }
     }
 }

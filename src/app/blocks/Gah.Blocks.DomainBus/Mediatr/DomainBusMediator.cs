@@ -73,6 +73,7 @@
         /// <param name="events">The events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A/an <c>Task</c>.</returns>
+        [DebuggerStepThrough]
         public async Task PublishAsync<TEvent>(IEnumerable<TEvent> events, CancellationToken cancellationToken = default)
             where TEvent : IDomainEvent
         {
@@ -100,6 +101,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <param name="events">The events.</param>
         /// <returns>A/an <c>Task</c>.</returns>
+        [DebuggerStepThrough]
         public Task PublishAsync<TEvent>(
             CancellationToken cancellationToken = default,
             params TEvent[] events)
