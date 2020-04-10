@@ -219,7 +219,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPost("{idOrSlug}/rapid-update")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Hospital), StatusCodes.Status200OK)]
         public async Task<IActionResult> RapidUpdateAsync(string idOrSlug, RapidHospitalUpdateInput input, CancellationToken cancellationToken)
         {
             var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new RapidHospitalUpdateRequirement());
@@ -248,7 +248,9 @@
 
             await this.domainBus.ExecuteAsync(cmd, cancellationToken);
 
-            return this.NoContent();
+            hospital = await this.domainBus.ExecuteAsync(q, cancellationToken);
+
+            return this.Ok(hospital.MakeSuccessfulResult());
         }
 
         /// <summary>
