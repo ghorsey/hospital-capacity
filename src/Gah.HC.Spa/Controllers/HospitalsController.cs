@@ -222,7 +222,7 @@
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> RapidUpdateAsync(string idOrSlug, RapidHospitalUpdateInput input, CancellationToken cancellationToken)
         {
-            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new CreateHospitalRequirement());
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new RapidHospitalUpdateRequirement());
             if (!authResult.Succeeded)
             {
                 return this.Forbid();

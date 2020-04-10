@@ -137,6 +137,21 @@ namespace Gah.HC.Spa
             {
                 options.Events = new CookieAuthenticationEvents
                 {
+                    OnRedirectToAccessDenied = ctx =>
+                    {
+                        if (
+                        ctx.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase) &&
+                        ctx.Response.StatusCode == StatusCodes.Status200OK)
+                        {
+                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+
+                        return Task.CompletedTask;
+                    },
                     OnRedirectToLogin = ctx =>
                     {
                         if (
