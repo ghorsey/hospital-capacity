@@ -62,6 +62,7 @@
                     hospital.BedsInUse = capacity.BedsInUse;
                     hospital.BedCapacity = capacity.BedCapacity;
                     hospital.PercentOfUsage = capacity.PercentOfUsage;
+                    hospital.UpdatedOn = DateTime.UtcNow;
 
                     await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
                 }

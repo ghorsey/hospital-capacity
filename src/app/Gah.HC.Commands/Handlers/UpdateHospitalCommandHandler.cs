@@ -65,6 +65,7 @@
                     capacity.CalculatePercentOfUsage();
 
                     command.Hospital.PercentOfUsage = capacity.PercentOfUsage;
+                    command.Hospital.UpdatedOn = DateTime.UtcNow;
 
                     await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
                 }
