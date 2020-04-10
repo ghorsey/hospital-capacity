@@ -41,4 +41,15 @@ export class HospitalService {
   getHospital(slug: string): Observable<Result<Hospital>> {
     return this.http.get<any>(`/api/hospitals/${slug}`).pipe(catchError(this.errorHandler.handleError('getHospital', [])));
   }
+
+  rapidUpdateHospital(hospital: Hospital): Observable<Result<Hospital>> {
+    const payload = {
+      isCovid: hospital.isCovid,
+      regionId: this.userInfo.regionId,
+      updatedOn: new Date(new Date().toUTCString()).toISOString(),
+      bedsInUse: hospital.bedsInUse,
+      bedCapacity: hospital.bedCapacity
+    };
+    return this.http.post<any>(`/api/hospitals/${hospital.slug}/rapid-update`, payload).pipe(catchError(this.errorHandler.handleError('rapidUpdateHospital', [])));
+  }
 }

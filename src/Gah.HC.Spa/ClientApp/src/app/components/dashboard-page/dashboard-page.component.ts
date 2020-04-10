@@ -17,6 +17,7 @@ export class DashboardPageComponent implements OnInit {
   hospitals: Hospital[] = [];
   filter = new FormControl('');
   showError = false;
+  isEdit = {};
 
   constructor(private hospitalService: HospitalService, private router: Router) {}
 
@@ -57,6 +58,17 @@ export class DashboardPageComponent implements OnInit {
         } else {
           this.showError = true;
         }
+      },
+      () => {
+        this.showError = true;
+      },
+    );
+  }
+
+  update(hospital: Hospital, index: number): void {
+    this.hospitalService.rapidUpdateHospital(hospital).subscribe(
+      () => {
+        this.isEdit[index] = false;
       },
       () => {
         this.showError = true;
