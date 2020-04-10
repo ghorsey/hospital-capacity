@@ -9,7 +9,7 @@ import { startWith, map } from 'rxjs/operators';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+  styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
   hospitals$: Observable<Hospital[]>;
@@ -17,7 +17,7 @@ export class HomePageComponent implements OnInit {
   filter = new FormControl('');
   showError = false;
 
-  constructor(private hospitalService: HospitalService) { }
+  constructor(private hospitalService: HospitalService) {}
 
   private search(text: string): Hospital[] {
     return this.hospitals.filter((hospital) => {
@@ -58,5 +58,4 @@ export class HomePageComponent implements OnInit {
       },
     );
   }
-
 }
