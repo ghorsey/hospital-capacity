@@ -132,6 +132,13 @@
                 return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
             }
 
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new RegisterHospitalUserRequirement());
+
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
+
             var cmd = new RegisterHospitalUserCommand(input.Email, input.Password, input.HospitalId);
 
             await this.domainBus.ExecuteAsync(cmd, cancellationToken);
@@ -162,13 +169,6 @@
             if (input == null)
             {
                 return this.BadRequest("input cannot be null".MakeUnsuccessfulResult());
-            }
-
-            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new RegisterHospitalUserRequirement());
-
-            if (!authResult.Succeeded)
-            {
-                return this.Forbid();
             }
 
             this.Logger.LogInformation($"Registering a new Region User for {input.RegionName}");
