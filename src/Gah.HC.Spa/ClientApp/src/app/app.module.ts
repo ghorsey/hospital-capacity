@@ -1,7 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxWebstorageModule } from 'ngx-webstorage';
@@ -17,6 +17,7 @@ import { AuthGeneralGuardService } from './route-guards/auth-general-guard.servi
 import { RegistrationPageComponent } from './components/registration-page/registration-page.component';
 import { AboutPageComponent } from './components/about-page/about-page.component';
 import { HospitalPageComponent } from './components/hospital-page/hospital-page.component';
+import { NoopInterceptor } from './interceptors/http.interceptor';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { HospitalPageComponent } from './components/hospital-page/hospital-page.
     ])
   ],
   providers: [
-    Title
+    Title,
+    { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

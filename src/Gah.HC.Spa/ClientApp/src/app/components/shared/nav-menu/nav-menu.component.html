@@ -4,14 +4,9 @@
       <img src="logo.svg" title="Hospital Capacity Application" />
       Hospital Capacity
     </a>
-    <button class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbar-content"
-            aria-controls="navbar-content"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            (click)="isCollapsed = !isCollapsed">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
+      aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation"
+      (click)="isCollapsed = !isCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse flex-grow-1 text-right" [ngbCollapse]="isCollapsed" id="navbar-content">
@@ -35,3 +30,6 @@
     </div>
   </nav>
 </header>
+<div *ngIf="showSpinner" class="spinner spinner-border text-primary" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
