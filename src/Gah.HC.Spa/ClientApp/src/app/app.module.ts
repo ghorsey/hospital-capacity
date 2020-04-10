@@ -18,6 +18,7 @@ import { RegistrationPageComponent } from './components/registration-page/regist
 import { AboutPageComponent } from './components/about-page/about-page.component';
 import { HospitalPageComponent } from './components/hospital-page/hospital-page.component';
 import { NoopInterceptor } from './interceptors/http.interceptor';
+import { UsersPageComponent } from './components/users-page/users-page.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NoopInterceptor } from './interceptors/http.interceptor';
     LogoutPageComponent,
     RegistrationPageComponent,
     HospitalPageComponent,
+    UsersPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -47,6 +49,11 @@ import { NoopInterceptor } from './interceptors/http.interceptor';
       {
         path: 'dashboard',
         component: DashboardPageComponent,
+        canActivate: [ AuthGeneralGuardService ]
+      },
+      {
+        path: 'users',
+        component: UsersPageComponent,
         canActivate: [ AuthGeneralGuardService ]
       },
       {
