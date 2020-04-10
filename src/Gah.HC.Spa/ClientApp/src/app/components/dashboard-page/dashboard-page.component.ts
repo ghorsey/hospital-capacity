@@ -1,3 +1,6 @@
+import { USER_TYPE } from './../../constants/common.constants';
+import { UserDto } from './../../services/models/user-dto';
+import { AuthenticationService } from './../../services/authentication.service';
 import { HospitalService } from './../../services/hospital.service';
 import { Component, OnInit, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -18,8 +21,11 @@ export class DashboardPageComponent implements OnInit {
   filter = new FormControl('');
   showError = false;
   isEdit = {};
+  userInfo: UserDto;
 
-  constructor(private hospitalService: HospitalService, private router: Router) {}
+  constructor(private hospitalService: HospitalService, private router: Router, private authenticationService: AuthenticationService) {
+    this.userInfo = this.authenticationService.loggedOnUser();
+  }
 
   private search(text: string): Hospital[] {
     return this.hospitals.filter((hospital) => {
@@ -42,8 +48,12 @@ export class DashboardPageComponent implements OnInit {
     });
   }
 
-  edit(slug: string): void {
-    this.router.navigate(['/hospital', slug]);
+  canUserEditHospital(hospital: Hospital): boolean {
+    return this.userInfo.userType === USER_TYPE.ADMIN || this.userInfo.regionId === hospital.regionId;
+  }
+
+  edit(hospital: Hospital): void {
+    this.router.navigate(['/hospital', hospital.slug]);
   }
 
   ngOnInit(): void {
@@ -65,10 +75,10 @@ export class DashboardPageComponent implements OnInit {
     );
   }
 
-  update(hospital: Hospital, index: number): void {
+  update(hospital: Hospital, key: string): void {
     this.hospitalService.rapidUpdateHospital(hospital).subscribe(
       () => {
-        this.isEdit[index] = false;
+        this.isEdit[key] = false;
       },
       () => {
         this.showError = true;

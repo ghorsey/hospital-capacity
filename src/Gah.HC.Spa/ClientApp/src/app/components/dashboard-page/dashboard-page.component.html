@@ -25,16 +25,17 @@
     </thead>
     <tbody>
       <tr *ngFor="let hospital of hospitals$ | async; index as i">
-        <th scope="row pointer" (click)="edit(hospital.slug)">{{ i + 1 }}</th>
+        <th scope="row" [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">{{ i + 1 }}</th>
         <td>
           <div class="d-flex align-items-center">
-            <select *ngIf="isEdit[i]" class="form-control" id="isCovid" [(ngModel)]="hospital.isCovid">
+            <select *ngIf="isEdit['isCovid_' + i]" class="form-control" id="isCovid" [(ngModel)]="hospital.isCovid">
               <option [ngValue]="true" selected>Yes</option>
               <option [ngValue]="false">No</option>
             </select>
-            <ngb-highlight *ngIf="!isEdit[i]" [result]="hospital.isCovid ? 'Yes' : 'No'" [term]="filter.value"></ngb-highlight>
-            <svg *ngIf="!isEdit[i]" (click)="isEdit[i]=true" class="bi bi-pencil ml-3 pointer" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
+            <ngb-highlight *ngIf="!isEdit['isCovid_' + i]" [result]="hospital.isCovid ? 'Yes' : 'No'" [term]="filter.value">
+            </ngb-highlight>
+            <svg *ngIf="!isEdit['isCovid_' + i] && canUserEditHospital(hospital)" (click)="isEdit['isCovid_' + i]=true" class="bi bi-pencil ml-3 pointer" width="1em" height="1em"
+              viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"
                 clip-rule="evenodd" />
@@ -42,16 +43,18 @@
                 d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 00.5.5H4v.5a.5.5 0 00.5.5H5v.5a.5.5 0 00.5.5H6v-1.5a.5.5 0 00-.5-.5H5v-.5a.5.5 0 00-.5-.5H3z"
                 clip-rule="evenodd" />
             </svg>
-            <svg *ngIf="isEdit[i]" (click)="update(hospital, i);" class="bi bi-plus ml-3 pointer" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
-              <path fill-rule="evenodd" d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z" clip-rule="evenodd"/>
-            </svg>
+            <svg *ngIf="isEdit['isCovid_' + i]" (click)="update(hospital, 'isCovid_' + i);" class="ml-2 pointer"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="1.5em" height="1.5em">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+              </svg>
           </div>
         </td>
-        <td class="pointer" (click)="edit(hospital.slug)">
+        <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <ngb-highlight [result]="hospital.regionName" [term]="filter.value"></ngb-highlight>
         </td>
-        <td class="pointer" (click)="edit(hospital.slug)">
+        <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <ngb-highlight [result]="hospital.name" [term]="filter.value"></ngb-highlight><br />
           <ngb-highlight [result]="hospital.address1" [term]="filter.value"></ngb-highlight>&nbsp;
           <ngb-highlight [result]="hospital.address2" [term]="filter.value"></ngb-highlight><br />
@@ -59,14 +62,15 @@
           <ngb-highlight [result]="hospital.state" [term]="filter.value"></ngb-highlight>&nbsp;
           <ngb-highlight [result]="hospital.postalCode" [term]="filter.value"></ngb-highlight>&nbsp;
         </td>
-        <td class="pointer" (click)="edit(hospital.slug)">
+        <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <ngb-highlight [result]="hospital.phone" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
           <div class="d-flex align-items-center">
-            <ngb-highlight [result]="hospital.bedsInUse | number" [term]="filter.value"></ngb-highlight>
-            <svg class="bi bi-pencil pointer ml-3" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
+            <input *ngIf="isEdit['bedsInUse_' + i]" id="bedCapacity" type="number" class="form-control" placeholder="Bed Capacity" [(ngModel)]="hospital.bedsInUse">
+            <ngb-highlight *ngIf="!isEdit['bedsInUse_' + i]" [result]="hospital.bedsInUse | number" [term]="filter.value"></ngb-highlight>
+            <svg *ngIf="!isEdit['bedsInUse_' + i] && canUserEditHospital(hospital)" (click)="isEdit['bedsInUse_' + i]=true" class="bi bi-pencil ml-3 pointer" width="1em" height="1em"
+              viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"
                 clip-rule="evenodd" />
@@ -74,13 +78,20 @@
                 d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 00.5.5H4v.5a.5.5 0 00.5.5H5v.5a.5.5 0 00.5.5H6v-1.5a.5.5 0 00-.5-.5H5v-.5a.5.5 0 00-.5-.5H3z"
                 clip-rule="evenodd" />
             </svg>
+            <svg *ngIf="isEdit['bedsInUse_' + i]" (click)="update(hospital, 'bedsInUse_' + i);" class="ml-2 pointer"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="1.5em" height="1.5em">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+              </svg>
           </div>
         </td>
         <td>
           <div class="d-flex align-items-center">
-            <ngb-highlight [result]="hospital.bedCapacity | number" [term]="filter.value"></ngb-highlight>
-            <svg class="bi bi-pencil pointer ml-3" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
+            <input *ngIf="isEdit['bedCapacity_' + i]" id="bedCapacity" type="number" class="form-control" placeholder="Bed Capacity" [(ngModel)]="hospital.bedCapacity">
+            <ngb-highlight *ngIf="!isEdit['bedCapacity_' + i]" [result]="hospital.bedCapacity | number" [term]="filter.value"></ngb-highlight>
+            <svg *ngIf="!isEdit['bedCapacity_' + i] && canUserEditHospital(hospital)" (click)="isEdit['bedCapacity_' + i]=true" class="bi bi-pencil ml-3 pointer" width="1em" height="1em"
+              viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M11.293 1.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"
                 clip-rule="evenodd" />
@@ -88,12 +99,18 @@
                 d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 00.5.5H4v.5a.5.5 0 00.5.5H5v.5a.5.5 0 00.5.5H6v-1.5a.5.5 0 00-.5-.5H5v-.5a.5.5 0 00-.5-.5H3z"
                 clip-rule="evenodd" />
             </svg>
+            <svg *ngIf="isEdit['bedCapacity_' + i]" (click)="update(hospital, 'bedCapacity_' + i);" class="ml-2 pointer"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="1.5em" height="1.5em">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+              </svg>
           </div>
         </td>
-        <td class="pointer" (click)="edit(hospital.slug)">
+        <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <ngb-highlight [result]="hospital.percentOfUsage | number" [term]="filter.value"></ngb-highlight>
         </td>
-        <td class="pointer" (click)="edit(hospital.slug)">
+        <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <ngb-highlight [result]="hospital.updatedOn | date:'short'" [term]="filter.value"></ngb-highlight>
         </td>
       </tr>

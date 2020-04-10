@@ -1,3 +1,9 @@
 .pointer {
   cursor: pointer;
 }
+.table {
+  width: 120%;
+}
+select {
+  width: 50%
+}

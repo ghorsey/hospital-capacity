@@ -99,3 +99,7 @@ export const STATES = [
 
   'WY',
 ];
+
+export const USER_TYPE = {
+  ADMIN: 'Admin'
+}
