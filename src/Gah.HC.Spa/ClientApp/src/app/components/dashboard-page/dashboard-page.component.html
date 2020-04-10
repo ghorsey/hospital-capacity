@@ -108,7 +108,7 @@
           </div>
         </td>
         <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
-          <ngb-highlight [result]="hospital.percentOfUsage | number" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="(( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) ? (( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) + '%' : 0" [term]="filter.value"></ngb-highlight>
         </td>
         <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <ngb-highlight [result]="hospital.updatedOn | date:'short'" [term]="filter.value"></ngb-highlight>
