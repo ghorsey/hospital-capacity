@@ -168,7 +168,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPut("{idOrSlug}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Result<Hospital>), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateHospital(string idOrSlug, UpdateHospitalInput input, CancellationToken cancellationToken)
         {
             if (input == null)
@@ -208,7 +208,7 @@
 
             await this.domainBus.ExecuteAsync(command, cancellationToken);
 
-            return this.NoContent();
+            return this.Ok(hospital.MakeSuccessfulResult());
         }
 
         /// <summary>
