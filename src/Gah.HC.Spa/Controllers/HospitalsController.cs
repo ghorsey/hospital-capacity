@@ -169,7 +169,7 @@
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPut("{idOrSlug}")]
         [ProducesResponseType(typeof(Result<Hospital>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateHospital(string idOrSlug, UpdateHospitalInput input, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateHospital(string idOrSlug, [FromBody]UpdateHospitalInput input, CancellationToken cancellationToken)
         {
             if (input == null)
             {

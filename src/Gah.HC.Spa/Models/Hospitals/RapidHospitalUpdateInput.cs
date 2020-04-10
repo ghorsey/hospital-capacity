@@ -8,27 +8,27 @@
     public class RapidHospitalUpdateInput
     {
         /// <summary>
-        /// Gets the identifier.
+        /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
-        public Guid Id { get; }
+        public Guid Id { get; set;  }
 
         /// <summary>
-        /// Gets the beds in use.
+        /// Gets or sets the beds in use.
         /// </summary>
         /// <value>The beds in use.</value>
-        public int BedsInUse { get; }
+        public int BedsInUse { get; set; }
 
         /// <summary>
-        /// Gets the bed capacity.
+        /// Gets or sets the bed capacity.
         /// </summary>
         /// <value>The bed capacity.</value>
-        public int BedCapacity { get; }
+        public int BedCapacity { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is covid.
+        /// Gets or sets a value indicating whether this instance is covid.
         /// </summary>
         /// <value><c>true</c> if this instance is covid; otherwise, <c>false</c>.</value>
-        public bool IsCovid { get; }
+        public bool IsCovid { get; set;  }
     }
 }
