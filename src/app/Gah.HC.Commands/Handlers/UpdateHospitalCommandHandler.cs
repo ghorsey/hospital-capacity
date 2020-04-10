@@ -1,15 +1,12 @@
 ﻿namespace Gah.HC.Commands.Handlers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Events;
     using Gah.HC.Repository;
-    using MediatR;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
