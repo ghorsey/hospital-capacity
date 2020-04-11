@@ -6,10 +6,10 @@
 
     /// <summary>
     /// Class ChangeUserPasswordCommand.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandBase" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommand" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandBase" />
-    public class ChangeUserPasswordCommand : DomainCommandBase
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommand" />
+    public class ChangeUserPasswordCommand : DomainCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChangeUserPasswordCommand" /> class.

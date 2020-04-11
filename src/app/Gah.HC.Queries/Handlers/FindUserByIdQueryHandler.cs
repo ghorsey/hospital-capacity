@@ -12,10 +12,10 @@
 
     /// <summary>
     /// Class FindUserByIdQueryHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindUserByIdQuery, AppUser}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindUserByIdQuery, AppUser}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindUserByIdQuery, AppUser}" />
-    public class FindUserByIdQueryHandler : DomainQueryHandlerBase<FindUserByIdQuery, AppUser>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindUserByIdQuery, AppUser}" />
+    public class FindUserByIdQueryHandler : DomainQueryHandler<FindUserByIdQuery, AppUser>
     {
         private readonly UserManager<AppUser> userManager;
 

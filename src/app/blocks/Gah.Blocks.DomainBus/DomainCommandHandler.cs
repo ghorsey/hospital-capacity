@@ -10,15 +10,15 @@
     /// The abstract Domain Command Handler Base class.
     /// </summary>
     /// <typeparam name="TCommand">The command to handle.</typeparam>
-    public abstract class DomainCommandHandlerBase<TCommand> : IDomainCommandHandler<TCommand>
+    public abstract class DomainCommandHandler<TCommand> : IDomainCommandHandler<TCommand>
         where TCommand : IDomainCommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainCommandHandlerBase{TCommand}" /> class.
+        /// Initializes a new instance of the <see cref="DomainCommandHandler{TCommand}" /> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">logger.</exception>
-        public DomainCommandHandlerBase(ILogger logger)
+        public DomainCommandHandler(ILogger logger)
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

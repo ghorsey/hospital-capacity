@@ -7,7 +7,7 @@
     /// <summary>
     /// Class MatchRegionByName.
     /// </summary>
-    public class MatchRegionByNameQuery : DomainQueryBase<List<Region>>
+    public class MatchRegionByNameQuery : DomainQuery<List<Region>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchRegionByNameQuery" /> class.

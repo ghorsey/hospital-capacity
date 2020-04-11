@@ -13,10 +13,10 @@
 
     /// <summary>
     /// Class RegisterRegionUserCommandHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{RegisterRegionUserCommand}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandler{RegisterRegionUserCommand}" />.
     /// </summary>
     /// <seealso cref="Gah.Blocks.DomainBus.IDomainCommandHandler{RegisterRegionUserCommand}" />
-    public class RegisterRegionUserCommandHandler : DomainCommandHandlerBase<RegisterRegionUserCommand>
+    public class RegisterRegionUserCommandHandler : DomainCommandHandler<RegisterRegionUserCommand>
     {
         private readonly IHospitalCapacityUow uow;
         private readonly UserManager<AppUser> userManager;

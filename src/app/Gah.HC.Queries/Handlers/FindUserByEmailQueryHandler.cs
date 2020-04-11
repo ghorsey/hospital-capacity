@@ -12,10 +12,10 @@
 
     /// <summary>
     /// Class FindUserByEmailQueryHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindUserByEmailQuery, AppUser}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindUserByEmailQuery, AppUser}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindUserByEmailQuery, AppUser}" />
-    public class FindUserByEmailQueryHandler : DomainQueryHandlerBase<FindUserByEmailQuery, AppUser>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindUserByEmailQuery, AppUser}" />
+    public class FindUserByEmailQueryHandler : DomainQueryHandler<FindUserByEmailQuery, AppUser>
     {
         private readonly UserManager<AppUser> userManager;
 

@@ -10,10 +10,10 @@
 
     /// <summary>
     /// Class FindBySlugOrIdQueryHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindBySlugOrIdQuery, Hospital}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindBySlugOrIdQuery, Hospital}" />
-    public class FindHospitalBySlugOrIdQueryHandler : DomainQueryHandlerBase<FindHospitalBySlugOrIdQuery, Hospital>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindBySlugOrIdQuery, Hospital}" />
+    public class FindHospitalBySlugOrIdQueryHandler : DomainQueryHandler<FindHospitalBySlugOrIdQuery, Hospital>
     {
         private readonly IHospitalCapacityUow uow;
 

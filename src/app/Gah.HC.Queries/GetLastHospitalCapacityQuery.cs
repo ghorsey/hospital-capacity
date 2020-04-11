@@ -6,7 +6,7 @@
     using Gah.HC.Domain;
 
     /// <inheritdoc/>
-    public class GetLastHospitalCapacityQuery : DomainQueryBase<List<HospitalCapacity>>
+    public class GetLastHospitalCapacityQuery : DomainQuery<List<HospitalCapacity>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetLastHospitalCapacityQuery"/> class.

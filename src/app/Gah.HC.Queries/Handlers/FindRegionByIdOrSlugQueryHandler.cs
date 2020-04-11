@@ -10,10 +10,10 @@
 
     /// <summary>
     /// Class FindRegionByIdOrSlugHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindRegionByIdOrSlug, Region}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindRegionByIdOrSlug, Region}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindRegionByIdOrSlug, Region}" />
-    public class FindRegionByIdOrSlugQueryHandler : DomainQueryHandlerBase<FindRegionByIdOrSlugQuery, Region>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindRegionByIdOrSlug, Region}" />
+    public class FindRegionByIdOrSlugQueryHandler : DomainQueryHandler<FindRegionByIdOrSlugQuery, Region>
     {
         private readonly IHospitalCapacityUow uow;
 

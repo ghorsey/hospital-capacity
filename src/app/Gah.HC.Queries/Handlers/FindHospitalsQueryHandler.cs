@@ -10,7 +10,7 @@
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc/>
-    public class FindHospitalsQueryHandler : DomainQueryHandlerBase<FindHospitalsQuery, List<HospitalView>>
+    public class FindHospitalsQueryHandler : DomainQueryHandler<FindHospitalsQuery, List<HospitalView>>
     {
         private readonly IHospitalCapacityUow uow;
 

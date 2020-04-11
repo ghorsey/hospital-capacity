@@ -8,10 +8,10 @@
 
     /// <summary>
     /// Class HospitalChangedEvent.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainEventBase" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainEvent" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainEventBase" />
-    public class HospitalChangedEvent : DomainEventBase
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainEvent" />
+    public class HospitalChangedEvent : DomainEvent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HospitalChangedEvent"/> class.

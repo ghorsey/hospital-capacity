@@ -11,10 +11,10 @@
 
     /// <summary>
     /// Class UpdateHospitalCommandHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{UpdateHospitalCommand}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandler{UpdateHospitalCommand}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{UpdateHospitalCommand}" />
-    public class UpdateHospitalCommandHandler : DomainCommandHandlerBase<UpdateHospitalCommand>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandler{UpdateHospitalCommand}" />
+    public class UpdateHospitalCommandHandler : DomainCommandHandler<UpdateHospitalCommand>
     {
         private readonly IHospitalCapacityUow uow;
         private readonly IDomainBus domainBus;

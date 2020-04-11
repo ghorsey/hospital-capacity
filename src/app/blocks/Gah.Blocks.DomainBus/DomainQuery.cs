@@ -10,14 +10,14 @@
     /// </summary>
     /// <typeparam name="TResponse">The type of the t response.</typeparam>
     /// <seealso cref="Gah.Blocks.DomainBus.IDomainQuery{TResponse}" />
-    public abstract class DomainQueryBase<TResponse> : IDomainQuery<TResponse>
+    public abstract class DomainQuery<TResponse> : IDomainQuery<TResponse>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainQueryBase{TResponse}"/> class.
+        /// Initializes a new instance of the <see cref="DomainQuery{TResponse}"/> class.
         /// </summary>
         /// <param name="correlationId">The correlation identifier.</param>
         /// <exception cref="ArgumentNullException">correlationId.</exception>
-        public DomainQueryBase(string correlationId)
+        public DomainQuery(string correlationId)
         {
             this.CorrelationId = correlationId ?? throw new ArgumentNullException(nameof(correlationId));
         }

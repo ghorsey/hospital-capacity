@@ -4,10 +4,10 @@
 
     /// <summary>
     /// Class RegisterSuperUserCommand.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandBase" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommand" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandBase" />
-    public class RegisterSuperUserCommand : DomainCommandBase
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommand" />
+    public class RegisterSuperUserCommand : DomainCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterSuperUserCommand"/> class.

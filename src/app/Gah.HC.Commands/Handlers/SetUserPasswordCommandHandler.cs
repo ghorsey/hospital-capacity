@@ -11,10 +11,10 @@
 
     /// <summary>
     /// Class SetUserPasswordCommandHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{SetUserPasswordCommand}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandler{SetUserPasswordCommand}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{SetUserPasswordCommand}" />
-    public class SetUserPasswordCommandHandler : DomainCommandHandlerBase<SetUserPasswordCommand>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandler{SetUserPasswordCommand}" />
+    public class SetUserPasswordCommandHandler : DomainCommandHandler<SetUserPasswordCommand>
     {
         private readonly UserManager<AppUser> userManager;
 

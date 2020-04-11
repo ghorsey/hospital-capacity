@@ -6,7 +6,7 @@
     /// <summary>
     /// Class RapidHospitalUpdateCommand.
     /// </summary>
-    public class RapidHospitalUpdateCommand : DomainCommandBase
+    public class RapidHospitalUpdateCommand : DomainCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RapidHospitalUpdateCommand"/> class.

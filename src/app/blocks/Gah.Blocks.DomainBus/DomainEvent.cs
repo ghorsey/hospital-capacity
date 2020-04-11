@@ -7,13 +7,13 @@
     /// Implements the <see cref="Gah.Blocks.DomainBus.IDomainEvent" />.
     /// </summary>
     /// <seealso cref="Gah.Blocks.DomainBus.IDomainEvent" />
-    public class DomainEventBase : IDomainEvent
+    public class DomainEvent : IDomainEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainEventBase"/> class.
+        /// Initializes a new instance of the <see cref="DomainEvent"/> class.
         /// </summary>
         /// <param name="correlationId">The correlation identifier.</param>
-        public DomainEventBase(string correlationId)
+        public DomainEvent(string correlationId)
         {
             this.CorrelationId = correlationId;
         }

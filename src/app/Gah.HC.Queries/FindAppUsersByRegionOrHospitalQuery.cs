@@ -6,7 +6,7 @@
     using Gah.HC.Domain;
 
     /// <inheritdoc/>
-    public class FindAppUsersByRegionOrHospitalQuery : DomainQueryBase<List<AppUser>>
+    public class FindAppUsersByRegionOrHospitalQuery : DomainQuery<List<AppUser>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FindAppUsersByRegionOrHospitalQuery" /> class.

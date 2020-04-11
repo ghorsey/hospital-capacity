@@ -5,10 +5,10 @@
 
     /// <summary>
     /// Class RegisterHospitalUserCommand.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandBase" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommand" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandBase" />
-    public class RegisterHospitalUserCommand : DomainCommandBase
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommand" />
+    public class RegisterHospitalUserCommand : DomainCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterHospitalUserCommand" /> class.

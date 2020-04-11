@@ -10,10 +10,10 @@
 
     /// <summary>
     /// Class FindUserByClaimsPrincipalQueryHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindUserByClaimsPrincipalQuery, AppUser}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindUserByClaimsPrincipalQuery, AppUser}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandlerBase{FindUserByClaimsPrincipalQuery, AppUser}" />
-    public class FindUserByClaimsPrincipalQueryHandler : DomainQueryHandlerBase<FindUserByClaimsPrincipalQuery, AppUser>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryHandler{FindUserByClaimsPrincipalQuery, AppUser}" />
+    public class FindUserByClaimsPrincipalQueryHandler : DomainQueryHandler<FindUserByClaimsPrincipalQuery, AppUser>
     {
         private readonly UserManager<AppUser> userManager;
 

@@ -11,10 +11,10 @@
 
     /// <summary>
     /// Class RegisterSuperUserCommandHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{RegisterSuperUserCommand}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandler{RegisterSuperUserCommand}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{RegisterSuperUserCommand}" />
-    public class RegisterSuperUserCommandHandler : DomainCommandHandlerBase<RegisterSuperUserCommand>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandler{RegisterSuperUserCommand}" />
+    public class RegisterSuperUserCommandHandler : DomainCommandHandler<RegisterSuperUserCommand>
     {
         private readonly UserManager<AppUser> userManager;
 

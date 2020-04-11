@@ -12,7 +12,7 @@
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc/>
-    public class FindAppUsersByRegionOrHospitalQueryHandler : DomainQueryHandlerBase<FindAppUsersByRegionOrHospitalQuery, List<AppUser>>
+    public class FindAppUsersByRegionOrHospitalQueryHandler : DomainQueryHandler<FindAppUsersByRegionOrHospitalQuery, List<AppUser>>
     {
         private IAppUserRepository appUserRepository;
 

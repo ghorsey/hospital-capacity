@@ -10,7 +10,7 @@
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc/>
-    public class GetLastHospitalCapacityQueryHandler : DomainQueryHandlerBase<GetLastHospitalCapacityQuery, List<HospitalCapacity>>
+    public class GetLastHospitalCapacityQueryHandler : DomainQueryHandler<GetLastHospitalCapacityQuery, List<HospitalCapacity>>
     {
         private readonly IHospitalCapacityUow uow;
 

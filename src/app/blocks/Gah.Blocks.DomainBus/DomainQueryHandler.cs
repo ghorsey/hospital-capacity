@@ -12,15 +12,15 @@
     /// <typeparam name="TQuery">The type of the t query.</typeparam>
     /// <typeparam name="TResponse">The type of the t response.</typeparam>
     /// <seealso cref="Gah.Blocks.DomainBus.IDomainQueryHandler{TQuery, TResponse}" />
-    public abstract class DomainQueryHandlerBase<TQuery, TResponse> : IDomainQueryHandler<TQuery, TResponse>
+    public abstract class DomainQueryHandler<TQuery, TResponse> : IDomainQueryHandler<TQuery, TResponse>
         where TQuery : IDomainQuery<TResponse>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DomainQueryHandlerBase{TQuery, TResponse}"/> class.
+        /// Initializes a new instance of the <see cref="DomainQueryHandler{TQuery, TResponse}"/> class.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">logger.</exception>
-        public DomainQueryHandlerBase(ILogger logger)
+        public DomainQueryHandler(ILogger logger)
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

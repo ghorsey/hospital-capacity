@@ -6,7 +6,7 @@
     /// <summary>
     /// Class RegisterRegionUserCommand.
     /// </summary>
-    public class RegisterRegionUserCommand : DomainCommandBase
+    public class RegisterRegionUserCommand : DomainCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterRegionUserCommand" /> class.

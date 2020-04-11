@@ -5,10 +5,10 @@
 
     /// <summary>
     /// Class FindUserByIdQuery.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryBase{AppUser}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQuery{AppUser}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryBase{AppUser}" />
-    public class FindUserByIdQuery : DomainQueryBase<AppUser>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQuery{AppUser}" />
+    public class FindUserByIdQuery : DomainQuery<AppUser>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FindUserByIdQuery" /> class.

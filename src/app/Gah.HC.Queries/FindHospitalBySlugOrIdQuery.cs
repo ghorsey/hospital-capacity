@@ -6,10 +6,10 @@
 
     /// <summary>
     /// Class FindBySlugOrIdQuery.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryBase{Hospital}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQuery{Hospital}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryBase{Hospital}" />
-    public class FindHospitalBySlugOrIdQuery : DomainQueryBase<Hospital>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQuery{Hospital}" />
+    public class FindHospitalBySlugOrIdQuery : DomainQuery<Hospital>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FindHospitalBySlugOrIdQuery"/> class.

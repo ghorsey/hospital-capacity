@@ -11,10 +11,10 @@
 
     /// <summary>
     /// Class RegisterHospitalUserCommandHandler.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{RegisterHospitalUserCommand}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandHandler{RegisterHospitalUserCommand}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandlerBase{RegisterHospitalUserCommand}" />
-    public class RegisterHospitalUserCommandHandler : DomainCommandHandlerBase<RegisterHospitalUserCommand>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandler{RegisterHospitalUserCommand}" />
+    public class RegisterHospitalUserCommandHandler : DomainCommandHandler<RegisterHospitalUserCommand>
     {
         private readonly UserManager<AppUser> userManager;
 

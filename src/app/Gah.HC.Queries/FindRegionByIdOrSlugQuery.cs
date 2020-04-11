@@ -6,10 +6,10 @@
 
     /// <summary>
     /// Class FindRegionByIdOrSlug.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQueryBase{Region}" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainQuery{Region}" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainQueryBase{Region}" />
-    public class FindRegionByIdOrSlugQuery : DomainQueryBase<Region>
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainQuery{Region}" />
+    public class FindRegionByIdOrSlugQuery : DomainQuery<Region>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FindRegionByIdOrSlugQuery" /> class.

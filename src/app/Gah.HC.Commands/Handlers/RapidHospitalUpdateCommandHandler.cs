@@ -10,7 +10,7 @@
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc/>
-    public class RapidHospitalUpdateCommandHandler : DomainCommandHandlerBase<RapidHospitalUpdateCommand>
+    public class RapidHospitalUpdateCommandHandler : DomainCommandHandler<RapidHospitalUpdateCommand>
     {
         private readonly IHospitalCapacityUow uow;
         private readonly IDomainBus domainBus;

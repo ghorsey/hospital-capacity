@@ -6,10 +6,10 @@
 
     /// <summary>
     /// Class UpdateHospitalCommand.
-    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommandBase" />.
+    /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommand" />.
     /// </summary>
-    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandBase" />
-    public class UpdateHospitalCommand : DomainCommandBase
+    /// <seealso cref="Gah.Blocks.DomainBus.DomainCommand" />
+    public class UpdateHospitalCommand : DomainCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateHospitalCommand"/> class.

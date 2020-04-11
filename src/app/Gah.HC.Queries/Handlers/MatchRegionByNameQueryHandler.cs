@@ -10,7 +10,7 @@
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc/>
-    public class MatchRegionByNameQueryHandler : DomainQueryHandlerBase<MatchRegionByNameQuery, List<Region>>
+    public class MatchRegionByNameQueryHandler : DomainQueryHandler<MatchRegionByNameQuery, List<Region>>
     {
         private readonly IHospitalCapacityUow uow;
 
