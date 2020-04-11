@@ -58,9 +58,11 @@
                 regionId.Equals(resource.Id.ToString(), StringComparison.OrdinalIgnoreCase))
             {
                 context.Succeed(requirement);
+                this.logger.LogInformation("The user is a region user for the specified region");
                 return Task.CompletedTask;
             }
 
+            this.logger.LogInformation("Access denied");
             return Task.CompletedTask;
         }
     }

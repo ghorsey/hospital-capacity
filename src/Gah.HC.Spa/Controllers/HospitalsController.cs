@@ -10,6 +10,7 @@
     using Gah.HC.Domain;
     using Gah.HC.Queries;
     using Gah.HC.Spa.Authorization;
+    using Gah.HC.Spa.Models.Authorization;
     using Gah.HC.Spa.Models.Hospitals;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -119,6 +120,49 @@
             }
 
             return this.Ok(result.MakeSuccessfulResult());
+        }
+
+        /// <summary>
+        /// find hospital users as an asynchronous operation.
+        /// </summary>
+        /// <param name="idOrSlug">The identifier or slug.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>IActionResult.</returns>
+        [HttpGet("{idOrSlug}/users")]
+        [ProducesResponseType(typeof(List<UserDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> FindHospitalUsersAsync(string idOrSlug, CancellationToken cancellationToken)
+        {
+            this.Logger.LogInformation($"Attempting to see the users for {idOrSlug}");
+
+            var correlationId = this.HttpContext.TraceIdentifier;
+            var hospital = await this.domainBus.ExecuteAsync(
+                this.domainBus.MakeFindHospitalBySlugOrIdQuery(
+                    idOrSlug,
+                    correlationId),
+                cancellationToken);
+
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, hospital, new ViewHospitalUsersRequirement());
+
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
+
+            var users = await this.domainBus.ExecuteAsync(
+                new FindAppUsersByRegionOrHospitalQuery(
+                    correlationId,
+                    hosptialId: hospital.Id),
+                cancellationToken);
+
+            // I know should use automapper....
+            return this.Ok(
+                users.Select(u => new UserDto
+                {
+                    HospitalId = u.HospitalId,
+                    RegionId = u.RegionId,
+                    UserName = u.UserName,
+                    UserType = u.UserType,
+                }).ToList().MakeSuccessfulResult());
         }
 
         /// <summary>

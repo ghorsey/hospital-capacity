@@ -69,7 +69,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IActionResult.</returns>
         [HttpGet("{idOrSlug}/users")]
-        [ProducesResponseType(typeof(List<Result<AppUser>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Result<UserDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> FindRegionUsersAsync(string idOrSlug, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Finding all the users for the id or slug '{idOrSlug}'");
