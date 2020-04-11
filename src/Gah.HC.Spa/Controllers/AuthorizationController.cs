@@ -217,11 +217,20 @@
 
             cancellationToken.ThrowIfCancellationRequested();
 
+            var correlationId = this.HttpContext.TraceIdentifier;
+
+            var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, correlationId), cancellationToken);
+
             var result = await this.signInManager.PasswordSignInAsync(
                 input.Email,
                 input.Password,
                 input.RememberMe,
                 false);
+
+            if (result.Succeeded && user != null && !user.IsApproved)
+            {
+                return this.BadRequest("An unapproved user cannot log in.".MakeSuccessfulResult());
+            }
 
             if (result.Succeeded)
             {

@@ -117,9 +117,14 @@
                 return this.BadRequest("input cannot be null".MakeUnsuccessfulResult());
             }
 
-            // todo: add authorization check
             var correlationId = this.HttpContext.TraceIdentifier;
             var user = await this.domainBus.ExecuteAsync(new FindUserByIdQuery(id, correlationId), cancellationToken);
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, user, new SetUserPasswordRequirement());
+
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
 
             try
             {
@@ -159,6 +164,8 @@
 
             var correlationId = this.HttpContext.TraceIdentifier;
             var user = await this.domainBus.ExecuteAsync(new FindUserByIdQuery(id, correlationId), cancellationToken);
+
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, user, new SetUserApprovedRequirement());
 
             await this.domainBus.ExecuteAsync(new SetUserIsApprovedCommand(user, input.IsApproved, correlationId));
             user.IsApproved = input.IsApproved;

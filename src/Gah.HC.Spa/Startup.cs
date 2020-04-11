@@ -206,6 +206,8 @@ namespace Gah.HC.Spa
             services.AddSingleton<IAuthorizationHandler, UpdateHospitalRequirementHandler>();
             services.AddSingleton<IAuthorizationHandler, ManageUserRequirementHandler>();
             services.AddSingleton<IAuthorizationHandler, ViewHospitalUsersRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, SetUserApprovedRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, SetUserPasswordRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, RapidHospitalUpdateRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, RegisterHospitalUserRequirementHandler>();
 
