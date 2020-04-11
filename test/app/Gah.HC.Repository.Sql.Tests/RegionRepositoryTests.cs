@@ -22,8 +22,8 @@ namespace Gah.HC.Repository.Sql.Tests
                 {
                     IRegionRepository repo = new RegionRepository(ctx, this.MakeLogger<RegionRepository>());
 
-                    var regions = await repo.MatchByName("o", default);
-                    var caOnly = await repo.MatchByName("c", default);
+                    var regions = await repo.MatchByNameAsync("o", default);
+                    var caOnly = await repo.MatchByNameAsync("c", default);
 
                     Assert.Equal(2, regions.Count);
                     Assert.Single(caOnly);

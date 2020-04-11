@@ -48,7 +48,7 @@
                 return this.uow.RegionRepository.FindAsync(request.Id.Value, cancellationToken).AsTask();
             }
 
-            return this.uow.RegionRepository.FindBySlug(request.Slug, cancellationToken);
+            return this.uow.RegionRepository.FindBySlugAsync(request.Slug, cancellationToken);
         }
     }
 }

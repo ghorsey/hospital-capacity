@@ -34,7 +34,7 @@
             request = request ?? throw new ArgumentNullException(nameof(request));
             this.Logger.LogInformation($"handling match by name request for {request.PartialName}");
 
-            return this.uow.RegionRepository.MatchByName(request.PartialName, cancellationToken);
+            return this.uow.RegionRepository.MatchByNameAsync(request.PartialName, cancellationToken);
         }
     }
 }

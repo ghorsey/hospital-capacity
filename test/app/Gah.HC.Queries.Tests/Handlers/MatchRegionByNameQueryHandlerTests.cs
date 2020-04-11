@@ -15,7 +15,7 @@
             var result = new List<Region>();
             var query = new MatchRegionByNameQuery("partial", "cor");
             var regionRepoMock = new Mock<IRegionRepository>(MockBehavior.Strict);
-            regionRepoMock.Setup(r => r.MatchByName(query.PartialName, default))
+            regionRepoMock.Setup(r => r.MatchByNameAsync(query.PartialName, default))
                 .ReturnsAsync(result);
 
             var handler = new MatchRegionByNameQueryHandler(this.MakeUow(regionRepoMock.Object), this.MakeLogger<MatchRegionByNameQueryHandler>());

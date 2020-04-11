@@ -30,16 +30,29 @@
         }
 
         /// <summary>
+        /// Finds the name of the by.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;Region&gt;.</returns>
+        public Task<Region> FindByNameAsync(string name, CancellationToken cancellationToken)
+        {
+            this.Logger.LogInformation($"Finding region with the name'{name}'");
+
+            return this.Entities.FirstOrDefaultAsync(e => e.Name == name, cancellationToken);
+        }
+
+        /// <summary>
         /// Finds the by slug.
         /// </summary>
         /// <param name="slug">The slug.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;Region&gt;.</returns>
-        public Task<Region> FindBySlug(string slug, CancellationToken cancellationToken)
+        public Task<Region> FindBySlugAsync(string slug, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Attempting to find the region by slug '{slug}'");
-
-            return this.Entities.FirstOrDefaultAsync(e => e.Slug == slug);
+            cancellationToken.ThrowIfCancellationRequested();
+            return this.Entities.FirstOrDefaultAsync(e => e.Slug == slug, cancellationToken);
         }
 
         /// <summary>
@@ -48,7 +61,7 @@
         /// <param name="name">The name.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;List&lt;Region&gt;&gt;.</returns>
-        public Task<List<Region>> MatchByName(string name, CancellationToken cancellationToken)
+        public Task<List<Region>> MatchByNameAsync(string name, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Searching for a region named '{name}'");
 

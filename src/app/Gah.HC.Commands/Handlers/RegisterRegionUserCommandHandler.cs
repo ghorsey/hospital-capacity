@@ -45,10 +45,18 @@
 
             await this.uow.ExecuteInResilientTransactionAsync(async () =>
             {
-                var region = new Region
+                var region = await this.uow.RegionRepository.FindByNameAsync(command.RegionName, cancellationToken).ConfigureAwait(false);
+                var isApproved = false;
+
+                if (region == null)
                 {
-                    Name = command.RegionName,
-                };
+                    region = new Region
+                    {
+                        Name = command.RegionName,
+                    };
+
+                    isApproved = true;
+                }
 
                 await this.uow.RegionRepository.AddAsync(region).ConfigureAwait(false);
                 await this.uow.CommitAsync().ConfigureAwait(false);
@@ -58,6 +66,7 @@
                     UserName = command.Email,
                     UserType = AppUserType.Region,
                     RegionId = region.Id,
+                    IsApproved = isApproved,
                 };
 
                 var result = await this.userManager.CreateAsync(user, command.Password).ConfigureAwait(false);
