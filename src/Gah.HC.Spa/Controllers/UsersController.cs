@@ -31,7 +31,7 @@
         /// </summary>
         /// <param name="domainBus">The domain bus.</param>
         /// <param name="logger">The logger.</param>
-        protected UsersController(IDomainBus domainBus, ILogger<UsersController> logger)
+        public UsersController(IDomainBus domainBus, ILogger<UsersController> logger)
             : base(logger)
         {
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
