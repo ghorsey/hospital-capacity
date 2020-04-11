@@ -14,13 +14,11 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col" sortable="isCovid">Covid?</th>
-        <th scope="col" sortable="regionName">Region Name</th>
         <th scope="col" sortable="name">Info</th>
         <th scope="col" sortable="phone">Phone</th>
         <th scope="col" sortable="bedsInUse">Beds In Use</th>
         <th scope="col" sortable="bedCapacity">Beds Capacity</th>
-        <th scope="col" sortable="percentOfUsage">Percent Of Usage</th>
-        <th scope="col" sortable="updatedOn">Updated On</th>
+        <th scope="col" sortable="percentOfUsage">%</th>
       </tr>
     </thead>
     <tbody>
@@ -52,9 +50,7 @@
           </div>
         </td>
         <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
-          <ngb-highlight [result]="hospital.regionName" [term]="filter.value"></ngb-highlight>
-        </td>
-        <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
+          <ngb-highlight [result]="hospital.regionName" [term]="filter.value"></ngb-highlight><br />
           <ngb-highlight [result]="hospital.name" [term]="filter.value"></ngb-highlight><br />
           <ngb-highlight [result]="hospital.address1" [term]="filter.value"></ngb-highlight>&nbsp;
           <ngb-highlight [result]="hospital.address2" [term]="filter.value"></ngb-highlight><br />
@@ -108,10 +104,7 @@
           </div>
         </td>
         <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
-          <ngb-highlight [result]="(( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) ? (( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) + '%' : 0" [term]="filter.value"></ngb-highlight>
-        </td>
-        <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
-          <ngb-highlight [result]="hospital.updatedOn | date:'short'" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="hospital.percentOfUsage" [term]="filter.value"></ngb-highlight>
         </td>
       </tr>
     </tbody>
