@@ -9,7 +9,7 @@
     using Gah.HC.Domain;
     using Gah.HC.Queries;
     using Gah.HC.Spa.Authorization;
-    using Gah.HC.Spa.Models.Authorization;
+    using Gah.HC.Spa.Models.Shared;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -86,6 +86,7 @@
 
                 var dto = new UserDto
                 {
+                    Id = user.Id,
                     UserType = user.UserType,
                     RegionId = user.RegionId,
                     HospitalId = user.HospitalId,
@@ -147,6 +148,7 @@
 
             var dto = new UserDto
             {
+                Id = user.Id,
                 HospitalId = user.HospitalId,
                 RegionId = user.RegionId,
                 UserType = user.UserType,
@@ -189,6 +191,7 @@
                 await this.signInManager.SignInAsync(user, isPersistent: false);
                 var dto = new UserDto
                 {
+                    Id = user.Id,
                     HospitalId = user.HospitalId,
                     RegionId = user.RegionId,
                     UserType = user.UserType,
@@ -310,6 +313,7 @@
 
             var dto = new UserDto
             {
+                Id = result.Id,
                 HospitalId = result.HospitalId,
                 RegionId = result.RegionId,
                 UserType = result.UserType,

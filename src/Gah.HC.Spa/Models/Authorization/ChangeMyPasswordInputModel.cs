@@ -1,4 +1,4 @@
-﻿namespace Gah.HC.Spa.Models.Authorization
+﻿namespace Gah.HC.Spa.Models.Shared
 {
     using System.ComponentModel.DataAnnotations;
 

@@ -7,7 +7,7 @@
     using Gah.HC.Domain;
     using Gah.HC.Queries;
     using Gah.HC.Repository;
-    using Gah.HC.Spa.Models.Authorization;
+    using Gah.HC.Spa.Models.Shared;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;

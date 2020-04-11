@@ -9,7 +9,7 @@
     using Gah.HC.Domain;
     using Gah.HC.Queries;
     using Gah.HC.Spa.Authorization;
-    using Gah.HC.Spa.Models.Authorization;
+    using Gah.HC.Spa.Models.Shared;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -91,6 +91,7 @@
                 result.Select(
                     r => new UserDto
                     {
+                        Id = r.Id,
                         HospitalId = r.HospitalId,
                         RegionId = r.RegionId,
                         UserName = r.UserName,

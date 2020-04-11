@@ -1,4 +1,4 @@
-﻿namespace Gah.HC.Spa.Models.Authorization
+﻿namespace Gah.HC.Spa.Models.Shared
 {
     using System;
     using Gah.HC.Domain;
@@ -8,6 +8,12 @@
     /// </summary>
     public class UserDto
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>The identifier.</value>
+        public string Id { get; set; } = string.Empty;
+
         /// <summary>
         /// Gets or sets the type of the user.
         /// </summary>
