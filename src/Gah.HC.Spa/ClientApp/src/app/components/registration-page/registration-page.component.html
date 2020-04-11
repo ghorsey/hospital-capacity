@@ -17,6 +17,7 @@
         <div class="row">
           <label for="regionName" class="col-form-label">Region Name</label>
           <input
+            autocomplete="off"
             [ngClass]="{ 'is-invalid': registrationForm.get('regionName').invalid && registrationForm.get('regionName').dirty && submitted}"
             id="regionName" type="test" class="form-control" placeholder="Region Name" formControlName="regionName">
           <small *ngIf="registrationForm.get('regionName').errors?.required && submitted" class="text-danger">Region name is required field.</small>
