@@ -6,7 +6,6 @@
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Queries;
-    using Gah.HC.Repository;
     using Gah.HC.Spa.Models.Shared;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;

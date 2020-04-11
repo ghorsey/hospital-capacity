@@ -6,8 +6,6 @@
     using Gah.HC.Domain;
     using Gah.HC.Spa.Models.Hospitals;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Logging;
 
     /// <summary>

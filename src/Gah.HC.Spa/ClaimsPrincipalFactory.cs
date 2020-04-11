@@ -43,6 +43,7 @@
 
             var identity = await base.GenerateClaimsAsync(user);
 
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
             identity.AddClaim(new Claim(ClaimTypes.Role, user.UserType.ToString()));
             identity.AddClaim(new Claim("HospitalId", user.HospitalId?.ToString() ?? string.Empty));
             identity.AddClaim(new Claim("RegionId", user.RegionId?.ToString() ?? string.Empty));

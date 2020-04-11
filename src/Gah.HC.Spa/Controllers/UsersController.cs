@@ -8,6 +8,7 @@
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Queries;
+    using Gah.HC.Spa.Authorization;
     using Gah.HC.Spa.Models.Shared;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -25,15 +26,19 @@
     public class UsersController : BaseController
     {
         private readonly IDomainBus domainBus;
+        private readonly IAuthorizationService authorizationService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// Initializes a new instance of the <see cref="UsersController" /> class.
         /// </summary>
         /// <param name="domainBus">The domain bus.</param>
+        /// <param name="authorizationService">The authorization service.</param>
         /// <param name="logger">The logger.</param>
-        public UsersController(IDomainBus domainBus, ILogger<UsersController> logger)
+        /// <exception cref="ArgumentNullException">domainBus.</exception>
+        public UsersController(IDomainBus domainBus, IAuthorizationService authorizationService, ILogger<UsersController> logger)
             : base(logger)
         {
+            this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
         }
 
@@ -62,6 +67,38 @@
                         UserName = r.UserName,
                         UserType = r.UserType,
                     }).ToList().MakeSuccessfulResult());
+        }
+
+        /// <summary>
+        /// get user as an asynchronous operation.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>IActionResult.</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUserAsync(string id, CancellationToken cancellationToken)
+        {
+            this.Logger.LogInformation($"Attempting to get user {id}");
+
+            var user = await this.domainBus.ExecuteAsync(new FindUserByIdQuery(id, this.HttpContext.TraceIdentifier), cancellationToken);
+
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, user, new ManageUserRequirement());
+
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
+
+            return this.Ok(
+                new UserDto
+                {
+                    Id = user.Id,
+                    HospitalId = user.HospitalId,
+                    RegionId = user.RegionId,
+                    UserName = user.UserName,
+                    UserType = user.UserType,
+                }.MakeSuccessfulResult());
         }
     }
 }

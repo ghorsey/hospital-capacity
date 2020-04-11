@@ -1,15 +1,10 @@
 ﻿namespace Gah.HC.Spa.Authorization.Handler
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
-    using Gah.HC.Spa.Models.Hospitals;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -20,29 +15,19 @@
     public class UpdateHospitalRequirementHandler : AuthorizationHandler<UpdateHospitalRequirement, Hospital>
     {
         private readonly ILogger<UpdateHospitalRequirementHandler> logger;
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly IDomainBus domainBus;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateHospitalRequirementHandler"/> class.
+        /// Initializes a new instance of the <see cref="UpdateHospitalRequirementHandler" /> class.
         /// </summary>
-        /// <param name="domainBus">The domain bus.</param>
-        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="ArgumentNullException">
-        /// domainBus
+        /// <exception cref="ArgumentNullException">domainBus
         /// or
         /// httpContextAccessor
         /// or
-        /// logger.
-        /// </exception>
+        /// logger.</exception>
         public UpdateHospitalRequirementHandler(
-            IDomainBus domainBus,
-            IHttpContextAccessor httpContextAccessor,
             ILogger<UpdateHospitalRequirementHandler> logger)
         {
-            this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
-            this.httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 

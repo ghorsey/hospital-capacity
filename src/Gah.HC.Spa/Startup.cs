@@ -202,7 +202,11 @@ namespace Gah.HC.Spa
             services.AddSingleton<IAuthorizationHandler, CreateHospitalRequirementHandler>();
             services.AddSingleton<IAuthorizationHandler, AdminOnlyAccessRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, ViewRegionUsersRequirementHandler>();
-            services.AddScoped<IAuthorizationHandler, UpdateHospitalRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, UpdateHospitalRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, ManageUserRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, ViewHospitalUsersRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, RapidHospitalUpdateRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, RegisterHospitalUserRequirementHandler>();
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
