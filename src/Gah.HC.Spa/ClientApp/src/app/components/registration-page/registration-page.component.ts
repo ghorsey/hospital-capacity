@@ -7,6 +7,8 @@ import { RegionService } from 'src/app/services/region.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Result } from 'src/app/services/models/result';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserDto } from '../../services/models/user-dto';
 
 @Component({
   selector: 'app-registration-page',
@@ -18,6 +20,7 @@ export class RegistrationPageComponent implements OnInit {
   submitted = false;
   user: User;
   showError = false;
+  showErrorMessage: string;
 
   constructor(
     private userService: UserService,
@@ -58,42 +61,28 @@ export class RegistrationPageComponent implements OnInit {
       },
       (e) => {
         const error = e.error as Result<string>;
+        this.showErrorMessage = error.message;
         console.error(error);
-      },
-    );
-  }
-
-  private checkRegion(): void {
-    const region = this.registrationForm.get('regionName').value;
-    this.regionService.findRegion(region).subscribe(
-      (response: any) => {
-        if (response.success) {
-          if (response.value.length > 0) {
-            this.registrationForm.get('regionName').setErrors({ regionExist: true });
-          } else {
-            this.setUser();
-            this.createUser();
-          }
-        } else {
-          this.showError = true;
-        }
-      },
-      () => {
-        this.showError = true;
       },
     );
   }
 
   private createUser(): void {
     this.userService.createUser(this.user).subscribe(
-      (response: any) => {
-        if (response.success) {
+      (response: Result<UserDto>) => {
+        if (response.success && response.value.isApproved) {
           this.login();
+        } else if (response.success && !response.value.isApproved) {
+          this.showErrorMessage = "Your account has been created and needs to be approved before you can log in.";
+          this.showError = true;
         } else {
+          this.showErrorMessage = response.message
           this.showError = true;
         }
       },
-      () => {
+      (error: HttpErrorResponse) => {
+        const e = error.error as Result<string>;
+        this.showErrorMessage = e.message;
         this.showError = true;
       },
     );
@@ -107,7 +96,8 @@ export class RegistrationPageComponent implements OnInit {
   submit(): void {
     this.submitted = true;
     if (this.registrationForm.valid) {
-      this.checkRegion();
+      this.setUser();
+      this.createUser();
     }
   }
 }

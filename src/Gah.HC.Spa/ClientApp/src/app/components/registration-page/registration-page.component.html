@@ -1,5 +1,5 @@
 <ngb-alert *ngIf="showError" [type]="'danger'">
-  <strong>Error!</strong> Something went wrong please try again later.
+  <strong>Error!</strong> {{showErrorMessage || 'Something went wrong please try again later.'}}
 </ngb-alert>
 <h1>Registration</h1>
 <div class="container">

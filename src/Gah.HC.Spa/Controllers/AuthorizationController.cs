@@ -177,7 +177,11 @@
                 await this.domainBus.ExecuteAsync(command, cancellationToken);
                 var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, this.HttpContext.TraceIdentifier));
 
-                await this.signInManager.SignInAsync(user, isPersistent: false);
+                if (user.IsApproved)
+                {
+                    await this.signInManager.SignInAsync(user, isPersistent: false);
+                }
+
                 var dto = this.mapper.Map<UserDto>(user);
                 return this.Ok(dto.MakeSuccessfulResult());
             }

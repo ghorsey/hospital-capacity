@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class ErrorHandlerService {
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      ////return of(result as T); // GAH: should fail-fast never swallow errors.
+      return throwError(error);
     };
   }
 

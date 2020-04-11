@@ -56,10 +56,10 @@
                     };
 
                     isApproved = true;
-                }
 
-                await this.uow.RegionRepository.AddAsync(region).ConfigureAwait(false);
-                await this.uow.CommitAsync().ConfigureAwait(false);
+                    await this.uow.RegionRepository.AddAsync(region).ConfigureAwait(false);
+                    await this.uow.CommitAsync().ConfigureAwait(false);
+                }
 
                 var user = new AppUser
                 {

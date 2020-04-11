@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent {
+  showError = false;
+  showErrorMessage = ''
   submitted = false;
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -35,6 +37,8 @@ export class LoginPageComponent {
         },
         (e) => {
           const error = e.error as Result<string>;
+          this.showErrorMessage = error.message || error.value
+          this.showError = true;
           console.error(error);
         },
       );
