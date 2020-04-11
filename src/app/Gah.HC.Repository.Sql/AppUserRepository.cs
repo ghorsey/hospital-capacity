@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.HC.Domain;
+    using Gah.HC.Repository.Sql.Data;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
@@ -20,11 +21,11 @@
     public class AppUserRepository : UserStore<AppUser>, IAppUserRepository
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AppUserRepository"/> class.
+        /// Initializes a new instance of the <see cref="AppUserRepository" /> class.
         /// </summary>
         /// <param name="context">The <see cref="Microsoft.EntityFrameworkCore.DbContext" />.</param>
         /// <param name="describer">The <see cref="Microsoft.AspNetCore.Identity.IdentityErrorDescriber" />.</param>
-        public AppUserRepository(DbContext context, IdentityErrorDescriber? describer = null)
+        public AppUserRepository(HospitalCapacityContext context, IdentityErrorDescriber? describer = null)
             : base(context, describer)
         {
         }
@@ -42,12 +43,12 @@
 
             if (regionId != null)
             {
-                q.Where(e => e.RegionId == regionId);
+                q = q.Where(e => e.RegionId == regionId);
             }
 
             if (hospitalId != null)
             {
-                q.Where(e => e.HospitalId == hospitalId);
+                q = q.Where(e => e.HospitalId == hospitalId);
             }
 
             q = q.OrderBy(q => q.UserName);

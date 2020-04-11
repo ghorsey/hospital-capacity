@@ -11,16 +11,18 @@
     public class RegisterHospitalUserCommand : DomainCommandBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RegisterHospitalUserCommand"/> class.
+        /// Initializes a new instance of the <see cref="RegisterHospitalUserCommand" /> class.
         /// </summary>
         /// <param name="email">The email.</param>
         /// <param name="password">The password.</param>
         /// <param name="hospitalId">The hospital identifier.</param>
-        public RegisterHospitalUserCommand(string email, string password, Guid hospitalId)
+        /// <param name="regionId">The region identifier.</param>
+        public RegisterHospitalUserCommand(string email, string password, Guid hospitalId, Guid regionId)
         {
             this.Email = email;
             this.Password = password;
             this.HospitalId = hospitalId;
+            this.RegionId = regionId;
         }
 
         /// <summary>
@@ -40,5 +42,11 @@
         /// </summary>
         /// <value>The hospital identifier.</value>
         public Guid HospitalId { get; }
+
+        /// <summary>
+        /// Gets the region identifier.
+        /// </summary>
+        /// <value>The region identifier.</value>
+        public Guid RegionId { get; }
     }
 }

@@ -139,7 +139,8 @@
                 return this.Forbid();
             }
 
-            var cmd = new RegisterHospitalUserCommand(input.Email, input.Password, input.HospitalId);
+            var hospital = await this.domainBus.ExecuteAsync(new FindHospitalBySlugOrIdQuery(this.HttpContext.TraceIdentifier, input.HospitalId));
+            var cmd = new RegisterHospitalUserCommand(input.Email, input.Password, input.HospitalId, hospital.RegionId);
 
             await this.domainBus.ExecuteAsync(cmd, cancellationToken);
             var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, this.HttpContext.TraceIdentifier));

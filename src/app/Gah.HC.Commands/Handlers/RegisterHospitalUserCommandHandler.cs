@@ -53,6 +53,7 @@
             {
                 UserName = command.Email,
                 UserType = AppUserType.Hospital,
+                RegionId = command.RegionId,
                 HospitalId = command.HospitalId,
             };
 

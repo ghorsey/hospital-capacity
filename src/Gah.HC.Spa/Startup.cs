@@ -131,6 +131,7 @@ namespace Gah.HC.Spa
                     }));
 
             services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddUserStore<AppUserRepository>()
                 .AddEntityFrameworkStores<HospitalCapacityContext>();
 
             services.ConfigureApplicationCookie(options =>
@@ -210,12 +211,14 @@ namespace Gah.HC.Spa
                 .AddEvent<HospitalChangedEvent, HospitalChangedEventHandler>()
 
                 // Queryies
-                .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
+                .AddQuery<FindAppUsersByRegionOrHospitalQuery, List<AppUser>, FindAppUsersByRegionOrHospitalQueryHandler>()
                 .AddQuery<FindHospitalBySlugOrIdQuery, Hospital, FindHospitalBySlugOrIdQueryHandler>()
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
-                .AddQuery<GetLastHospitalCapacityQuery, List<HospitalCapacity>, GetLastHospitalCapacityQueryHandler>()
-                .AddQuery<FindUserByEmailQuery, AppUser, FindUserByEmailQueryHandler>()
+                .AddQuery<FindRegionByIdOrSlugQuery, Region, FindRegionByIdOrSlugQueryHandler>()
                 .AddQuery<FindUserByClaimsPrincipalQuery, AppUser, FindUserByClaimsPrincipalQueryHandler>()
+                .AddQuery<FindUserByEmailQuery, AppUser, FindUserByEmailQueryHandler>()
+                .AddQuery<GetLastHospitalCapacityQuery, List<HospitalCapacity>, GetLastHospitalCapacityQueryHandler>()
+                .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
 
                 // Commands
                 .AddCommand<ChangeUserPasswordCommand, ChangeUserPasswordCommandHandler>()

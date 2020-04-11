@@ -22,7 +22,7 @@
         /// <param name="userStore">The user store.</param>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">userStore.</exception>
-        public FindAppUsersByRegionOrHospitalQueryHandler(IUserStore<AppUser> userStore, ILogger logger)
+        public FindAppUsersByRegionOrHospitalQueryHandler(IUserStore<AppUser> userStore, ILogger<FindAppUsersByRegionOrHospitalQueryHandler> logger)
             : base(logger)
         {
             this.appUserRepository = (IAppUserRepository)userStore ?? throw new ArgumentNullException(nameof(userStore));

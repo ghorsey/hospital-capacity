@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Queries;
+    using Gah.HC.Spa.Models.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -68,9 +70,17 @@
 
             var q = new FindAppUsersByRegionOrHospitalQuery(this.HttpContext.TraceIdentifier, region.Id);
 
-            var result = this.domainBus.ExecuteAsync(q, cancellationToken);
+            var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
-            return this.Ok(result.MakeSuccessfulResult());
+            return this.Ok(
+                result.Select(
+                    r => new UserDto
+                    {
+                        HospitalId = r.HospitalId,
+                        RegionId = r.RegionId,
+                        UserName = r.UserName,
+                        UserType = r.UserType,
+                    }).MakeSuccessfulResult());
         }
 
         /// <summary>

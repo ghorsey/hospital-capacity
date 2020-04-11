@@ -23,7 +23,7 @@
         /// <param name="uow">The uow.</param>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">uow.</exception>
-        public FindRegionByIdOrSlugQueryHandler(IHospitalCapacityUow uow, ILogger logger)
+        public FindRegionByIdOrSlugQueryHandler(IHospitalCapacityUow uow, ILogger<FindRegionByIdOrSlugQuery> logger)
             : base(logger)
         {
             this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
