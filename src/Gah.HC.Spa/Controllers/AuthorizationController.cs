@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using AutoMapper;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Commands;
     using Gah.HC.Commands.Exceptions;
@@ -29,6 +30,7 @@
         private readonly IDomainBus domainBus;
         private readonly SignInManager<AppUser> signInManager;
         private readonly IAuthorizationService authorizationService;
+        private readonly IMapper mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorizationController" /> class.
@@ -36,6 +38,7 @@
         /// <param name="signInManager">The sign in manager.</param>
         /// <param name="domainBus">The domain bus.</param>
         /// <param name="authorizationService">The authorization service.</param>
+        /// <param name="mapper">The mapper.</param>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">userManager
         /// or
@@ -44,12 +47,14 @@
             SignInManager<AppUser> signInManager,
             IDomainBus domainBus,
             IAuthorizationService authorizationService,
+            IMapper mapper,
             ILogger<AuthorizationController> logger)
             : base(logger)
         {
             this.signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
             this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /// <summary>
@@ -84,15 +89,7 @@
                 var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, corrId), cancellationToken);
                 await this.signInManager.SignInAsync(user, isPersistent: false);
 
-                var dto = new UserDto
-                {
-                    Id = user.Id,
-                    UserType = user.UserType,
-                    RegionId = user.RegionId,
-                    HospitalId = user.HospitalId,
-                    UserName = user.UserName,
-                };
-
+                var dto = this.mapper.Map<UserDto>(user);
                 return this.Ok(dto.MakeSuccessfulResult());
             }
             catch (UserCreationException ex)
@@ -146,15 +143,7 @@
             await this.domainBus.ExecuteAsync(cmd, cancellationToken);
             var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, this.HttpContext.TraceIdentifier));
 
-            var dto = new UserDto
-            {
-                Id = user.Id,
-                HospitalId = user.HospitalId,
-                RegionId = user.RegionId,
-                UserType = user.UserType,
-                UserName = user.UserName,
-            };
-
+            var dto = this.mapper.Map<UserDto>(user);
             return this.Ok(dto.MakeSuccessfulResult());
         }
 
@@ -189,15 +178,7 @@
                 var user = await this.domainBus.ExecuteAsync(new FindUserByEmailQuery(input.Email, this.HttpContext.TraceIdentifier));
 
                 await this.signInManager.SignInAsync(user, isPersistent: false);
-                var dto = new UserDto
-                {
-                    Id = user.Id,
-                    HospitalId = user.HospitalId,
-                    RegionId = user.RegionId,
-                    UserType = user.UserType,
-                    UserName = user.UserName,
-                };
-
+                var dto = this.mapper.Map<UserDto>(user);
                 return this.Ok(dto.MakeSuccessfulResult());
             }
             catch (UserCreationException x)
@@ -311,14 +292,7 @@
                     this.HttpContext.TraceIdentifier),
                 cancellationToken);
 
-            var dto = new UserDto
-            {
-                Id = result.Id,
-                HospitalId = result.HospitalId,
-                RegionId = result.RegionId,
-                UserType = result.UserType,
-                UserName = result.UserName,
-            };
+            var dto = this.mapper.Map<UserDto>(result);
 
             return this.Ok(dto.MakeSuccessfulResult());
         }

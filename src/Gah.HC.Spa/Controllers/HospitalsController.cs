@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using AutoMapper;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Commands;
     using Gah.HC.Domain;
@@ -29,23 +30,28 @@
     {
         private readonly IDomainBus domainBus;
         private readonly IAuthorizationService authorizationService;
+        private readonly IMapper mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HospitalsController" /> class.
         /// </summary>
         /// <param name="authorizationService">The authorization service.</param>
         /// <param name="domainBus">The domain bus.</param>
+        /// <param name="mapper">The mapper.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="ArgumentNullException">
-        /// domainBus
+        /// <exception cref="ArgumentNullException">domainBus
         /// or
-        /// authorizationService.
-        /// </exception>
-        public HospitalsController(IAuthorizationService authorizationService, IDomainBus domainBus, ILogger<HospitalsController> logger)
+        /// authorizationService.</exception>
+        public HospitalsController(
+            IAuthorizationService authorizationService,
+            IDomainBus domainBus,
+            IMapper mapper,
+            ILogger<HospitalsController> logger)
             : base(logger)
         {
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
             this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /// <summary>
@@ -154,16 +160,9 @@
                     hosptialId: hospital.Id),
                 cancellationToken);
 
-            // I know should use automapper....
             return this.Ok(
-                users.Select(u => new UserDto
-                {
-                    Id = u.Id,
-                    HospitalId = u.HospitalId,
-                    RegionId = u.RegionId,
-                    UserName = u.UserName,
-                    UserType = u.UserType,
-                }).ToList().MakeSuccessfulResult());
+                this.mapper.Map<List<UserDto>>(users)
+                .MakeSuccessfulResult());
         }
 
         /// <summary>

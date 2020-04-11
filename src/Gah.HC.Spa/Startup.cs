@@ -3,6 +3,7 @@ namespace Gah.HC.Spa
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using AutoMapper;
     using Gah.Blocks.DomainBus.Configuration;
     using Gah.HC.Commands;
     using Gah.HC.Commands.Handlers;
@@ -237,9 +238,11 @@ namespace Gah.HC.Spa
                 .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
                 .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
                 .AddCommand<RegisterSuperUserCommand, RegisterSuperUserCommandHandler>()
-                .AddCommand<SetUserAuthorizedCommand, SetUserAuthorizedCommandHandler>()
+                .AddCommand<SetUserIsApprovedCommand, SetUserIsApprovedCommandHandler>()
                 .AddCommand<SetUserPasswordCommand, SetUserPasswordCommandHandler>()
                 .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>();
+
+            services.AddAutoMapper(this.GetType().Assembly);
 
             services.AddSwaggerGen(c =>
             {

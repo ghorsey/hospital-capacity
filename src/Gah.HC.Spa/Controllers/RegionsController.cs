@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using AutoMapper;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Queries;
@@ -26,21 +27,26 @@
     {
         private readonly IDomainBus domainBus;
         private readonly IAuthorizationService authorizationService;
+        private readonly IMapper mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegionsController" /> class.
         /// </summary>
         /// <param name="domainBus">The domain bus.</param>
         /// <param name="authorizationService">The authorization service.</param>
+        /// <param name="mapper">The mapper.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="ArgumentNullException">
-        /// domainBus.
-        /// </exception>
-        public RegionsController(IDomainBus domainBus, IAuthorizationService authorizationService, ILogger<RegionsController> logger)
+        /// <exception cref="ArgumentNullException">domainBus.</exception>
+        public RegionsController(
+            IDomainBus domainBus,
+            IAuthorizationService authorizationService,
+            IMapper mapper,
+            ILogger<RegionsController> logger)
             : base(logger)
         {
             this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /// <summary>
@@ -88,15 +94,8 @@
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
             return this.Ok(
-                result.Select(
-                    r => new UserDto
-                    {
-                        Id = r.Id,
-                        HospitalId = r.HospitalId,
-                        RegionId = r.RegionId,
-                        UserName = r.UserName,
-                        UserType = r.UserType,
-                    }).MakeSuccessfulResult());
+                this.mapper.Map<List<UserDto>>(result)
+                .MakeSuccessfulResult());
         }
     }
 }

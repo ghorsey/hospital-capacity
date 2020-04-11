@@ -63,7 +63,7 @@
         /// <param name="isApproved">if set to <c>true</c> the user is approved.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task.</returns>
-        public async Task SetUserAuthorized(AppUser user, bool isApproved, CancellationToken cancellationToken = default)
+        public async Task SetUserIsApproved(AppUser user, bool isApproved, CancellationToken cancellationToken = default)
         {
             user = user ?? throw new ArgumentNullException(nameof(user));
 

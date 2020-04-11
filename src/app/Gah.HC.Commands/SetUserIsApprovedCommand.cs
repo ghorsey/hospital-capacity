@@ -9,19 +9,20 @@
     /// Implements the <see cref="Gah.Blocks.DomainBus.DomainCommand" />.
     /// </summary>
     /// <seealso cref="Gah.Blocks.DomainBus.DomainCommand" />
-    public class SetUserAuthorizedCommand : DomainCommand
+    public class SetUserIsApprovedCommand : DomainCommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SetUserAuthorizedCommand"/> class.
+        /// Initializes a new instance of the <see cref="SetUserIsApprovedCommand" /> class.
         /// </summary>
         /// <param name="user">The user.</param>
-        /// <param name="isAuthorized">if set to <c>true</c> [is authorized].</param>
+        /// <param name="isApproved">if set to <c>true</c> if the user is approved.</param>
         /// <param name="correlationId">The correlation identifier.</param>
-        public SetUserAuthorizedCommand(AppUser user, bool isAuthorized, string correlationId)
+        /// <exception cref="ArgumentNullException">user.</exception>
+        public SetUserIsApprovedCommand(AppUser user, bool isApproved, string correlationId)
             : base(correlationId)
         {
             this.User = user ?? throw new ArgumentNullException(nameof(user));
-            this.IsAuthorized = isAuthorized;
+            this.IsApproved = isApproved;
         }
 
         /// <summary>
@@ -34,6 +35,6 @@
         /// Gets a value indicating whether this instance is authorized.
         /// </summary>
         /// <value><c>true</c> if this instance is authorized; otherwise, <c>false</c>.</value>
-        public bool IsAuthorized { get; }
+        public bool IsApproved { get; }
     }
 }

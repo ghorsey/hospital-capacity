@@ -1,5 +1,6 @@
 ﻿namespace Gah.HC.Spa.Tests.Controllers
 {
+    using AutoMapper;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Commands;
     using Gah.HC.Domain;
@@ -32,6 +33,7 @@
             var c = new HospitalsController(
                 new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
                 domainBusMock.Object,
+                new Mock<IMapper>(MockBehavior.Strict).Object,
                 new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
 
@@ -61,6 +63,7 @@
             var c = new HospitalsController(
                 new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
                 domainBusMock.Object,
+                new Mock<IMapper>(MockBehavior.Strict).Object,
                 new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
 
@@ -92,6 +95,7 @@
             var c = new HospitalsController(
                 new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
                 domainBusMock.Object,
+                new Mock<IMapper>(MockBehavior.Strict).Object,
                 new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
 
@@ -122,6 +126,7 @@
             var c = new HospitalsController(
                 new Mock<IAuthorizationService>(MockBehavior.Strict).Object,
                 domainBusMock.Object,
+                new Mock<IMapper>(MockBehavior.Strict).Object,
                 new Mock<ILogger<HospitalsController>>().Object);
             c.SetDefaultContext();
 

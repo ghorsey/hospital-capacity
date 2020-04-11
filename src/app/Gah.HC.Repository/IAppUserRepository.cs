@@ -21,12 +21,12 @@
         Task<List<AppUser>> FindBy(Guid? regionId = null, Guid? hospitalId = null, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Sets the user authorized.
+        /// Sets the user is approved.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="isApproved">if set to <c>true</c> the user is approved.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task.</returns>
-        Task SetUserAuthorized(AppUser user, bool isApproved, CancellationToken cancellationToken = default);
+        Task SetUserIsApproved(AppUser user, bool isApproved, CancellationToken cancellationToken = default);
     }
 }
