@@ -237,6 +237,7 @@ namespace Gah.HC.Spa
                 .AddCommand<RegisterHospitalUserCommand, RegisterHospitalUserCommandHandler>()
                 .AddCommand<RegisterRegionUserCommand, RegisterRegionUserCommandHandler>()
                 .AddCommand<RegisterSuperUserCommand, RegisterSuperUserCommandHandler>()
+                .AddCommand<SetUserAuthorizedCommand, SetUserAuthorizedCommandHandler>()
                 .AddCommand<SetUserPasswordCommand, SetUserPasswordCommandHandler>()
                 .AddCommand<UpdateHospitalCommand, UpdateHospitalCommandHandler>();
 
