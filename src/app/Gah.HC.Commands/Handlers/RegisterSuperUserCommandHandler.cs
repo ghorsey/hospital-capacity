@@ -48,7 +48,6 @@
                 UserName = command.Email,
                 UserType = AppUserType.Admin,
             };
-
             var result = await this.userManager.CreateAsync(user, command.Password).ConfigureAwait(false);
 
             if (!result.Succeeded)

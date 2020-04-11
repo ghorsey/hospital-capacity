@@ -51,5 +51,41 @@
 
             return this.Ok(response.MakeSuccessfulResult());
         }
+
+        /// <summary>
+        /// Finds the region users.
+        /// </summary>
+        /// <param name="idOrSlug">The identifier or slug.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>IActionResult.</returns>
+        [HttpGet("{idOrSlug}/users")]
+        [ProducesResponseType(typeof(List<Result<AppUser>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> FindRegionUsersAsync(string idOrSlug, CancellationToken cancellationToken)
+        {
+            this.Logger.LogInformation($"Finding all the users for the id or slug '{idOrSlug}'");
+
+            var region = await this.domainBus.ExecuteAsync(this.MakeIdOrSlugQuery(idOrSlug));
+
+            var q = new FindAppUsersByRegionOrHospitalQuery(this.HttpContext.TraceIdentifier, region.Id);
+
+            var result = this.domainBus.ExecuteAsync(q, cancellationToken);
+
+            return this.Ok(result.MakeSuccessfulResult());
+        }
+
+        /// <summary>
+        /// Makes the identifier or slug query.
+        /// </summary>
+        /// <param name="idOrSlug">The identifier or slug.</param>
+        /// <returns>FindRegionByIdOrSlug.</returns>
+        private FindRegionByIdOrSlugQuery MakeIdOrSlugQuery(string idOrSlug)
+        {
+            if (Guid.TryParse(idOrSlug, out var id))
+            {
+                return new FindRegionByIdOrSlugQuery(this.HttpContext.TraceIdentifier, id);
+            }
+
+            return new FindRegionByIdOrSlugQuery(this.HttpContext.TraceIdentifier, slug: idOrSlug);
+        }
     }
 }

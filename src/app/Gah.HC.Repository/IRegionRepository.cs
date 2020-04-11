@@ -20,5 +20,13 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;List&lt;Region&gt;&gt;.</returns>
         public Task<List<Region>> MatchByName(string name, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Finds the by slug.
+        /// </summary>
+        /// <param name="slug">The slug.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>Task&lt;Region&gt;.</returns>
+        public Task<Region> FindBySlug(string slug, CancellationToken cancellationToken);
     }
 }
