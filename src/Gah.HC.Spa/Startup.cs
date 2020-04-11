@@ -193,9 +193,14 @@ namespace Gah.HC.Spa
                 options.AddPolicy(
                     "UpdateHospitalPolicy",
                     policy => policy.Requirements.Add(new UpdateHospitalRequirement()));
+
+                options.AddPolicy(
+                    "AdminOnlyAccess",
+                    policy => policy.Requirements.Add(new AdminOnlyAccessRequirement()));
             });
 
             services.AddSingleton<IAuthorizationHandler, CreateHospitalRequirementHandler>();
+            services.AddSingleton<IAuthorizationHandler, AdminOnlyAccessRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, ViewRegionUsersRequirementHandler>();
             services.AddScoped<IAuthorizationHandler, UpdateHospitalRequirementHandler>();
 
@@ -217,6 +222,7 @@ namespace Gah.HC.Spa
                 .AddQuery<FindRegionByIdOrSlugQuery, Region, FindRegionByIdOrSlugQueryHandler>()
                 .AddQuery<FindUserByClaimsPrincipalQuery, AppUser, FindUserByClaimsPrincipalQueryHandler>()
                 .AddQuery<FindUserByEmailQuery, AppUser, FindUserByEmailQueryHandler>()
+                .AddQuery<FindUserByIdQuery, AppUser, FindUserByIdQueryHandler>()
                 .AddQuery<GetLastHospitalCapacityQuery, List<HospitalCapacity>, GetLastHospitalCapacityQueryHandler>()
                 .AddQuery<MatchRegionByNameQuery, List<Region>, MatchRegionByNameQueryHandler>()
 

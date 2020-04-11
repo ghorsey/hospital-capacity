@@ -5,5 +5,6 @@
         <Rule Id="CA1303" Action="None" /> <!-- DoNotPassLiteralsAsLocalizedParameters  -->
         <Rule Id="CA2007" Action="None" />
         <Rule Id="CS8602" Action="None" />
+        <Rule Id="CA1716" Action="None" /> <!-- ignore shared keyword -->
     </Rules>
 </RuleSet>
