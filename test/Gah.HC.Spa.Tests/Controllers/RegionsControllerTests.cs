@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using Gah.HC.Domain;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     public class RegionsControllerTests
     {
@@ -24,7 +25,9 @@
 
             var loggerMock = new Mock<ILogger<RegionsController>>(MockBehavior.Loose);
 
-            var c = new RegionsController(domainBusMock.Object, loggerMock.Object);
+            var authServiceMock = new Mock<IAuthorizationService>(MockBehavior.Strict);
+
+            var c = new RegionsController(domainBusMock.Object, authServiceMock.Object, loggerMock.Object);
             c.SetDefaultContext();
 
             var response = await c.FindRegionsByPartialNameAsync(partialName, default) as OkObjectResult;

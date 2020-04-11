@@ -109,7 +109,7 @@
         {
             this.Logger.LogInformation($"Finding hospital by id or slug: {idOrSlug}");
 
-            var q = this.MakeFindByIdOrSlugQuery(idOrSlug);
+            var q = this.domainBus.MakeFindHospitalBySlugOrIdQuery(idOrSlug, this.HttpContext.TraceIdentifier);
 
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
@@ -138,7 +138,7 @@
         {
             this.Logger.LogInformation($"Finding the last {maxRecentRecords} recent capacity records for hospital {idOrSlug}");
 
-            var hospitalQuery = this.MakeFindByIdOrSlugQuery(idOrSlug);
+            var hospitalQuery = this.domainBus.MakeFindHospitalBySlugOrIdQuery(idOrSlug, this.HttpContext.TraceIdentifier);
             var hospital = await this.domainBus.ExecuteAsync(hospitalQuery, cancellationToken);
 
             if (hospital == null)
@@ -183,7 +183,11 @@
                 return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
             }
 
-            var hospital = await this.domainBus.ExecuteAsync(this.MakeFindByIdOrSlugQuery(idOrSlug), cancellationToken);
+            var hospital = await this.domainBus.ExecuteAsync(
+                this.domainBus.MakeFindHospitalBySlugOrIdQuery(
+                    idOrSlug,
+                    this.HttpContext.TraceIdentifier),
+                cancellationToken);
 
             // TODO: use auto mapper for this mappings...
             hospital.Name = input.Name;
@@ -240,7 +244,7 @@
                 return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
             }
 
-            var q = this.MakeFindByIdOrSlugQuery(idOrSlug);
+            var q = this.domainBus.MakeFindHospitalBySlugOrIdQuery(idOrSlug, this.HttpContext.TraceIdentifier);
 
             var hospital = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
@@ -299,27 +303,6 @@
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
             return this.Ok(result.MakeSuccessfulResult());
-        }
-
-        /// <summary>
-        /// Makes the find by identifier or slug query.
-        /// </summary>
-        /// <param name="idOrSlug">The identifier or slug.</param>
-        /// <returns>Gah.HC.Queries.FindBySlugOrIdQuery.</returns>
-        private FindHospitalBySlugOrIdQuery MakeFindByIdOrSlugQuery(string idOrSlug)
-        {
-            FindHospitalBySlugOrIdQuery q;
-
-            if (Guid.TryParse(idOrSlug, out var id))
-            {
-                q = new FindHospitalBySlugOrIdQuery(this.HttpContext.TraceIdentifier, id: id);
-            }
-            else
-            {
-                q = new FindHospitalBySlugOrIdQuery(this.HttpContext.TraceIdentifier, slug: idOrSlug);
-            }
-
-            return q;
         }
     }
 }

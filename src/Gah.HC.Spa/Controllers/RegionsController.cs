@@ -8,7 +8,9 @@
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
     using Gah.HC.Queries;
+    using Gah.HC.Spa.Authorization;
     using Gah.HC.Spa.Models.Authorization;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -23,15 +25,21 @@
     public class RegionsController : BaseController
     {
         private readonly IDomainBus domainBus;
+        private readonly IAuthorizationService authorizationService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegionsController" /> class.
         /// </summary>
         /// <param name="domainBus">The domain bus.</param>
+        /// <param name="authorizationService">The authorization service.</param>
         /// <param name="logger">The logger.</param>
-        public RegionsController(IDomainBus domainBus, ILogger<RegionsController> logger)
+        /// <exception cref="ArgumentNullException">
+        /// domainBus.
+        /// </exception>
+        public RegionsController(IDomainBus domainBus, IAuthorizationService authorizationService, ILogger<RegionsController> logger)
             : base(logger)
         {
+            this.authorizationService = authorizationService ?? throw new ArgumentNullException(nameof(authorizationService));
             this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
         }
 
@@ -66,7 +74,14 @@
         {
             this.Logger.LogInformation($"Finding all the users for the id or slug '{idOrSlug}'");
 
-            var region = await this.domainBus.ExecuteAsync(this.MakeIdOrSlugQuery(idOrSlug));
+            var region = await this.domainBus.ExecuteAsync(this.domainBus.MakeFindRegionIdOrSlugQuery(idOrSlug, this.HttpContext.TraceIdentifier));
+
+            var authResponse = await this.authorizationService.AuthorizeAsync(this.User, region, new ViewRegionUsersRequirement());
+
+            if (!authResponse.Succeeded)
+            {
+                return this.Forbid();
+            }
 
             var q = new FindAppUsersByRegionOrHospitalQuery(this.HttpContext.TraceIdentifier, region.Id);
 
@@ -81,21 +96,6 @@
                         UserName = r.UserName,
                         UserType = r.UserType,
                     }).MakeSuccessfulResult());
-        }
-
-        /// <summary>
-        /// Makes the identifier or slug query.
-        /// </summary>
-        /// <param name="idOrSlug">The identifier or slug.</param>
-        /// <returns>FindRegionByIdOrSlug.</returns>
-        private FindRegionByIdOrSlugQuery MakeIdOrSlugQuery(string idOrSlug)
-        {
-            if (Guid.TryParse(idOrSlug, out var id))
-            {
-                return new FindRegionByIdOrSlugQuery(this.HttpContext.TraceIdentifier, id);
-            }
-
-            return new FindRegionByIdOrSlugQuery(this.HttpContext.TraceIdentifier, slug: idOrSlug);
         }
     }
 }
