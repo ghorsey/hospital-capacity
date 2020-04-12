@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import { Ng2GoogleChartsModule, GoogleChartsSettings } from 'ng2-google-charts';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/shared/nav-menu/nav-menu.component';
@@ -19,6 +20,7 @@ import { AboutPageComponent } from './components/about-page/about-page.component
 import { HospitalPageComponent } from './components/hospital-page/hospital-page.component';
 import { NoopInterceptor } from './interceptors/http.interceptor';
 import { UsersPageComponent } from './components/users-page/users-page.component';
+import { SparkLineComponent } from './components/shared/spark-line/spark-line.component';
 
 @NgModule({
   declarations: [
@@ -32,11 +34,13 @@ import { UsersPageComponent } from './components/users-page/users-page.component
     RegistrationPageComponent,
     HospitalPageComponent,
     UsersPageComponent,
+    SparkLineComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    Ng2GoogleChartsModule,
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),
     NgbModule,
