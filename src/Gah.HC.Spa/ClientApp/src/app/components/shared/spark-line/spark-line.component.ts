@@ -56,19 +56,6 @@ export class SparkLineComponent implements OnInit {
       [10, this.hospital.capacity10 - this.hospital.used10, this.hospital.used10]
     ];
 
-    let minValue = 0;
-    for (let x of this.sparkLineData.dataTable) {
-      if (x[1] < minValue) {
-        minValue = x[1];
-      }
-
-      if (x[2] < minValue) {
-        minValue = x[2];
-      }
-    }
-    console.log(minValue);
-    //this.sparkLineData.options.vAxis.viewWindow.min = minValue;
-
     this.sparkLineData.options.height = this.height;
     this.sparkLineData.options.width = this.width;
   }
