@@ -103,5 +103,17 @@
 
             return q.ToListAsync();
         }
+
+        /// <summary>
+        /// Hospitals the view exists.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;System.Boolean&gt;.</returns>
+        public async Task<bool> HospitalViewExists(Guid id)
+        {
+            this.Logger.LogInformation($"checking if hospital view exists for {id}");
+
+            return await this.Entities.CountAsync(e => e.Id == id).ConfigureAwait(false) > 0;
+        }
     }
 }

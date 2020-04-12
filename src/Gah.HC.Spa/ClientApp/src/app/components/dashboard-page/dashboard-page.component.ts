@@ -76,6 +76,7 @@ export class DashboardPageComponent implements OnInit {
   }
 
   update(hospital: Hospital, key: string): void {
+    console.log(hospital);
     this.hospitalService.rapidUpdateHospital(hospital).subscribe(
       () => {
         this.isEdit[key] = false;

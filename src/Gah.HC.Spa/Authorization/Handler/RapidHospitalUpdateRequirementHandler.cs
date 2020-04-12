@@ -13,10 +13,10 @@
 
     /// <summary>
     /// Class EditHospitalRequirementHandler.
-    /// Implements the <see cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{EditHospitalRequirement, RapidHospitalUpdateInput}" />.
+    /// Implements the <see cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{EditHospitalRequirement, Hospital}" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{RapidHospitalUpdateRequirement, RapidHospitalUpdateInput}" />
-    public class RapidHospitalUpdateRequirementHandler : AuthorizationHandler<RapidHospitalUpdateRequirement, RapidHospitalUpdateInput>
+    /// <seealso cref="Microsoft.AspNetCore.Authorization.AuthorizationHandler{RapidHospitalUpdateRequirement, Hospital}" />
+    public class RapidHospitalUpdateRequirementHandler : AuthorizationHandler<RapidHospitalUpdateRequirement, Hospital>
     {
         private readonly ILogger<RapidHospitalUpdateRequirementHandler> logger;
         private readonly IHttpContextAccessor httpContextAccessor;
@@ -49,7 +49,7 @@
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             RapidHospitalUpdateRequirement requirement,
-            RapidHospitalUpdateInput resource)
+            Hospital resource)
         {
             context = context ?? throw new ArgumentNullException(nameof(context));
             resource = resource ?? throw new ArgumentNullException(nameof(resource));

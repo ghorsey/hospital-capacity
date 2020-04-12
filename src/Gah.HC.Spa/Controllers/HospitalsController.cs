@@ -270,12 +270,6 @@
         [ProducesResponseType(typeof(Hospital), StatusCodes.Status200OK)]
         public async Task<IActionResult> RapidUpdateAsync(string idOrSlug, RapidHospitalUpdateInput input, CancellationToken cancellationToken)
         {
-            var authResult = await this.authorizationService.AuthorizeAsync(this.User, input, new RapidHospitalUpdateRequirement());
-            if (!authResult.Succeeded)
-            {
-                return this.Forbid();
-            }
-
             if (input == null)
             {
                 return this.BadRequest("Input cannot be null".MakeUnsuccessfulResult());
@@ -291,6 +285,12 @@
             var q = this.domainBus.MakeFindHospitalBySlugOrIdQuery(idOrSlug, this.HttpContext.TraceIdentifier);
 
             var hospital = await this.domainBus.ExecuteAsync(q, cancellationToken);
+
+            var authResult = await this.authorizationService.AuthorizeAsync(this.User, hospital, new RapidHospitalUpdateRequirement());
+            if (!authResult.Succeeded)
+            {
+                return this.Forbid();
+            }
 
             var cmd = new RapidHospitalUpdateCommand(hospital.Id, input.BedsInUse, input.BedCapacity, input.IsCovid);
 

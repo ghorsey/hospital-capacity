@@ -5,6 +5,7 @@ import { HospitalService } from 'src/app/services/hospital.service';
 import { ActivatedRoute } from '@angular/router';
 import { Result } from 'src/app/services/models/result';
 import { STATES } from 'src/app/constants/common.constants';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-hospital-page',
@@ -20,7 +21,7 @@ export class HospitalPageComponent implements OnInit {
   edit = false;
   states: string[] = STATES;
 
-  constructor(private route: ActivatedRoute, private hospitalService: HospitalService) {}
+  constructor(private route: ActivatedRoute, private hospitalService: HospitalService, private authenticationService: AuthenticationService) {}
 
   private createControls(): void {
     this.hospitalForm = new FormGroup({
@@ -64,6 +65,7 @@ export class HospitalPageComponent implements OnInit {
   }
 
   private createHospital(): void {
+    this.hospital.regionId = this.authenticationService.loggedOnUser().regionId;
     this.hospitalService.createHospital(this.hospital).subscribe(
       (response: Result<Hospital>) => {
         if (response.success) {

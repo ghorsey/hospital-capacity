@@ -15,7 +15,7 @@ import { HospitalCapacity } from './models/hospital-capacity.model';
 export class HospitalService {
   private userInfo: UserDto;
 
-  constructor(private http: HttpClient, private errorHandler: ErrorHandlerService, private authenticationService: AuthenticationService,) {
+  constructor(private http: HttpClient, private errorHandler: ErrorHandlerService, private authenticationService: AuthenticationService) {
     this.userInfo = this.authenticationService.loggedOnUser();
   }
 
@@ -25,8 +25,6 @@ export class HospitalService {
 
   createHospital(hospital: Hospital): Observable<Result<Hospital>> {
     hospital.createdOn = new Date(new Date().toUTCString()).toISOString();
-    hospital.regionId = this.userInfo.regionId;
-    delete hospital.slug;
     return this.http.post<any>(`/api/hospitals`, hospital).pipe(catchError(this.errorHandler.handleError('createHospital', [])));
   }
 

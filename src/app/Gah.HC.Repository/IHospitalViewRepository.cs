@@ -36,5 +36,12 @@
             int bedsInUse = -1,
             int percentOfUse = -1,
             bool? isCovid = null);
+
+        /// <summary>
+        /// Hospitals the view exists.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task&lt;System.Boolean&gt;.</returns>
+        public Task<bool> HospitalViewExists(Guid id);
     }
 }
