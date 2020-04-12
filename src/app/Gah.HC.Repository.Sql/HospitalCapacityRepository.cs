@@ -33,7 +33,7 @@
             this.Logger.LogInformation($"Fetching recent 10 for {hospitalId}");
 
             return this.Entities.Where(e => e.HospitalId == hospitalId)
-                .OrderBy(e => e.CreatedOn)
+                .OrderByDescending(e => e.CreatedOn)
                 .Take(last)
                 .ToListAsync();
         }
