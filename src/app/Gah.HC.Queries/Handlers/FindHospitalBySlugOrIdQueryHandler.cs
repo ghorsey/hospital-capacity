@@ -47,7 +47,13 @@
                 return await this.uow.HospitalRepository.FindAsync(request.Id.Value).ConfigureAwait(false);
             }
 
-            return await this.uow.HospitalRepository.FindBySlugAsync(request.Slug, cancellationToken).ConfigureAwait(false);
+            var hospital = await this.uow.HospitalRepository.FindBySlugAsync(request.Slug, cancellationToken).ConfigureAwait(false);
+
+            var region = await this.uow.RegionRepository.FindAsync(hospital.RegionId, cancellationToken).ConfigureAwait(false);
+
+            hospital.Region = region;
+
+            return hospital;
         }
     }
 }
