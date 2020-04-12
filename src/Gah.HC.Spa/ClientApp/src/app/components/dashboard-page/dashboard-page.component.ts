@@ -53,7 +53,7 @@ export class DashboardPageComponent implements OnInit {
   }
 
   edit(hospital: Hospital): void {
-    this.router.navigate(['/hospital', hospital.slug]);
+    this.router.navigate(['/dashboard', hospital.slug]);
   }
 
   ngOnInit(): void {

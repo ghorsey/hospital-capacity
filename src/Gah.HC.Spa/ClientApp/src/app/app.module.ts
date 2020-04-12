@@ -17,7 +17,7 @@ import { LogoutPageComponent } from './components/logout-page/logout-page.compon
 import { AuthGeneralGuardService } from './route-guards/auth-general-guard.service';
 import { RegistrationPageComponent } from './components/registration-page/registration-page.component';
 import { AboutPageComponent } from './components/about-page/about-page.component';
-import { HospitalPageComponent } from './components/hospital-page/hospital-page.component';
+import { EditHospitalPageComponent } from './components/edit-hospital-page/edit-hospital-page.component';
 import { NoopInterceptor } from './interceptors/http.interceptor';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { SparkLineComponent } from './components/shared/spark-line/spark-line.component';
@@ -33,7 +33,7 @@ import { HospitalCapacityGraphComponent } from './components/shared/hospital-cap
     DashboardPageComponent,
     LogoutPageComponent,
     RegistrationPageComponent,
-    HospitalPageComponent,
+    EditHospitalPageComponent,
     UsersPageComponent,
     SparkLineComponent,
     HospitalCapacityGraphComponent,
@@ -55,17 +55,20 @@ import { HospitalCapacityGraphComponent } from './components/shared/hospital-cap
       {
         path: 'dashboard',
         component: DashboardPageComponent,
-        canActivate: [ AuthGeneralGuardService ]
+        canActivate: [AuthGeneralGuardService],
+        data: { title: 'Dashboard: Hospital Capacity'}
       },
       {
         path: 'users',
         component: UsersPageComponent,
-        canActivate: [ AuthGeneralGuardService ]
+        canActivate: [AuthGeneralGuardService],
+        data: { title: 'Users: Hospital Capacity' }
       },
       {
-        path: 'hospital/:id',
-        component: HospitalPageComponent,
-        canActivate: [ AuthGeneralGuardService ]
+        path: 'dashboard/:id',
+        component: EditHospitalPageComponent,
+        canActivate: [AuthGeneralGuardService],
+        data: { title: 'Add/Edit Hospital: Hospital Capacity' }
       }
     ])
   ],

@@ -2,17 +2,17 @@ import { Hospital } from 'src/app/services/models/hospital.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HospitalService } from 'src/app/services/hospital.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Result } from 'src/app/services/models/result';
 import { STATES } from 'src/app/constants/common.constants';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
-  selector: 'app-hospital-page',
-  templateUrl: './hospital-page.component.html',
-  styleUrls: ['./hospital-page.component.css'],
+  selector: 'app-edit-hospital-page',
+  templateUrl: './edit-hospital-page.component.html',
+  styleUrls: ['./edit-hospital-page.component.css'],
 })
-export class HospitalPageComponent implements OnInit {
+export class EditHospitalPageComponent implements OnInit {
   hospitalForm: FormGroup;
   submitted = false;
   hospital: Hospital;
@@ -21,7 +21,11 @@ export class HospitalPageComponent implements OnInit {
   edit = false;
   states: string[] = STATES;
 
-  constructor(private route: ActivatedRoute, private hospitalService: HospitalService, private authenticationService: AuthenticationService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private hospitalService: HospitalService,
+    private authenticationService: AuthenticationService) { }
 
   private createControls(): void {
     this.hospitalForm = new FormGroup({
@@ -72,6 +76,7 @@ export class HospitalPageComponent implements OnInit {
           this.edit = true;
           this.hospital = <Hospital>response.value;
           this.hospitalId = this.hospital.slug;
+          this.router.navigate(['/dashboard'])
         } else {
           this.showError = true;
         }
@@ -86,6 +91,7 @@ export class HospitalPageComponent implements OnInit {
     this.hospitalService.updateHospital(this.hospitalId, this.hospital).subscribe(
       (response: Result<Hospital>) => {
         if (response.success) {
+          this.router.navigate(['/dashboard']);
         } else {
           this.showError = true;
         }
