@@ -29,8 +29,6 @@ export class HospitalService {
   }
 
   updateHospital(slug: string, hospital: Hospital): Observable<Result<Hospital>> {
-    hospital.updatedOn = new Date(new Date().toUTCString()).toISOString();
-    hospital.regionId = this.userInfo.regionId;
     delete hospital.slug;
     delete hospital.region;
     delete hospital.id;

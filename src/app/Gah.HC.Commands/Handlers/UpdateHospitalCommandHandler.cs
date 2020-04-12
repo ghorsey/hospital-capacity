@@ -61,14 +61,25 @@
 
                     capacity.CalculatePercentOfUsage();
 
-                    command.Hospital.PercentOfUsage = capacity.PercentOfUsage;
-                    command.Hospital.UpdatedOn = DateTime.UtcNow;
+                    current.PercentOfUsage = capacity.PercentOfUsage;
 
                     await this.uow.HospitalCapacityRepository.AddAsync(capacity).ConfigureAwait(false);
                 }
 
+                current.Address1 = command.Hospital.Address1;
+                current.Address2 = command.Hospital.Address2;
+                current.BedCapacity = command.Hospital.BedCapacity;
+                current.BedsInUse = command.Hospital.BedsInUse;
+                current.City = command.Hospital.City;
+                current.IsCovid = command.Hospital.IsCovid;
+                current.Name = command.Hospital.Name;
+                current.Phone = command.Hospital.Phone;
+                current.PostalCode = command.Hospital.PostalCode;
+                current.State = command.Hospital.State;
+                current.UpdatedOn = DateTime.UtcNow;
+
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.uow.HospitalRepository.UpdateAsync(command.Hospital).ConfigureAwait(false);
+                await this.uow.HospitalRepository.UpdateAsync(current).ConfigureAwait(false);
                 await this.uow.CommitAsync().ConfigureAwait(false);
 
                 await PublishHospitalChanedEvent().ConfigureAwait(false);

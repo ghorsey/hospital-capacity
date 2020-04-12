@@ -201,7 +201,7 @@
                 CreatedOn = r.CreatedOn,
                 HospitalId = r.HospitalId,
                 PercentOfUsage = r.PercentOfUsage,
-            }).ToList());
+            }).ToList().MakeSuccessfulResult());
         }
 
         /// <summary>
@@ -227,13 +227,19 @@
                 return this.BadRequest(this.ModelState.MakeUnsuccessfulResult());
             }
 
-            var hospital = await this.domainBus.ExecuteAsync(
+            var current = await this.domainBus.ExecuteAsync(
                 this.domainBus.MakeFindHospitalBySlugOrIdQuery(
                     idOrSlug,
                     this.HttpContext.TraceIdentifier),
                 cancellationToken);
 
-            // TODO: use auto mapper for this mappings...
+            if (current == null)
+            {
+                return this.NotFound();
+            }
+
+            var hospital = new Hospital(current.Id);
+            hospital.RegionId = current.RegionId;
             hospital.Name = input.Name;
             hospital.Address1 = input.Address1;
             hospital.Address2 = input.Address2;
@@ -244,6 +250,9 @@
             hospital.BedCapacity = input.BedCapacity;
             hospital.BedsInUse = input.BedsInUse;
             hospital.IsCovid = input.IsCovid;
+            hospital.UpdatedOn = DateTime.UtcNow;
+            hospital.PercentOfUsage = current.PercentOfUsage;
+            hospital.CreatedOn = current.CreatedOn;
 
             var authResult = await this.authorizationService.AuthorizeAsync(this.User, hospital, new UpdateHospitalRequirement());
 
