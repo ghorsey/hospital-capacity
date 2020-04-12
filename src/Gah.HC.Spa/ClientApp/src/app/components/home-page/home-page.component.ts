@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { HospitalService } from 'src/app/services/hospital.service';
 import { Result } from 'src/app/services/models/result';
 import { startWith, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -17,7 +18,13 @@ export class HomePageComponent implements OnInit {
   filter = new FormControl('');
   showError = false;
 
-  constructor(private hospitalService: HospitalService) {}
+  constructor(
+    private router: Router,
+    private hospitalService: HospitalService) { }
+
+  public goTo(hospital: Hospital): void {
+    this.router.navigate([hospital.slug]);
+  }
 
   private search(text: string): Hospital[] {
     return this.hospitals.filter((hospital) => {

@@ -48,7 +48,10 @@ export class HospitalCapacityGraphComponent implements OnInit {
     }
 
     this.capacityData.dataTable = data;
-    this.capacityData.component.draw();
+
+    if (this.capacityData.component) {
+      this.capacityData.component.draw();
+    }
   }
 
   ngOnInit(): void {

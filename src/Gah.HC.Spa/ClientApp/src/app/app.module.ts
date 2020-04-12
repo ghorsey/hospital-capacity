@@ -22,6 +22,7 @@ import { NoopInterceptor } from './interceptors/http.interceptor';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { SparkLineComponent } from './components/shared/spark-line/spark-line.component';
 import { HospitalCapacityGraphComponent } from './components/shared/hospital-capacity-graph/hospital-capacity-graph.component';
+import { HospitalPageComponent } from './components/hospital-page/hospital-page.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HospitalCapacityGraphComponent } from './components/shared/hospital-cap
     UsersPageComponent,
     SparkLineComponent,
     HospitalCapacityGraphComponent,
+    HospitalPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,6 +54,7 @@ import { HospitalCapacityGraphComponent } from './components/shared/hospital-cap
       { path: 'logout', component: LogoutPageComponent, data: { title: 'Logout: Hospital Capacity' } },
       { path: 'registration', component: RegistrationPageComponent, data: { title: 'Registration: Hospital Capacity' } },
       { path: 'about', component: AboutPageComponent, data: { title: 'About: Hospital Capacity' } },
+      { path: ':id', component: HospitalPageComponent, data: { title: "Hospital: Hospital Capacity" } },
       {
         path: 'dashboard',
         component: DashboardPageComponent,

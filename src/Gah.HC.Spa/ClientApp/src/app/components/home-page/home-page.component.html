@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let hospital of hospitals$ | async; index as i">
+        <tr *ngFor="let hospital of hospitals$ | async; index as i" (click)="goTo(hospital)">
           <td><app-spark-line [hospital]="hospital"></app-spark-line></td>
           <td>
             <ngb-highlight [result]="hospital.regionName" [term]="filter.value"></ngb-highlight><br />

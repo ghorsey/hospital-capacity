@@ -1,0 +1,41 @@
+<ngb-alert *ngIf="showError" [type]="'danger'">
+  <strong>Error!</strong> {{ showErrorMessage || 'Something went wrong please try again later.' }}
+</ngb-alert>
+
+<div class="row" *ngIf="!showError && hospital">
+  <div class="col">
+    <h1>{{hospital.name}}</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <small><a [routerLink]="['']">Back</a></small>
+  </div>
+</div>
+<div class="row" *ngIf="!showError">
+  <div class="col-3">
+    <h3>Address</h3>
+    <p>
+      {{hospital.address1 }} {{hospital.address2 !== '' ? ', ' + hospital.address2 : ''}}<br />
+      {{hospital.city}}, {{hospital.state}} {{hospital.postalCode}} <br />
+      <a href="tel:{{hospital.phone}}">{{hospital.phone}}</a>
+    </p>
+
+    <h3>Current Stats</h3>
+    <dl>
+      <dt>Total Beds</dt>
+      <dd>{{hospital.bedCapacity}}</dd>
+      <dt>Occupied Beds</dt>
+      <dd>{{hospital.bedsInUse}}</dd>
+      <dt>Capacity</dt>
+      <dd>{{hospital.percentOfUsage}}%</dd>
+      <dt>Created On</dt>
+      <dd>{{hospital.createdOn | date: 'short'}}</dd>
+      <dt>Last Updated</dt>
+      <dd>{{hospital.updatedOn | date: 'short' }}</dd>
+    </dl>
+  </div>
+    <div class="col-9" style="height: 450px">
+      <app-hospital-capacity-graph [hospital]="hospital" *ngIf="hospital"></app-hospital-capacity-graph>
+    </div>
+</div>
