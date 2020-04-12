@@ -47,11 +47,11 @@ import { HospitalCapacityGraphComponent } from './components/shared/hospital-cap
     NgxWebstorageModule.forRoot(),
     NgbModule,
     RouterModule.forRoot([
-      { path: '', component: HomePageComponent, pathMatch: 'full' },
-      { path: 'login', component: LoginPageComponent },
-      { path: 'logout', component: LogoutPageComponent },
-      { path: 'registration', component: RegistrationPageComponent },
-      { path: 'about', component: AboutPageComponent },
+      { path: '', component: HomePageComponent, pathMatch: 'full', data: { title: 'Hospital Capacity' } },
+      { path: 'login', component: LoginPageComponent, data: { title: 'Login: Hospital Capacity' } },
+      { path: 'logout', component: LogoutPageComponent, data: { title: 'Logout: Hospital Capacity' } },
+      { path: 'registration', component: RegistrationPageComponent, data: { title: 'Registration: Hospital Capacity' } },
+      { path: 'about', component: AboutPageComponent, data: { title: 'About: Hospital Capacity' } },
       {
         path: 'dashboard',
         component: DashboardPageComponent,
