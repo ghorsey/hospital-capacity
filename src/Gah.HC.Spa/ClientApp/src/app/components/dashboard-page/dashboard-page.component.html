@@ -23,7 +23,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let hospital of hospitals$ | async; index as i">
-        <th scope="row" [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">{{ i + 1 }}</th>
+        <!--<th scope="row" [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">{{ i + 1 }}</th>-->
+        <td><app-spark-line [hospital]="hospital"></app-spark-line></td>
         <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <ngb-highlight [result]="hospital.regionName" [term]="filter.value"></ngb-highlight><br />
           <ngb-highlight [result]="hospital.name" [term]="filter.value"></ngb-highlight><br />

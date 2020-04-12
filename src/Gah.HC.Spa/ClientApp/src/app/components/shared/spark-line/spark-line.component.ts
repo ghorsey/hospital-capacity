@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Hospital } from '../../../services/models/hospital.model';
 import { GoogleChartInterface } from 'ng2-google-charts';
+import { min } from 'rxjs/operators';
 
 @Component({
   selector: 'app-spark-line',
@@ -54,6 +55,19 @@ export class SparkLineComponent implements OnInit {
       [9, this.hospital.capacity9 - this.hospital.used9, this.hospital.used9],
       [10, this.hospital.capacity10 - this.hospital.used10, this.hospital.used10]
     ];
+
+    let minValue = 0;
+    for (let x of this.sparkLineData.dataTable) {
+      if (x[1] < minValue) {
+        minValue = x[1];
+      }
+
+      if (x[2] < minValue) {
+        minValue = x[2];
+      }
+    }
+    console.log(minValue);
+    //this.sparkLineData.options.vAxis.viewWindow.min = minValue;
 
     this.sparkLineData.options.height = this.height;
     this.sparkLineData.options.width = this.width;
