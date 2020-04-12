@@ -3,104 +3,109 @@
 </ngb-alert>
 <h1>{{edit ? "Update" : "Create"}} Hospital</h1>
 <div class="container">
-  <form [formGroup]="hospitalForm" (ngSubmit)="submit()">
-    <div class="row justify-content-md-center">
-      <div class="col">
-        <div class="row">
-          <label for="name" class="col-form-label">Name</label>
-          <input
-            [ngClass]="{'is-invalid': hospitalForm.get('name').invalid && hospitalForm.get('name').dirty && submitted}"
-            id="name" type="text" class="form-control" placeholder="Name" formControlName="name">
-          <small *ngIf="hospitalForm.get('name').errors?.required && submitted" class="text-danger">Name is required
-            field.</small>
-        </div>
+  <div class="row">
+    <app-hospital-capacity-graph [hospital]="hospital"></app-hospital-capacity-graph>
+  </div>
+  <div class="row">
+    <form [formGroup]="hospitalForm" (ngSubmit)="submit()">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <div class="row">
+            <label for="name" class="col-form-label">Name</label>
+            <input
+              [ngClass]="{'is-invalid': hospitalForm.get('name').invalid && hospitalForm.get('name').dirty && submitted}"
+              id="name" type="text" class="form-control" placeholder="Name" formControlName="name">
+            <small *ngIf="hospitalForm.get('name').errors?.required && submitted" class="text-danger">Name is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <label for="address1" class="col-form-label">Address 1</label>
-          <input
-            [ngClass]="{'is-invalid': hospitalForm.get('address1').invalid && hospitalForm.get('address1').dirty && submitted}"
-            id="address1" type="text" class="form-control" placeholder="Address 1" formControlName="address1">
-          <small *ngIf="hospitalForm.get('address1').errors?.required && submitted" class="text-danger">Address 1 is required
-            field.</small>
-        </div>
+          <div class="row">
+            <label for="address1" class="col-form-label">Address 1</label>
+            <input
+              [ngClass]="{'is-invalid': hospitalForm.get('address1').invalid && hospitalForm.get('address1').dirty && submitted}"
+              id="address1" type="text" class="form-control" placeholder="Address 1" formControlName="address1">
+            <small *ngIf="hospitalForm.get('address1').errors?.required && submitted" class="text-danger">Address 1 is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <label for="address2" class="col-form-label">Address 2</label>
-          <input
-            id="address2" type="text" class="form-control" placeholder="Address 2" formControlName="address2">
-        </div>
+          <div class="row">
+            <label for="address2" class="col-form-label">Address 2</label>
+            <input
+              id="address2" type="text" class="form-control" placeholder="Address 2" formControlName="address2">
+          </div>
 
-        <div class="row">
-          <label for="city" class="col-form-label">City</label>
-          <input
-            [ngClass]="{'is-invalid': hospitalForm.get('city').invalid && hospitalForm.get('city').dirty && submitted}"
-            id="city" type="text" class="form-control" placeholder="City" formControlName="city">
-          <small *ngIf="hospitalForm.get('city').errors?.required && submitted" class="text-danger">City is required
-            field.</small>
-        </div>
+          <div class="row">
+            <label for="city" class="col-form-label">City</label>
+            <input
+              [ngClass]="{'is-invalid': hospitalForm.get('city').invalid && hospitalForm.get('city').dirty && submitted}"
+              id="city" type="text" class="form-control" placeholder="City" formControlName="city">
+            <small *ngIf="hospitalForm.get('city').errors?.required && submitted" class="text-danger">City is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <label for="state" class="col-form-label">State</label>
-          <select class="form-control" id="state" [ngClass]="{'is-invalid': hospitalForm.get('state').invalid && hospitalForm.get('state').dirty && submitted}" formControlName="state">
-            <option selected>None</option>
-            <option *ngFor="let state of states" [value]="state">{{
-              state
-            }}</option>
-          </select>
-          <small *ngIf="hospitalForm.get('state').errors?.required && submitted" class="text-danger">State is required
-            field.</small>
-        </div>
+          <div class="row">
+            <label for="state" class="col-form-label">State</label>
+            <select class="form-control" id="state" [ngClass]="{'is-invalid': hospitalForm.get('state').invalid && hospitalForm.get('state').dirty && submitted}" formControlName="state">
+              <option selected>None</option>
+              <option *ngFor="let state of states" [value]="state">{{
+                state
+              }}</option>
+            </select>
+            <small *ngIf="hospitalForm.get('state').errors?.required && submitted" class="text-danger">State is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <label for="postalCode" class="col-form-label">Postal Code</label>
-          <input
-            [ngClass]="{'is-invalid': hospitalForm.get('postalCode').invalid && hospitalForm.get('postalCode').dirty && submitted}"
-            id="postalCode" type="text" class="form-control" placeholder="Postal Code" formControlName="postalCode">
-          <small *ngIf="hospitalForm.get('postalCode').errors?.required && submitted" class="text-danger">Postal code is required
-            field.</small>
-        </div>
+          <div class="row">
+            <label for="postalCode" class="col-form-label">Postal Code</label>
+            <input
+              [ngClass]="{'is-invalid': hospitalForm.get('postalCode').invalid && hospitalForm.get('postalCode').dirty && submitted}"
+              id="postalCode" type="text" class="form-control" placeholder="Postal Code" formControlName="postalCode">
+            <small *ngIf="hospitalForm.get('postalCode').errors?.required && submitted" class="text-danger">Postal code is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <label for="phone" class="col-form-label">Phone</label>
-          <input
-            [ngClass]="{'is-invalid': hospitalForm.get('phone').invalid && hospitalForm.get('phone').dirty && submitted}"
-            id="phone" type="text" class="form-control" placeholder="Phone" formControlName="phone">
-          <small *ngIf="hospitalForm.get('phone').errors?.required && submitted" class="text-danger">Phone is required
-            field.</small>
-        </div>
+          <div class="row">
+            <label for="phone" class="col-form-label">Phone</label>
+            <input
+              [ngClass]="{'is-invalid': hospitalForm.get('phone').invalid && hospitalForm.get('phone').dirty && submitted}"
+              id="phone" type="text" class="form-control" placeholder="Phone" formControlName="phone">
+            <small *ngIf="hospitalForm.get('phone').errors?.required && submitted" class="text-danger">Phone is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <label for="isCovid" class="col-form-label">Is Covid?</label>
-          <select class="form-control" id="isCovid" formControlName="isCovid">
-            <option value="true" selected>Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
+          <div class="row">
+            <label for="isCovid" class="col-form-label">Is Covid?</label>
+            <select class="form-control" id="isCovid" formControlName="isCovid">
+              <option value="true" selected>Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
 
-        <div class="row">
-          <label for="bedCapacity" class="col-form-label">Bed Capacity</label>
-          <input
-            [ngClass]="{'is-invalid': hospitalForm.get('bedCapacity').invalid && hospitalForm.get('bedCapacity').dirty && submitted}"
-            id="bedCapacity" type="number" class="form-control" placeholder="Bed Capacity" formControlName="bedCapacity">
-          <small *ngIf="hospitalForm.get('bedCapacity').errors?.required && submitted" class="text-danger">Bed capacity is required
-            field.</small>
-        </div>
+          <div class="row">
+            <label for="bedCapacity" class="col-form-label">Bed Capacity</label>
+            <input
+              [ngClass]="{'is-invalid': hospitalForm.get('bedCapacity').invalid && hospitalForm.get('bedCapacity').dirty && submitted}"
+              id="bedCapacity" type="number" class="form-control" placeholder="Bed Capacity" formControlName="bedCapacity">
+            <small *ngIf="hospitalForm.get('bedCapacity').errors?.required && submitted" class="text-danger">Bed capacity is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <label for="bedsInUse" class="col-form-label">Beds In Use</label>
-          <input
-            [ngClass]="{'is-invalid': hospitalForm.get('bedsInUse').invalid && hospitalForm.get('bedsInUse').dirty && submitted}"
-            id="bedsInUse" type="number" class="form-control" placeholder="Beds In Use" formControlName="bedsInUse">
-          <small *ngIf="hospitalForm.get('bedsInUse').errors?.required && submitted" class="text-danger">Beds in use is required
-            field.</small>
-        </div>
+          <div class="row">
+            <label for="bedsInUse" class="col-form-label">Beds In Use</label>
+            <input
+              [ngClass]="{'is-invalid': hospitalForm.get('bedsInUse').invalid && hospitalForm.get('bedsInUse').dirty && submitted}"
+              id="bedsInUse" type="number" class="form-control" placeholder="Beds In Use" formControlName="bedsInUse">
+            <small *ngIf="hospitalForm.get('bedsInUse').errors?.required && submitted" class="text-danger">Beds in use is required
+              field.</small>
+          </div>
 
-        <div class="row">
-          <a class="btn btn-secondary mt-3" [routerLink]="['/dashboard']"
-            routerLinkActive="router-link-active">Cancel</a>
-          <button type="submit" class="btn btn-primary mt-3 ml-3">{{edit ? "Update" : "Create"}}</button>
+          <div class="row">
+            <a class="btn btn-secondary mt-3" [routerLink]="['/dashboard']"
+              routerLinkActive="router-link-active">Cancel</a>
+            <button type="submit" class="btn btn-primary mt-3 ml-3">{{edit ? "Update" : "Create"}}</button>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

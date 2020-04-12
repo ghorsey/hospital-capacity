@@ -7,6 +7,7 @@ import { Result } from './models/result';
 import { catchError } from 'rxjs/operators';
 import { Hospital } from './models/hospital.model';
 import { AuthenticationService } from './authentication.service';
+import { HospitalCapacity } from './models/hospital-capacity.model';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +52,11 @@ export class HospitalService {
       bedCapacity: hospital.bedCapacity
     };
     return this.http.post<any>(`/api/hospitals/${hospital.slug}/rapid-update`, payload).pipe(catchError(this.errorHandler.handleError('rapidUpdateHospital', [])));
+  }
+
+  recentCapacity(slug: string): Observable<Result<Array<HospitalCapacity>>> {
+    return this.http.get<any>(
+      `api/hospitals/${slug}/recent-capacity`)
+      .pipe(catchError(this.errorHandler.handleError('getRecentCapacity', [])));
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Hospital } from '../../../services/models/hospital.model';
 import { GoogleChartInterface } from 'ng2-google-charts';
-import { min } from 'rxjs/operators';
 
 @Component({
   selector: 'app-spark-line',

@@ -21,6 +21,7 @@ import { HospitalPageComponent } from './components/hospital-page/hospital-page.
 import { NoopInterceptor } from './interceptors/http.interceptor';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { SparkLineComponent } from './components/shared/spark-line/spark-line.component';
+import { HospitalCapacityGraphComponent } from './components/shared/hospital-capacity-graph/hospital-capacity-graph.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SparkLineComponent } from './components/shared/spark-line/spark-line.co
     HospitalPageComponent,
     UsersPageComponent,
     SparkLineComponent,
+    HospitalCapacityGraphComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
