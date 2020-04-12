@@ -135,6 +135,13 @@ namespace Gah.HC.Spa
                 .AddUserStore<AppUserRepository>()
                 .AddEntityFrameworkStores<HospitalCapacityContext>();
 
+            services.AddAuthentication();
+
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.Zero;
+            });
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Events = new CookieAuthenticationEvents
@@ -174,7 +181,7 @@ namespace Gah.HC.Spa
                 options.Cookie.Name = "app-hospital-capacity";
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                options.LoginPath = "/manage/login";
+                options.LoginPath = "/login";
                 //// ReturnUrlParameter requires
                 ////using Microsoft.AspNetCore.Authentication.Cookies;
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;

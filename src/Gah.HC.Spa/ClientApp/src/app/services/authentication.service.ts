@@ -47,4 +47,12 @@ export class AuthenticationService {
     return this.loggedOnUser() !== null;
   }
 
+  public resumeSession(): void {
+    if (this.isLoggedOn) {
+      return;
+    }
+
+    this.me().subscribe(user => this.login(user.value));
+  }
+
 }

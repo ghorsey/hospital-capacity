@@ -316,6 +316,7 @@
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPost("logout")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [AllowAnonymous]
         public async Task<IActionResult> LogOutAsync()
         {
             await this.signInManager.SignOutAsync();

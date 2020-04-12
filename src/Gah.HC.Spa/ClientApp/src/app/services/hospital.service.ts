@@ -44,8 +44,6 @@ export class HospitalService {
   rapidUpdateHospital(hospital: Hospital): Observable<Result<Hospital>> {
     const payload = {
       isCovid: hospital.isCovid,
-      regionId: this.userInfo.regionId,
-      updatedOn: new Date(new Date().toUTCString()).toISOString(),
       bedsInUse: hospital.bedsInUse,
       bedCapacity: hospital.bedCapacity
     };
