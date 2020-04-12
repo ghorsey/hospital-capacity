@@ -13,7 +13,7 @@
   </div>
 </div>
 <div class="row" *ngIf="!showError">
-  <div class="col-3">
+  <div class="col-lg-3 col-sm-12">
     <h3>Address</h3>
     <p>
       {{hospital.address1 }} {{hospital.address2 !== '' ? ', ' + hospital.address2 : ''}}<br />
@@ -35,7 +35,7 @@
       <dd>{{hospital.updatedOn | date: 'short' }}</dd>
     </dl>
   </div>
-    <div class="col-9" style="height: 450px">
+    <div class="col-lg-9 col-sm-12" style="height: 450px">
       <app-hospital-capacity-graph [hospital]="hospital" *ngIf="hospital"></app-hospital-capacity-graph>
     </div>
 </div>
