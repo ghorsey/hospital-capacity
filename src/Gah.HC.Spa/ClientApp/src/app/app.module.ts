@@ -54,7 +54,6 @@ import { HospitalPageComponent } from './components/hospital-page/hospital-page.
       { path: 'logout', component: LogoutPageComponent, data: { title: 'Logout: Hospital Capacity' } },
       { path: 'registration', component: RegistrationPageComponent, data: { title: 'Registration: Hospital Capacity' } },
       { path: 'about', component: AboutPageComponent, data: { title: 'About: Hospital Capacity' } },
-      { path: ':id', component: HospitalPageComponent, data: { title: "Hospital: Hospital Capacity" } },
       {
         path: 'dashboard',
         component: DashboardPageComponent,
@@ -72,7 +71,8 @@ import { HospitalPageComponent } from './components/hospital-page/hospital-page.
         component: EditHospitalPageComponent,
         canActivate: [AuthGeneralGuardService],
         data: { title: 'Add/Edit Hospital: Hospital Capacity' }
-      }
+      },
+      { path: ':id', component: HospitalPageComponent, data: { title: "Hospital: Hospital Capacity" } },
     ])
   ],
   providers: [

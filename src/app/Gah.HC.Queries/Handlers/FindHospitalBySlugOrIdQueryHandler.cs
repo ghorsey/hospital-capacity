@@ -49,6 +49,13 @@
 
             var hospital = await this.uow.HospitalRepository.FindBySlugAsync(request.Slug, cancellationToken).ConfigureAwait(false);
 
+            if (hospital == null)
+            {
+#nullable disable
+                return null;
+#nullable enable
+            }
+
             var region = await this.uow.RegionRepository.FindAsync(hospital.RegionId, cancellationToken).ConfigureAwait(false);
 
             hospital.Region = region;
