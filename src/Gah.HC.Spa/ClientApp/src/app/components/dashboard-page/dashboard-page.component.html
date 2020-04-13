@@ -106,7 +106,7 @@
         </td>
         <td [ngClass]="canUserEditHospital(hospital) ? 'pointer' : ''" (click)="canUserEditHospital(hospital) ? edit(hospital) : ''">
           <!--<ngb-highlight [result]="(( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) ? (( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) + '%' : 0" [term]="filter.value"></ngb-highlight>-->
-          <ngb-highlight [result]="hospital.percentOfUsage" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="hospital.percentOfUsage + '%'" [term]="filter.value"></ngb-highlight>
         </td>
       </tr>
     </tbody>

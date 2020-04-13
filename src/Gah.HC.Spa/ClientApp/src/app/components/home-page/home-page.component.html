@@ -47,7 +47,7 @@
           </td>
           <td>
             <ngb-highlight
-              [result]="(( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) ? (( (hospital.bedsInUse / hospital.bedCapacity) * 100) | number) + '%' : 0"
+              [result]="hospital.percentOfUsage + '%'"
               [term]="filter.value"></ngb-highlight>
           </td>
         </tr>
