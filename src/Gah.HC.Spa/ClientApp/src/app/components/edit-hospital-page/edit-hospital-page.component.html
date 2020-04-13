@@ -12,7 +12,7 @@
       <small><a [routerLink]="['/dashboard']">Back</a></small>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="this.edit">
     <div class="col" style="height: 450px">
       <app-hospital-capacity-graph [hospital]="hospital"></app-hospital-capacity-graph>
     </div>
