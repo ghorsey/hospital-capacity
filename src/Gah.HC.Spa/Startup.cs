@@ -233,6 +233,7 @@ namespace Gah.HC.Spa
                 .AddQuery<FindAppUsersByRegionOrHospitalQuery, List<AppUser>, FindAppUsersByRegionOrHospitalQueryHandler>()
                 .AddQuery<FindHospitalBySlugOrIdQuery, Hospital, FindHospitalBySlugOrIdQueryHandler>()
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
+                .AddQuery<FindHospitalViewByIdQuery, HospitalView, FindHospitalViewByIdQueryHandler>()
                 .AddQuery<FindRegionByIdOrSlugQuery, Region, FindRegionByIdOrSlugQueryHandler>()
                 .AddQuery<FindUserByClaimsPrincipalQuery, AppUser, FindUserByClaimsPrincipalQueryHandler>()
                 .AddQuery<FindUserByEmailQuery, AppUser, FindUserByEmailQueryHandler>()

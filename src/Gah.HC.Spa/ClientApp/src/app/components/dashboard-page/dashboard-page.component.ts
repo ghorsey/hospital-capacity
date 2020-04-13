@@ -75,11 +75,13 @@ export class DashboardPageComponent implements OnInit {
     );
   }
 
-  update(hospital: Hospital, key: string): void {
+  update(hospital: Hospital, key: string, index: number): void {
     console.log(hospital);
     this.hospitalService.rapidUpdateHospital(hospital).subscribe(
-      () => {
+      (result) => {
         this.isEdit[key] = false;
+        this.hospitals[index] = result.value;
+        console.log(result);
       },
       () => {
         this.showError = true;

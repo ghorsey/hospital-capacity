@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Hospital } from '../../../services/models/hospital.model';
 import { GoogleChartInterface } from 'ng2-google-charts';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-spark-line',
   templateUrl: './spark-line.component.html',
   styleUrls: ['./spark-line.component.css']
 })
-export class SparkLineComponent implements OnInit {
+export class SparkLineComponent implements OnInit, OnChanges {
 
   @Input() public hospital: Hospital;
   @Input() public width = 100;
@@ -35,12 +36,15 @@ export class SparkLineComponent implements OnInit {
   }
 
   constructor() { }
-
-  ngOnInit(): void {
-    if (this.hospital == null) {
-      throw new Error("Hospital is required");
+    ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+      this.init();
+      console.log(this.sparkLineData.component);
+      if (this.sparkLineData.component) {
+        this.sparkLineData.component.draw();
+      }
     }
-    console.log(this.hospital);
+
+  private init(): void {
     this.sparkLineData.dataTable = [
       ['X', 'Available', 'Occupied'],
       [1, this.hospital.capacity1 - this.hospital.used1, this.hospital.used1],
@@ -57,5 +61,13 @@ export class SparkLineComponent implements OnInit {
 
     this.sparkLineData.options.height = this.height;
     this.sparkLineData.options.width = this.width;
+
+  }
+
+  ngOnInit(): void {
+    if (this.hospital == null) {
+      throw new Error("Hospital is required");
+    }
+    this.init();
   }
 }

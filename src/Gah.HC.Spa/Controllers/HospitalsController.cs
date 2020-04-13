@@ -276,7 +276,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;IActionResult&gt;.</returns>
         [HttpPost("{idOrSlug}/rapid-update")]
-        [ProducesResponseType(typeof(Hospital), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<HospitalView>), StatusCodes.Status200OK)]
         public async Task<IActionResult> RapidUpdateAsync(string idOrSlug, RapidHospitalUpdateInput input, CancellationToken cancellationToken)
         {
             if (input == null)
@@ -305,9 +305,13 @@
 
             await this.domainBus.ExecuteAsync(cmd, cancellationToken);
 
-            hospital = await this.domainBus.ExecuteAsync(q, cancellationToken);
+            var view = await this.domainBus.ExecuteAsync(
+                new FindHospitalViewByIdQuery(
+                    hospital.Id,
+                    this.HttpContext.TraceIdentifier),
+                cancellationToken);
 
-            return this.Ok(hospital.MakeSuccessfulResult());
+            return this.Ok(view.MakeSuccessfulResult());
         }
 
         /// <summary>

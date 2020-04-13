@@ -12,13 +12,13 @@ export class AuthGeneralGuardService implements CanActivate {
   canActivate(
     route: import('@angular/router').ActivatedRouteSnapshot,
     state: import('@angular/router').RouterStateSnapshot): boolean | import("@angular/router").UrlTree | import("rxjs").Observable<boolean | import("@angular/router").UrlTree> | Promise<boolean | import("@angular/router").UrlTree> {
-      console.log(route);
-      console.log(state);
+      //console.log(route);
+      //console.log(state);
 
-    if (this.authService.isLoggedOn()) {
-      return true;
-    }
+      if (this.authService.isLoggedOn()) {
+        return true;
+      }
 
-    return this.router.navigate(['/login']);
+      return this.router.navigate(['/login']);
     }
 }
