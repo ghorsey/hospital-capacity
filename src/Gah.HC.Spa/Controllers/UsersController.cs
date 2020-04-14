@@ -59,18 +59,16 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IActionResult.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(List<UserDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<List<AppUserView>>), StatusCodes.Status200OK)]
         [Authorize(Policy = "AdminOnlyAccess")]
         public async Task<IActionResult> FindAllUsersAsync(CancellationToken cancellationToken)
         {
             this.Logger.LogInformation("Attempting to find all users in the system");
 
-            var q = new FindAppUsersByRegionOrHospitalQuery(this.HttpContext.TraceIdentifier);
+            var q = new FindAppUserViewsByRegionOrHospitalQuery(this.HttpContext.TraceIdentifier);
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
-            return this.Ok(
-                this.mapper.Map<List<UserDto>>(result)
-                .MakeSuccessfulResult());
+            return this.Ok(result.MakeSuccessfulResult());
         }
 
         /// <summary>
@@ -80,12 +78,12 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IActionResult.</returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Result<UserDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetUserAsync(string id, CancellationToken cancellationToken)
+        [ProducesResponseType(typeof(Result<AppUserView>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUserAsync(Guid id, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Attempting to get user {id}");
 
-            var user = await this.domainBus.ExecuteAsync(new FindUserByIdQuery(id, this.HttpContext.TraceIdentifier), cancellationToken);
+            var user = await this.domainBus.ExecuteAsync(new FindAppUserViewByIdQuery(id, this.HttpContext.TraceIdentifier), cancellationToken);
 
             var authResult = await this.authorizationService.AuthorizeAsync(this.User, user, new ManageUserRequirement());
 
@@ -94,7 +92,12 @@
                 return this.Forbid();
             }
 
-            return this.Ok(this.mapper.Map<UserDto>(user));
+            if (user == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(user.MakeSuccessfulResult());
         }
 
         /// <summary>

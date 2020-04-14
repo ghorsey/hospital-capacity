@@ -6,6 +6,8 @@
     using Gah.Blocks.DomainBus;
     using Gah.HC.Commands.Exceptions;
     using Gah.HC.Domain;
+    using Gah.HC.Events;
+    using Gah.HC.Repository;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
 
@@ -16,17 +18,33 @@
     /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandler{RegisterSuperUserCommand}" />
     public class RegisterSuperUserCommandHandler : DomainCommandHandler<RegisterSuperUserCommand>
     {
+        private readonly IHospitalCapacityUow uow;
+        private readonly IDomainBus domainBus;
         private readonly UserManager<AppUser> userManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RegisterSuperUserCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="RegisterSuperUserCommandHandler" /> class.
         /// </summary>
         /// <param name="userManager">The user manager.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="domainBus">The domain bus.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="ArgumentNullException">userManager.</exception>
-        public RegisterSuperUserCommandHandler(UserManager<AppUser> userManager, ILogger<RegisterSuperUserCommandHandler> logger)
+        /// <exception cref="ArgumentNullException">
+        /// uow
+        /// or
+        /// domainBus
+        /// or
+        /// userManager.
+        /// </exception>
+        public RegisterSuperUserCommandHandler(
+            UserManager<AppUser> userManager,
+            IHospitalCapacityUow uow,
+            IDomainBus domainBus,
+            ILogger<RegisterSuperUserCommandHandler> logger)
             : base(logger)
         {
+            this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
+            this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
@@ -48,12 +66,22 @@
                 UserName = command.Email,
                 UserType = AppUserType.Admin,
             };
-            var result = await this.userManager.CreateAsync(user, command.Password).ConfigureAwait(false);
 
-            if (!result.Succeeded)
+            await this.uow.ExecuteInResilientTransactionAsync(async () =>
             {
-                throw new UserCreationException("Failed to create a super user", result.Errors);
-            }
+                var result = await this.userManager.CreateAsync(user, command.Password).ConfigureAwait(false);
+
+                if (!result.Succeeded)
+                {
+                    throw new UserCreationException("Failed to create a super user", result.Errors);
+                }
+
+                var appUserUpdatedEvent = new AppUserUpdatedEvent(user, command.CorrelationId);
+
+                await this.domainBus.PublishAsync(cancellationToken, appUserUpdatedEvent).ConfigureAwait(false);
+
+                return true;
+            }).ConfigureAwait(false);
         }
     }
 }

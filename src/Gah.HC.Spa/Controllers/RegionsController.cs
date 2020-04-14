@@ -75,7 +75,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IActionResult.</returns>
         [HttpGet("{idOrSlug}/users")]
-        [ProducesResponseType(typeof(List<Result<UserDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<List<AppUserView>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> FindRegionUsersAsync(string idOrSlug, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Finding all the users for the id or slug '{idOrSlug}'");
@@ -89,13 +89,11 @@
                 return this.Forbid();
             }
 
-            var q = new FindAppUsersByRegionOrHospitalQuery(this.HttpContext.TraceIdentifier, region.Id);
+            var q = new FindAppUserViewsByRegionOrHospitalQuery(this.HttpContext.TraceIdentifier, region.Id);
 
             var result = await this.domainBus.ExecuteAsync(q, cancellationToken);
 
-            return this.Ok(
-                this.mapper.Map<List<UserDto>>(result)
-                .MakeSuccessfulResult());
+            return this.Ok(result.MakeSuccessfulResult());
         }
     }
 }

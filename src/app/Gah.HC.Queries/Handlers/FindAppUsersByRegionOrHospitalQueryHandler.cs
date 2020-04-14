@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
@@ -40,7 +39,7 @@
             request = request ?? throw new ArgumentNullException(nameof(request));
 
             this.Logger.LogInformation($"Finding users of either region '{request.RegionId}' or hospital '{request.HospitalId}'");
-            return this.appUserRepository.FindBy(request.RegionId, request.HospitalId, cancellationToken);
+            return this.appUserRepository.FindByAsync(request.RegionId, request.HospitalId, cancellationToken);
         }
     }
 }

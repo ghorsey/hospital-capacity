@@ -229,9 +229,12 @@ namespace Gah.HC.Spa
 
                 // Events
                 .AddEvent<HospitalChangedEvent, HospitalChangedEventHandler>()
+                .AddEvent<HospitalChangedEvent, HospitalChangedUpdateUserViewHandler>()
+                .AddEvent<AppUserUpdatedEvent, AppUserUpdatedEventHandler>()
 
                 // Queryies
                 .AddQuery<FindAppUsersByRegionOrHospitalQuery, List<AppUser>, FindAppUsersByRegionOrHospitalQueryHandler>()
+                .AddQuery<FindAppUserViewsByRegionOrHospitalQuery, List<AppUserView>, FindAppUserViewsByRegionOrHospitalQueryHandler>()
                 .AddQuery<FindHospitalBySlugOrIdQuery, Hospital, FindHospitalBySlugOrIdQueryHandler>()
                 .AddQuery<FindHospitalsQuery, List<HospitalView>, FindHospitalsQueryHandler>()
                 .AddQuery<FindHospitalViewByIdQuery, HospitalView, FindHospitalViewByIdQueryHandler>()

@@ -18,7 +18,7 @@
         /// <param name="hospitalId">The hospital identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;AppUser&gt;.</returns>
-        Task<List<AppUser>> FindBy(Guid? regionId = null, Guid? hospitalId = null, CancellationToken cancellationToken = default);
+        Task<List<AppUser>> FindByAsync(Guid? regionId = null, Guid? hospitalId = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sets the user is approved.
@@ -27,6 +27,6 @@
         /// <param name="isApproved">if set to <c>true</c> the user is approved.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task.</returns>
-        Task SetUserIsApproved(AppUser user, bool isApproved, CancellationToken cancellationToken = default);
+        Task SetUserIsApprovedAsync(AppUser user, bool isApproved, CancellationToken cancellationToken = default);
     }
 }

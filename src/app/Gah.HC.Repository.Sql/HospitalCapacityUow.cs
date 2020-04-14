@@ -25,6 +25,7 @@
             this.HospitalRepository = new HospitalRepository(context, loggerFactory.CreateLogger<HospitalRepository>());
             this.HospitalCapacityRepository = new HospitalCapacityRepository(context, loggerFactory.CreateLogger<HospitalCapacityRepository>());
             this.HospitalViewRepository = new HospitalViewRepository(context, loggerFactory.CreateLogger<HospitalViewRepository>());
+            this.AppUserViewRepository = new AppUserViewRepository(context, loggerFactory.CreateLogger<AppUserViewRepository>());
         }
 
         /// <summary>
@@ -50,5 +51,11 @@
         /// </summary>
         /// <value>The hospital capacity repository.</value>
         public IHospitalCapacityRepository HospitalCapacityRepository { get; }
+
+        /// <summary>
+        /// Gets the application user view repository.
+        /// </summary>
+        /// <value>The application user view repository.</value>
+        public IAppUserViewRepository AppUserViewRepository { get; }
     }
 }

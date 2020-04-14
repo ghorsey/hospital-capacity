@@ -7,6 +7,7 @@
     using Gah.Blocks.DomainBus;
     using Gah.HC.Commands.Exceptions;
     using Gah.HC.Domain;
+    using Gah.HC.Events;
     using Gah.HC.Repository;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
@@ -20,19 +21,30 @@
     {
         private readonly IHospitalCapacityUow uow;
         private readonly UserManager<AppUser> userManager;
+        private readonly IDomainBus domainBus;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterRegionUserCommandHandler" /> class.
         /// </summary>
         /// <param name="uow">The uow.</param>
         /// <param name="userManager">The user manager.</param>
+        /// <param name="domainBus">The domain bus.</param>
         /// <param name="logger">The logger.</param>
+        /// <exception cref="ArgumentNullException">
+        /// domainBus
+        /// or
+        /// uow
+        /// or
+        /// userManager.
+        /// </exception>
         public RegisterRegionUserCommandHandler(
             IHospitalCapacityUow uow,
             UserManager<AppUser> userManager,
+            IDomainBus domainBus,
             ILogger<RegisterRegionUserCommandHandler> logger)
             : base(logger)
         {
+            this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
             this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
             this.userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
@@ -75,6 +87,10 @@
                 {
                     throw new UserCreationException("Failed to create user", result.Errors ?? new List<IdentityError>());
                 }
+
+                var appUserUpdatedEvent = new AppUserUpdatedEvent(user, command.CorrelationId);
+
+                await this.domainBus.PublishAsync(cancellationToken, appUserUpdatedEvent).ConfigureAwait(false);
 
                 return true;
             }).ConfigureAwait(false);

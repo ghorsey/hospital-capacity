@@ -42,7 +42,7 @@
 
             this.Logger.LogInformation($"Setting user is authorized for {command.User.Id} to {command.IsApproved}");
 
-            await this.appUserRepository.SetUserIsApproved(command.User, command.IsApproved, cancellationToken).ConfigureAwait(false);
+            await this.appUserRepository.SetUserIsApprovedAsync(command.User, command.IsApproved, cancellationToken).ConfigureAwait(false);
         }
     }
 }

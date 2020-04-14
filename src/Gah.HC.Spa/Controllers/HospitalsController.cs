@@ -135,7 +135,7 @@
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>IActionResult.</returns>
         [HttpGet("{idOrSlug}/users")]
-        [ProducesResponseType(typeof(List<UserDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<List<AppUserView>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> FindHospitalUsersAsync(string idOrSlug, CancellationToken cancellationToken)
         {
             this.Logger.LogInformation($"Attempting to see the users for {idOrSlug}");
@@ -155,14 +155,12 @@
             }
 
             var users = await this.domainBus.ExecuteAsync(
-                new FindAppUsersByRegionOrHospitalQuery(
+                new FindAppUserViewsByRegionOrHospitalQuery(
                     correlationId,
                     hosptialId: hospital.Id),
                 cancellationToken);
 
-            return this.Ok(
-                this.mapper.Map<List<UserDto>>(users)
-                .MakeSuccessfulResult());
+            return this.Ok(users.MakeSuccessfulResult());
         }
 
         /// <summary>

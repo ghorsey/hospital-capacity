@@ -28,5 +28,11 @@
         /// </summary>
         /// <value>The region repository.</value>
         IRegionRepository RegionRepository { get; }
+
+        /// <summary>
+        /// Gets the application user view repository.
+        /// </summary>
+        /// <value>The application user view repository.</value>
+        IAppUserViewRepository AppUserViewRepository { get; }
     }
 }
