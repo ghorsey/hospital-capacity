@@ -25,7 +25,6 @@ export class RegistrationPageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private regionService: RegionService,
     private authService: AuthenticationService,
     private router: Router,
   ) {}

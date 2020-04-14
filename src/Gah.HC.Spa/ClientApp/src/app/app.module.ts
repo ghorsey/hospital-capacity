@@ -23,6 +23,7 @@ import { UsersPageComponent } from './components/users-page/users-page.component
 import { SparkLineComponent } from './components/shared/spark-line/spark-line.component';
 import { HospitalCapacityGraphComponent } from './components/shared/hospital-capacity-graph/hospital-capacity-graph.component';
 import { HospitalPageComponent } from './components/hospital-page/hospital-page.component';
+import { SetUserPasswordPageComponent } from './components/set-user-password-page/set-user-password-page.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { HospitalPageComponent } from './components/hospital-page/hospital-page.
     SparkLineComponent,
     HospitalCapacityGraphComponent,
     HospitalPageComponent,
+    SetUserPasswordPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -65,6 +67,12 @@ import { HospitalPageComponent } from './components/hospital-page/hospital-page.
         component: UsersPageComponent,
         canActivate: [AuthGeneralGuardService],
         data: { title: 'Users: Hospital Capacity' }
+      },
+      {
+        path: 'users/:id/set-password',
+        component: SetUserPasswordPageComponent,
+        canActivate: [AuthGeneralGuardService],
+        data: { title: 'Users: Set User Password' }
       },
       {
         path: 'dashboard/:id',

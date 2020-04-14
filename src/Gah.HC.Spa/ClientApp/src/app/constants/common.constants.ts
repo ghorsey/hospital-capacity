@@ -101,5 +101,7 @@ export const STATES = [
 ];
 
 export const USER_TYPE = {
-  ADMIN: 'Admin'
+  ADMIN: 'Admin',
+  REGION: 'Region',
+  HOSPITAL: 'Hospital'
 }
