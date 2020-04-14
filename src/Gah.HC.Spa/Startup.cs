@@ -115,7 +115,8 @@ namespace Gah.HC.Spa
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
+            ////services.AddControllersWithViews();
+            services.AddControllers()
                 .AddNewtonsoftJson(
                 options =>
                 {
