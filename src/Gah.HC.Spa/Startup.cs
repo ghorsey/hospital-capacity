@@ -133,6 +133,7 @@ namespace Gah.HC.Spa
                     }));
 
             services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddDefaultTokenProviders()
                 .AddUserStore<AppUserRepository>()
                 .AddEntityFrameworkStores<HospitalCapacityContext>();
 
