@@ -41,9 +41,13 @@ export class UsersPageComponent implements OnInit {
 
   approve(user: UserListItem, key: string, index: number): void {
     this.userService.approveUser(user.id, user.isApproved).subscribe(
-      (result) => {
-        this.isEdit[key] = false;
-        this.users[index] = result.value;
+      (result: Result<UserListItem>) => {
+        if (result.success) {
+          this.isEdit[key] = false;
+          this.users[index] = result.value;
+        } else {
+          this.showError = true;
+        }
       },
       () => {
         this.showError = true;

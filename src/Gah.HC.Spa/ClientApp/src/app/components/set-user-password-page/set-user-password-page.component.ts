@@ -37,12 +37,8 @@ export class SetUserPasswordPageComponent implements OnInit {
 
   private setNewUserPassword(): void {
     this.userService.setUserPassword(this.userId, this.setPasswordForm.get('password').value).subscribe(
-      (response) => {
-        if (response) {
-          this.router.navigate(['/users']);
-        } else {
-          this.showError = true;
-        }
+      () => {
+        this.router.navigate(['/users']);
       },
       (error: HttpErrorResponse) => {
         const e = error.error as Result<string>;
