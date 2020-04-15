@@ -31,13 +31,13 @@ export class UserService {
 
   setUserPassword(id: string, newPassword: string) {
     return this.http
-      .post<any>(`/api​/users​/${id}​/set-password`, { newPassword })
+      .post<any>(`/api/users/${id}/set-password`, { newPassword })
       .pipe(catchError(this.errorHandler.handleError('setUserPassword', [])));
   }
 
   approveUser(id: string, isApproved: boolean) {
     return this.http
-      .post<any>(`​/api​/users​/${id}​/set-authorized`, { isApproved })
+      .post<any>(`/api/users/${id}/set-authorized`, { isApproved })
       .pipe(catchError(this.errorHandler.handleError('approveUser', [])));
   }
 }
