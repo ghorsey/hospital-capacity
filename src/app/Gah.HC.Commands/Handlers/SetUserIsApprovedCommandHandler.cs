@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Gah.Blocks.DomainBus;
     using Gah.HC.Domain;
+    using Gah.HC.Events;
     using Gah.HC.Repository;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
@@ -16,17 +17,30 @@
     /// <seealso cref="Gah.Blocks.DomainBus.DomainCommandHandler{SetUserAuthorizedCommand}" />
     public class SetUserIsApprovedCommandHandler : DomainCommandHandler<SetUserIsApprovedCommand>
     {
-        private readonly IAppUserRepository appUserRepository;
+        private readonly IHospitalCapacityUow uow;
+        private readonly IUserStore<AppUser> appUserRepository;
+        private readonly IDomainBus domainBus;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SetUserIsApprovedCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="SetUserIsApprovedCommandHandler" /> class.
         /// </summary>
+        /// <param name="uow">The uow.</param>
+        /// <param name="domainBus">The domain bus.</param>
         /// <param name="userStore">The user store.</param>
         /// <param name="logger">The logger.</param>
-        public SetUserIsApprovedCommandHandler(IUserStore<AppUser> userStore, ILogger<SetUserIsApprovedCommandHandler> logger)
+        /// <exception cref="ArgumentNullException">
+        /// domainBus
+        /// or
+        /// userStore
+        /// or
+        /// uow.
+        /// </exception>
+        public SetUserIsApprovedCommandHandler(IHospitalCapacityUow uow, IDomainBus domainBus, IUserStore<AppUser> userStore, ILogger<SetUserIsApprovedCommandHandler> logger)
             : base(logger)
         {
-            this.appUserRepository = (IAppUserRepository)userStore ?? throw new ArgumentNullException(nameof(userStore));
+            this.domainBus = domainBus ?? throw new ArgumentNullException(nameof(domainBus));
+            this.appUserRepository = userStore ?? throw new ArgumentNullException(nameof(userStore));
+            this.uow = uow ?? throw new ArgumentNullException(nameof(uow));
         }
 
         /// <summary>
@@ -42,7 +56,17 @@
 
             this.Logger.LogInformation($"Setting user is authorized for {command.User.Id} to {command.IsApproved}");
 
-            await this.appUserRepository.SetUserIsApprovedAsync(command.User, command.IsApproved, cancellationToken).ConfigureAwait(false);
+            await this.uow.ExecuteInResilientTransactionAsync(async () =>
+            {
+                await ((IAppUserRepository)this.appUserRepository).SetUserIsApprovedAsync(command.User, command.IsApproved, cancellationToken).ConfigureAwait(false);
+
+                var user = await this.appUserRepository.FindByIdAsync(command.User.Id, cancellationToken).ConfigureAwait(false);
+
+                var e = new AppUserUpdatedEvent(user, command.CorrelationId);
+
+                await this.domainBus.PublishAsync(cancellationToken, e).ConfigureAwait(false);
+                return true;
+            }).ConfigureAwait(false);
         }
     }
 }
